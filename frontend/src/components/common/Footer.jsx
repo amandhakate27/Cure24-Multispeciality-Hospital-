@@ -42,7 +42,7 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold">Contact Us</h3>
                         <ul className="mt-4 space-y-3 text-blue-100 text-sm text-center lg:text-left">
                             <li className="flex items-start gap-3 justify-center lg:justify-start text-center lg:text-left">
-                                <MapPin className="w-5 h-5 text-blue-200 flex-shrink-0" aria-hidden="true" />
+                                <MapPin className="w-5 h-5 text-blue-200 shrink-0" aria-hidden="true" />
                                 <span className="leading-relaxed">
                                     Plot No 5, Daddu's Kitchen, Diamond Nagar,
                                     Besa Road, Nagpur-440037, Maharashtra

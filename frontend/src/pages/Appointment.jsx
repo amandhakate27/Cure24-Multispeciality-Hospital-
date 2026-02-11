@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Calendar, CircleCheckBig, Clock, User } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
@@ -15,12 +16,41 @@ const initialFormState = {
     message: "",
 };
 
+const formVariants = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+            when: "beforeChildren",
+            staggerChildren: 0.08,
+        },
+    },
+};
+
+const fieldVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const Appointment = () => {
     const [formData, setFormData] = useState(initialFormState);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    const inputClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+    const inputWithIconClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 pl-10 pr-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+    const textareaClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -49,10 +79,16 @@ const Appointment = () => {
 
             <section className="py-12">
                 <div className="max-w-5xl mx-auto px-6 lg:px-10">
-                    <div className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8">
+                    <motion.div
+                        className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8"
+                        variants={formVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.25 }}
+                    >
                         <form className="space-y-4" onSubmit={handleSubmit}>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div className="space-y-1">
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <input
                                         type="text"
                                         name="name"
@@ -60,10 +96,10 @@ const Appointment = () => {
                                         onChange={handleChange}
                                         placeholder="Name"
                                         required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                        className={inputClasses}
                                     />
-                                </div>
-                                <div className="space-y-1">
+                                </motion.div>
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <input
                                         type="tel"
                                         name="phone"
@@ -71,10 +107,10 @@ const Appointment = () => {
                                         onChange={handleChange}
                                         placeholder="Phone No."
                                         required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                        className={inputClasses}
                                     />
-                                </div>
-                                <div className="space-y-1 md:col-span-2">
+                                </motion.div>
+                                <motion.div className="space-y-1 md:col-span-2" variants={fieldVariants}>
                                     <input
                                         type="email"
                                         name="email"
@@ -82,10 +118,10 @@ const Appointment = () => {
                                         onChange={handleChange}
                                         placeholder="Email"
                                         required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                        className={inputClasses}
                                     />
-                                </div>
-                                <div className="space-y-1">
+                                </motion.div>
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <div className="relative">
                                         <Calendar className="w-4 h-4 text-blue-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
                                         <input
@@ -94,11 +130,11 @@ const Appointment = () => {
                                             value={formData.date}
                                             onChange={handleChange}
                                             required
-                                            className="w-full rounded-xl border border-blue-200 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                            className={inputWithIconClasses}
                                         />
                                     </div>
-                                </div>
-                                <div className="space-y-1">
+                                </motion.div>
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <div className="relative">
                                         <Clock className="w-4 h-4 text-blue-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
                                         <input
@@ -107,11 +143,11 @@ const Appointment = () => {
                                             value={formData.time}
                                             onChange={handleChange}
                                             required
-                                            className="w-full rounded-xl border border-blue-200 bg-white pl-10 pr-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                            className={inputWithIconClasses}
                                         />
                                     </div>
-                                </div>
-                                <div className="space-y-1">
+                                </motion.div>
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <input
                                         type="text"
                                         name="department"
@@ -119,10 +155,10 @@ const Appointment = () => {
                                         onChange={handleChange}
                                         placeholder="Department"
                                         required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                        className={inputClasses}
                                     />
-                                </div>
-                                <div className="space-y-1">
+                                </motion.div>
+                                <motion.div className="space-y-1" variants={fieldVariants}>
                                     <input
                                         type="text"
                                         name="doctor"
@@ -130,28 +166,30 @@ const Appointment = () => {
                                         onChange={handleChange}
                                         placeholder="Doctor"
                                         required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
+                                        className={inputClasses}
                                     />
-                                </div>
+                                </motion.div>
                             </div>
-                            <textarea
-                                rows="4"
-                                name="message"
-                                value={formData.message}
-                                onChange={handleChange}
-                                placeholder="Message / Reason for visit (optional)"
-                                className="w-full rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400"
-                            />
-                            <div className="flex justify-center">
+                            <motion.div variants={fieldVariants}>
+                                <textarea
+                                    rows="4"
+                                    name="message"
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    placeholder="Message / Reason for visit (optional)"
+                                    className={textareaClasses}
+                                />
+                            </motion.div>
+                            <motion.div variants={fieldVariants} className="flex justify-center">
                                 <LoadingButton
                                     type="submit"
-                                    className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-800 transition-transform active:scale-95"
+                                    className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                 >
                                     Confirm Appointment
                                 </LoadingButton>
-                            </div>
+                            </motion.div>
                         </form>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 

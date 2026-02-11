@@ -1,6 +1,16 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import LoadingLink from "./LoadingLink";
+import hospitalLogo from "../../assets/images/reallogo1.png";
+
+const navLinks = [
+    { label: "Home", to: "/" },
+    { label: "About Us", to: "/about" },
+    { label: "Services", to: "/services" },
+    { label: "Doctors", to: "/doctors" },
+    { label: "Insurance", to: "/insurance" },
+    { label: "Contact", to: "/contact" },
+];
 
 const Navbar = () => {
     const [open, setOpen] = useState(false);
@@ -8,25 +18,33 @@ const Navbar = () => {
     return (
         <header className="fixed top-0 left-0 w-full z-50">
             <div className=" backdrop-blur-md ">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 sm:h-20 flex items-center justify-between">
 
                     {/* LOGO */}
-                    <Link to="/" className="text-3xl md:text-4xl font-bold text-blue-700 cursor-pointer">
-                        Cure<span className="text-blue-500">24</span>
+                    <Link to="/" className="inline-flex items-center h-full cursor-pointer">
+                        <img
+                            src={hospitalLogo}
+                            alt="Cure 24 Hospital"
+                            className="h-[70%] w-auto max-h-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] object-contain transition-transform hover:scale-105  "
+                        />
                     </Link>
 
                     {/* DESKTOP MENU */}
                     <nav className="hidden lg:flex items-center gap-8 text-lg font-medium text-slate-700">
-                        <Link to="/" className="hover:text-blue-600 hover:underline underline-offset-4 transition">Home</Link>
-                        <Link to="/about" className="hover:text-blue-600 hover:underline underline-offset-4 transition">About Us</Link>
-                        <Link to="/services" className="hover:text-blue-600 hover:underline underline-offset-4 transition">Services</Link>
-                        <Link to="/doctors" className="hover:text-blue-600 hover:underline underline-offset-4 transition">Doctors</Link>
-                        <Link to="/insurance" className="hover:text-blue-600 hover:underline underline-offset-4 transition">Insurance</Link>
-                        <Link to="/contact" className="hover:text-blue-600 hover:underline underline-offset-4 transition">Contact</Link>
+                        {navLinks.map((link) => (
+                            <div key={link.label} className="relative">
+                                <Link
+                                    to={link.to}
+                                    className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-600 text-slate-700"
+                                >
+                                    {link.label}
+                                </Link>
+                            </div>
+                        ))}
 
                         <LoadingLink
                             to="/appointment"
-                            className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition-transform active:scale-95"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
                         </LoadingLink>
@@ -34,7 +52,7 @@ const Navbar = () => {
 
                     {/* MOBILE MENU BUTTON */}
                     <button
-                        className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-blue-100 text-blue-700 transition-transform active:scale-95"
+                        className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-blue-100 text-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
                         onClick={() => setOpen(!open)}
                         aria-label="Toggle menu"
                     >
@@ -69,7 +87,7 @@ const Navbar = () => {
                         <LoadingLink
                             to="/appointment"
                             onClick={() => setOpen(false)}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-full w-fit transition-transform active:scale-95"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-full w-fit transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
                         </LoadingLink>

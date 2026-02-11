@@ -7,10 +7,12 @@ import Doctors from "./pages/Doctors";
 import Insurance from "./pages/Insurance";
 import Privacy from "./pages/Privacy";
 import Services from "./pages/Services";
+import ScrollToTop from "./components/common/ScrollToTop";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

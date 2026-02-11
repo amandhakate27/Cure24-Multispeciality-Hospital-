@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-const LoadingLink = ({ to, children, className = "", delay = 2000, onClick }) => {
+const LoadingLink = ({ to, children, className = "", delay = 1000, onClick }) => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();

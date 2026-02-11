@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
@@ -12,12 +13,50 @@ const initialFormState = {
     message: "",
 };
 
+const formVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.97 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: {
+            duration: 0.6,
+            ease: [0.22, 1, 0.36, 1],
+            when: "beforeChildren",
+            staggerChildren: 0.08,
+        },
+    },
+};
+
+const fieldVariants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 22, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const Contact = () => {
     const [formData, setFormData] = useState(initialFormState);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
+    const inputClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+    const textareaClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -57,7 +96,15 @@ const Contact = () => {
             <section className="py-12">
                 <div className="max-w-7xl mx-auto px-6 lg:px-10">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 items-stretch">
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8 h-full">
+                        <motion.div
+                            className="bg-white/90 border border-blue-100 rounded-2xl shadow-md shadow-blue-200/40 p-6 md:p-8 h-full transition-all duration-300 hover:shadow-2xl hover:shadow-blue-300/50 hover:bg-white"
+                            variants={cardVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: false, amount: 0.25 }}
+                            whileHover={{ y: -6, scale: 1.01 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                        >
                             <h3 className="text-lg font-semibold text-blue-800">Contact Details</h3>
                             <div className="mt-6 space-y-5 text-sm text-slate-600">
                                 <div className="flex items-start gap-3">
@@ -94,9 +141,17 @@ const Contact = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
-                        <div className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8 h-full flex flex-col">
+                        <motion.div
+                            className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-md shadow-blue-200/40 p-6 md:p-8 h-full flex flex-col transition-all duration-300 hover:shadow-2xl hover:shadow-blue-300/50 hover:bg-blue-50/90"
+                            variants={formVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: false, amount: 0.25 }}
+                            whileHover={{ y: -6, scale: 1.01 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                        >
                             <div className="text-center">
                                 <h3 className="text-lg font-semibold text-blue-800">Get in touch</h3>
                                 <p className="text-slate-600 text-sm mt-1">
@@ -106,62 +161,72 @@ const Contact = () => {
                             </div>
                             <form className="mt-6 space-y-4 flex-1" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <input
-                                        type="text"
-                                        placeholder="Name"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
-                                    />
-                                    <input
-                                        type="email"
-                                        placeholder="Email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
-                                    />
-                                    <input
-                                        type="tel"
-                                        placeholder="Phone No."
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
-                                    />
-                                    <input
-                                        type="text"
-                                        placeholder="Subject"
-                                        name="subject"
-                                        value={formData.subject}
-                                        onChange={handleChange}
-                                        required
-                                        className="w-full rounded-xl border border-blue-200 bg-white px-4 py-2.5 text-sm outline-none focus:border-blue-400"
-                                    />
+                                    <motion.div variants={fieldVariants}>
+                                        <input
+                                            type="text"
+                                            placeholder="Name"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            required
+                                            className={inputClasses}
+                                        />
+                                    </motion.div>
+                                    <motion.div variants={fieldVariants}>
+                                        <input
+                                            type="email"
+                                            placeholder="Email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            required
+                                            className={inputClasses}
+                                        />
+                                    </motion.div>
+                                    <motion.div variants={fieldVariants}>
+                                        <input
+                                            type="tel"
+                                            placeholder="Phone No."
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            required
+                                            className={inputClasses}
+                                        />
+                                    </motion.div>
+                                    <motion.div variants={fieldVariants}>
+                                        <input
+                                            type="text"
+                                            placeholder="Subject"
+                                            name="subject"
+                                            value={formData.subject}
+                                            onChange={handleChange}
+                                            required
+                                            className={inputClasses}
+                                        />
+                                    </motion.div>
                                 </div>
-                                <textarea
-                                    rows="4"
-                                    placeholder="Message"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    required
-                                    className="w-full rounded-xl border border-blue-200 bg-white px-4 py-3 text-sm outline-none focus:border-blue-400"
-                                />
-                                <div className="flex justify-center mt-2">
+                                <motion.div variants={fieldVariants}>
+                                    <textarea
+                                        rows="4"
+                                        placeholder="Message"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        required
+                                        className={textareaClasses}
+                                    />
+                                </motion.div>
+                                <motion.div variants={fieldVariants} className="flex justify-center mt-2">
                                     <LoadingButton
                                         type="submit"
-                                        className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-800 transition-transform active:scale-95"
+                                        className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                     >
                                         Send
                                     </LoadingButton>
-                                </div>
+                                </motion.div>
                             </form>
-                        </div>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -171,7 +236,15 @@ const Contact = () => {
                     <h3 className="text-2xl font-bold text-blue-800 text-center">
                         Find Us on Map
                     </h3>
-                    <div className="mt-6 bg-white/90 border border-blue-100 rounded-2xl shadow-xl shadow-blue-300/40 overflow-hidden">
+                    <motion.div
+                        className="mt-6 bg-white/90 border border-blue-100 rounded-2xl shadow-2xl shadow-blue-300/40 overflow-hidden transition-shadow duration-300 hover:shadow-[0_28px_60px_-24px_rgba(30,64,175,0.45)]"
+                        variants={cardVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.25 }}
+                        whileHover={{ y: -4 }}
+                        transition={{ type: "spring", stiffness: 220, damping: 18 }}
+                    >
                         <div className="w-full h-80 md:h-[420px]">
                             <iframe
                                 title="Cure24 Location"
@@ -181,7 +254,7 @@ const Contact = () => {
                                 src="https://www.google.com/maps?q=Nagpur%20Besa%20Road&output=embed"
                             />
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -191,13 +264,17 @@ const Contact = () => {
                     <p className="text-slate-600 mt-2 text-sm md:text-base">
                         Call our emergency hotline immediately for urgent medical assistance
                     </p>
-                    <a
+                    <motion.a
                         href="tel:+919654317717"
-                        className="inline-flex items-center justify-center gap-2 mt-6 bg-blue-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-800 transition-transform active:scale-95"
+                        className="inline-flex items-center justify-center gap-2 mt-6 bg-blue-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-800 transition-all duration-200 hover:scale-[1.04] hover:shadow-lg active:scale-95"
+                        initial={{ opacity: 0, y: 16 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: false, amount: 0.4 }}
+                        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <Phone className="w-4 h-4" aria-hidden="true" />
                         Call: +91 9654317717
-                    </a>
+                    </motion.a>
                 </div>
             </section>
 

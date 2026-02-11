@@ -6,6 +6,7 @@ import {
     Stethoscope,
     Users,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const features = [
     {
@@ -46,10 +47,29 @@ const features = [
     },
 ];
 
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.12,
+        },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 26, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const ServicesPreview = () => {
     return (
         <section className="relative overflow-hidden py-16 md:py-20">
-            <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-blue-100" />
+            <div className="absolute inset-0 bg-linear-to-br from-white via-blue-50 to-blue-100" />
             <div className="absolute -left-24 -top-24 w-72 h-72 bg-blue-200/40 blur-3xl rounded-full" />
             <div className="absolute -right-10 top-24 w-48 h-48 bg-blue-300/30 blur-2xl rounded-full" />
 
@@ -63,11 +83,20 @@ const ServicesPreview = () => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+                <motion.div
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
+                    variants={gridVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {features.map((item) => (
-                        <div
+                        <motion.div
                             key={item.title}
-                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-blue-200"
+                            variants={cardVariants}
+                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-6 transition-shadow duration-300 hover:shadow-lg hover:border-blue-200"
                         >
                             <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                                 <item.Icon className="w-5 h-5" aria-hidden="true" />
@@ -78,9 +107,9 @@ const ServicesPreview = () => {
                             <p className="text-slate-600 mt-2 text-sm leading-relaxed">
                                 {item.description}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
             </div>
         </section>
     );

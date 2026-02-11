@@ -1,6 +1,25 @@
 import { Eye, Heart, Target } from "lucide-react";
+import { motion } from "framer-motion";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import hospitalLogo from "../assets/images/reallogo1.png";
+
+const cardsContainer = {
+    hidden: {},
+    visible: {
+        transition: { staggerChildren: 0.12 },
+    },
+};
+
+const popCard = {
+    hidden: { opacity: 0, scale: 0.88, y: 18 },
+    visible: {
+        opacity: 1,
+        scale: 1,
+        y: 0,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
 
 const About = () => {
     return (
@@ -28,7 +47,7 @@ const About = () => {
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                                 Cure 24 Clinic Hospital, Nagpur
                             </h3>
-                            <p className="text-slate-600 mt-4 text-sm leading-relaxed">
+                            <p className="text-slate-600 mt-4 text-sm leading-relaxed [text-align:justify]">
                                 Cure 24 Clinic is a patient-centric healthcare facility located in Nagpur,
                                 dedicated to providing reliable, compassionate, and accessible medical care
                                 for individuals and families. Our clinic focuses on delivering a complete
@@ -46,13 +65,12 @@ const About = () => {
                             </p>
                         </div>
                         <div className="flex justify-center lg:justify-end">
-                            <div className="bg-white border border-blue-100 rounded-2xl shadow-sm w-64 h-64 sm:w-72 sm:h-72 flex flex-col items-center justify-center text-center">
-                                <div className="text-4xl md:text-5xl font-bold text-blue-800">
-                                    Cure<span className="text-blue-500">24</span>
-                                </div>
-                                <div className="text-base md:text-lg font-semibold text-blue-600 mt-2">
-                                    Multi-Speciality Hospital
-                                </div>
+                            <div className="bg-white border border-blue-100 rounded-2xl shadow-sm w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center p-4 sm:p-6">
+                                <img
+                                    src={hospitalLogo}
+                                    alt="Cure 24 Multi-Speciality Hospital"
+                                    className="w-full h-full max-w-[220px] sm:max-w-[260px] md:max-w-[280px] object-contain"
+                                />
                             </div>
                         </div>
                     </div>
@@ -64,12 +82,23 @@ const About = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Our Mission & Vision
                     </h3>
-                    <p className="text-slate-600 mt-2 text-sm md:text-base">
-                        Committed to transforming healthcare in Nagpur and beyond
-                    </p>
+                            <p className="text-slate-600 mt-2 text-sm md:text-base [text-align:justify]">
+                                Committed to transforming healthcare in Nagpur and beyond
+                            </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 text-center">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8 rounded-3xl bg-blue-50/80 border border-blue-100/70 p-4 sm:p-6"
+                        variants={cardsContainer}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.25 }}
+                    >
+                        <motion.div
+                            variants={popCard}
+                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm p-6 text-center"
+                        >
                             <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto">
                                 <Target className="w-6 h-6" aria-hidden="true" />
                             </div>
@@ -79,8 +108,13 @@ const About = () => {
                                 accessible, affordable, and delivered with compassion. We strive to be the
                                 first choice for comprehensive medical care in Central India.
                             </p>
-                        </div>
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 text-center">
+                        </motion.div>
+                        <motion.div
+                            variants={popCard}
+                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm p-6 text-center"
+                        >
                             <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto">
                                 <Eye className="w-6 h-6" aria-hidden="true" />
                             </div>
@@ -90,8 +124,13 @@ const About = () => {
                                 Maharashtra, setting benchmarks in medical excellence, innovation, and
                                 patient satisfaction through continuous improvement.
                             </p>
-                        </div>
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 text-center">
+                        </motion.div>
+                        <motion.div
+                            variants={popCard}
+                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm p-6 text-center"
+                        >
                             <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto">
                                 <Heart className="w-6 h-6" aria-hidden="true" />
                             </div>
@@ -101,8 +140,8 @@ const About = () => {
                                 in treatment, and commitment to our community. These core values guide
                                 every decision we make.
                             </p>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 

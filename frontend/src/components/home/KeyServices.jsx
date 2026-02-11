@@ -1,9 +1,10 @@
+import { motion } from "framer-motion";
 import LoadingImage from "../common/LoadingImage";
 import LoadingLink from "../common/LoadingLink";
 import cardiologyImg from "../../assets/images/cardiology.jpg";
 import criticalCareImg from "../../assets/images/critical care.jpg";
 import emergencyCareImg from "../../assets/images/emergency-care.jpg";
-import neurologyImg from "../../assets/images/neurology.jpg";
+import neurologyImg from "../../assets/images/neurology.jpeg";
 import diabeticsImg from "../../assets/images/diabetics.png";
 import generalMedicineImg from "../../assets/images/general medicin.png";
 
@@ -41,10 +42,29 @@ const services = [
     },
 ];
 
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.12,
+        },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 28, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const KeyServices = () => {
     return (
         <section className="relative overflow-hidden py-16 md:py-20">
-            <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-50 to-blue-100" />
+            <div className="absolute inset-0 bg-linear-to-br from-white via-blue-50 to-blue-100" />
             <div className="absolute -left-24 -top-24 w-72 h-72 bg-blue-200/40 blur-3xl rounded-full" />
             <div className="absolute -right-10 top-24 w-48 h-48 bg-blue-300/30 blur-2xl rounded-full" />
 
@@ -58,11 +78,20 @@ const KeyServices = () => {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+                <motion.div
+                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
+                    variants={gridVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                >
                     {services.map((service) => (
-                        <div
+                        <motion.div
                             key={service.title}
-                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                            variants={cardVariants}
+                            whileHover={{ y: -6, scale: 1.03 }}
+                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-5 hover:shadow-lg transition-shadow duration-300"
                         >
                             <LoadingImage
                                 src={service.image}
@@ -76,14 +105,14 @@ const KeyServices = () => {
                             <p className="text-slate-600 text-sm mt-2 text-center">
                                 {service.description}
                             </p>
-                        </div>
+                        </motion.div>
                     ))}
-                </div>
+                </motion.div>
 
                 <div className="flex justify-center mt-10">
                     <LoadingLink
                         to="/services"
-                        className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition-transform active:scale-95"
+                        className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95"
                     >
                         View All Services
                     </LoadingLink>

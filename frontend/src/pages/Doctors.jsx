@@ -1,9 +1,29 @@
 import { GraduationCap, Stethoscope, User } from "lucide-react";
+import { motion } from "framer-motion";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingImage from "../components/common/LoadingImage";
 import femaleDoctorImg from "../assets/images/female dr staff.png";
 import maleDoctorImg from "../assets/images/male dr staff.png";
+
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.12,
+        },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
 
 const Doctors = () => {
     return (
@@ -24,8 +44,14 @@ const Doctors = () => {
 
             <section className="py-12">
                 <div className="max-w-7xl mx-auto px-12 lg:px-16">
-                    <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-start">
-                        <div className="order-2 lg:order-1">
+                    <motion.div
+                        className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-start"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.25 }}
+                    >
+                        <motion.div className="order-2 lg:order-1" variants={cardVariants}>
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                                 Meet Our Lead Consultant
                             </h3>
@@ -63,35 +89,54 @@ const Doctors = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </motion.div>
 
-                        <div className="order-1 lg:order-2 flex flex-col items-center lg:items-end">
-                            <LoadingImage
-                                src={maleDoctorImg}
-                                alt="Dr. Jitesh K. Bhandarkar"
-                                className="w-full max-w-[260px] md:max-w-[300px] rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
-                                imgClassName="w-full h-full object-cover"
-                            />
+                        <motion.div
+                            className="order-1 lg:order-2 flex flex-col items-center lg:items-end"
+                            variants={cardVariants}
+                        >
+                            <motion.div
+                                whileHover={{ y: -6, scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            >
+                                <LoadingImage
+                                    src={maleDoctorImg}
+                                    alt="Dr. Jitesh K. Bhandarkar"
+                                    className="w-full max-w-[260px] md:max-w-[300px] rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl"
+                                    imgClassName="w-full h-full object-cover"
+                                />
+                            </motion.div>
                             <p className="mt-3 text-base md:text-lg font-semibold text-blue-800 text-center md:hidden">
                                 Dr. Jitesh K. Bhandarkar
                             </p>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start mt-12">
-                        <div className="flex flex-col items-center lg:items-start order-1">
-                            <LoadingImage
-                                src={femaleDoctorImg}
-                                alt="Dr. Prajakta Bhandarkar"
-                                className="w-full max-w-[260px] md:max-w-[300px] rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl"
-                                imgClassName="w-full h-full object-cover"
-                            />
+                    <motion.div
+                        className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start mt-12"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.25 }}
+                    >
+                        <motion.div className="flex flex-col items-center lg:items-start order-1" variants={cardVariants}>
+                            <motion.div
+                                whileHover={{ y: -6, scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            >
+                                <LoadingImage
+                                    src={femaleDoctorImg}
+                                    alt="Dr. Prajakta Bhandarkar"
+                                    className="w-full max-w-[260px] md:max-w-[300px] rounded-2xl shadow-lg overflow-hidden transition-shadow duration-300 hover:shadow-xl"
+                                    imgClassName="w-full h-full object-cover"
+                                />
+                            </motion.div>
                             <p className="mt-3 text-base md:text-lg font-semibold text-blue-800 text-center md:hidden">
                                 Dr. Prajakta Bhandarkar
                             </p>
-                        </div>
+                        </motion.div>
 
-                        <div className="order-2 lg:order-2">
+                        <motion.div className="order-2 lg:order-2" variants={cardVariants}>
                             <div className="mt-2 space-y-5 text-sm text-slate-600">
                                 <div className="flex items-start gap-3">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
@@ -125,8 +170,8 @@ const Doctors = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 

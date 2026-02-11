@@ -8,6 +8,7 @@ import {
     Phone,
     ShieldCheck,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 
@@ -100,6 +101,25 @@ const notes = [
     "In case of TPA rejection, patient must arrange for payment",
 ];
 
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.12,
+        },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const Insurance = () => {
     return (
         <div className="min-h-screen bg-[#F5F9FF]">
@@ -128,20 +148,29 @@ const Insurance = () => {
                         healthcare accessible and hassle-free.
                     </p>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-10"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {highlights.map((item) => (
-                            <div
+                            <motion.div
                                 key={item.title}
-                                className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                variants={cardVariants}
+                                whileHover={{ y: -6, scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 250, damping: 18 }}
+                                className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 text-center transition-shadow duration-300 hover:shadow-lg"
                             >
                                 <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center mx-auto">
                                     <item.Icon className="w-6 h-6" aria-hidden="true" />
                                 </div>
                                 <h4 className="text-base font-semibold text-blue-800 mt-4">{item.title}</h4>
                                 <p className="text-slate-600 text-sm mt-2">{item.description}</p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -154,22 +183,36 @@ const Insurance = () => {
                         Simple 5-step process for cashless treatment
                     </p>
 
-                    <div className="mt-10 space-y-4">
+                    <motion.div
+                        className="mt-10 space-y-4"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {processSteps.map((step, index) => (
-                            <div key={step.title} className="flex gap-16 items-center justify-center">
+                            <motion.div
+                                key={step.title}
+                                variants={cardVariants}
+                                className="flex gap-16 items-center justify-center"
+                            >
                                 <div className="w-10 h-10 rounded-full bg-blue-700 text-white font-semibold flex items-center justify-center flex-shrink-0">
                                     {index + 1}
                                 </div>
-                                <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-4 flex-1 min-w-0 lg:max-w-3xl transition-all duration-300 hover:shadow-md">
+                                <motion.div
+                                    whileHover={{ y: -4, scale: 1.01 }}
+                                    transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                                    className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-4 flex-1 min-w-0 lg:max-w-3xl transition-shadow duration-300 hover:shadow-md"
+                                >
                                     <div className="flex items-center gap-2 text-blue-800 font-semibold">
                                         <BadgeCheck className="w-4 h-4" aria-hidden="true" />
                                         {step.title}
                                     </div>
                                     <p className="text-slate-600 text-sm mt-2">{step.description}</p>
-                                </div>
-                            </div>
+                                </motion.div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -179,20 +222,29 @@ const Insurance = () => {
                     <p className="text-slate-600 mt-2 text-sm md:text-base">
                         We work with all major Third Party Administrators in India
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {tpaPartners.map((name) => (
-                            <div
+                            <motion.div
                                 key={name}
-                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex flex-col items-center gap-1 justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                variants={cardVariants}
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex flex-col items-center gap-1 justify-center transition-shadow duration-300 hover:shadow-lg"
                             >
                                 <div className="flex items-center gap-2">
                                     <CircleCheck className="w-4 h-4 text-green-600" aria-hidden="true" />
                                     <span>{name}</span>
                                 </div>
                                 <span className="text-xs text-blue-500 font-medium">Leading TPA</span>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -204,24 +256,44 @@ const Insurance = () => {
                     <p className="text-slate-600 mt-2 text-sm md:text-base">
                         Partnerships with leading health insurance providers
                     </p>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {insurers.map((name) => (
-                            <div
+                            <motion.div
                                 key={name}
-                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex items-center gap-2 justify-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+                                variants={cardVariants}
+                                whileHover={{ y: -5, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex items-center gap-2 justify-center transition-shadow duration-300 hover:shadow-lg"
                             >
                                 <ShieldCheck className="w-4 h-4 text-blue-700" aria-hidden="true" />
                                 <span>{name}</span>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             <section className="pb-12">
                 <div className="max-w-7xl mx-auto px-6 lg:px-10">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    <motion.div
+                        className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
+                        <motion.div
+                            variants={cardVariants}
+                            whileHover={{ y: -6, scale: 1.02 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 transition-shadow duration-300 hover:shadow-lg"
+                        >
                             <h4 className="text-lg font-semibold text-blue-800 flex items-center gap-2">
                                 <FileText className="w-5 h-5" aria-hidden="true" />
                                 Documents Required
@@ -231,8 +303,13 @@ const Insurance = () => {
                                     <li key={item}>{item}</li>
                                 ))}
                             </ul>
-                        </div>
-                        <div className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                        </motion.div>
+                        <motion.div
+                            variants={cardVariants}
+                            whileHover={{ y: -6, scale: 1.02 }}
+                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                            className="bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-6 transition-shadow duration-300 hover:shadow-lg"
+                        >
                             <h4 className="text-lg font-semibold text-blue-800 flex items-center gap-2">
                                 <ShieldCheck className="w-5 h-5" aria-hidden="true" />
                                 Important Notes
@@ -242,14 +319,22 @@ const Insurance = () => {
                                     <li key={item}>{item}</li>
                                 ))}
                             </ul>
-                        </div>
-                    </div>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 
             <section className="pb-16">
                 <div className="max-w-5xl mx-auto px-6 lg:px-10">
-                    <div className="bg-blue-100/80 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8 text-center transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    <motion.div
+                        className="bg-blue-100/80 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8 text-center transition-shadow duration-300 hover:shadow-lg"
+                        variants={cardVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                        whileHover={{ y: -6, scale: 1.02 }}
+                        transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                    >
                         <h3 className="text-xl md:text-2xl font-bold text-blue-800">
                             Need Help with Insurance?
                         </h3>
@@ -272,7 +357,7 @@ const Insurance = () => {
                         <p className="text-xs text-slate-500 mt-4">
                             Visit our insurance desk on the ground floor near the main reception.
                         </p>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 

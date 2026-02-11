@@ -1,4 +1,5 @@
 import { Cpu, HeartHandshake, Stethoscope } from "lucide-react";
+import { motion } from "framer-motion";
 import LoadingImage from "../components/common/LoadingImage";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
@@ -10,7 +11,7 @@ import diabeticsImg from "../assets/images/diabetics.png";
 import emergencyCareImg from "../assets/images/emergency-care.jpg";
 import generalMedicineImg from "../assets/images/general medicin.png";
 import inpatientImg from "../assets/images/inpatient services.png";
-import neurologyImg from "../assets/images/neurology.jpg";
+import neurologyImg from "../assets/images/neurology.jpeg";
 import pathologyImg from "../assets/images/pathology labs.png";
 import pharmacyImg from "../assets/images/pharmacy.png";
 import preventiveImg from "../assets/images/preventive health checkups.png";
@@ -97,6 +98,25 @@ const highlights = [
     },
 ];
 
+const gridVariants = {
+    hidden: {},
+    visible: {
+        transition: {
+            staggerChildren: 0.12,
+        },
+    },
+};
+
+const cardVariants = {
+    hidden: { opacity: 0, y: 26, scale: 0.98 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    },
+};
+
 const Services = () => {
     return (
         <div className="min-h-screen bg-[#F5F9FF]">
@@ -116,11 +136,20 @@ const Services = () => {
 
             <section className="py-12">
                 <div className="max-w-7xl mx-auto px-6 lg:px-10">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {services.map((service) => (
-                            <div
+                            <motion.div
                                 key={service.title}
-                                className="group bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-5 hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
+                                variants={cardVariants}
+                                whileHover={{ y: -6, scale: 1.03 }}
+                                transition={{ type: "spring", stiffness: 260, damping: 18 }}
+                                className="group bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-5 hover:shadow-lg transition-shadow duration-300"
                             >
                                 <LoadingImage
                                     src={service.image}
@@ -134,9 +163,9 @@ const Services = () => {
                                 <p className="text-slate-600 text-sm mt-2 text-center">
                                     {service.description}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -145,9 +174,19 @@ const Services = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800 text-center">
                         Why Our Services Stand Out
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 text-center">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-8 text-center"
+                        variants={gridVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
                         {highlights.map((item) => (
-                            <div key={item.title} className="flex flex-col items-center">
+                            <motion.div
+                                key={item.title}
+                                variants={cardVariants}
+                                className="flex flex-col items-center"
+                            >
                                 <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
                                     <item.Icon className="w-6 h-6" aria-hidden="true" />
                                 </div>
@@ -157,9 +196,9 @@ const Services = () => {
                                 <p className="text-slate-600 text-sm mt-2">
                                     {item.description}
                                 </p>
-                            </div>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
