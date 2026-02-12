@@ -98,12 +98,14 @@ const ServicesPreview = () => {
                             transition={{ type: "spring", stiffness: 260, damping: 18 }}
                             className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-6 transition-shadow duration-300 hover:shadow-lg hover:border-blue-200"
                         >
-                            <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                                <item.Icon className="w-5 h-5" aria-hidden="true" />
+                            <div className="flex items-center gap-3">
+                                <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                                    <item.Icon className="w-5 h-5" aria-hidden="true" />
+                                </div>
+                                <h3 className="text-lg font-semibold text-blue-800">
+                                    {item.title}
+                                </h3>
                             </div>
-                            <h3 className="text-lg font-semibold text-blue-800 mt-4">
-                                {item.title}
-                            </h3>
                             <p className="text-blue-700 mt-2 text-sm leading-relaxed">
                                 {item.description}
                             </p>

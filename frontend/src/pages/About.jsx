@@ -82,7 +82,7 @@ const About = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Our Mission & Vision
                     </h3>
-                            <p className="text-blue-700 mt-2 text-sm md:text-base [text-align:justify]">
+                            <p className="text-blue-700 mt-2 text-sm md:text-base text-center">
                                 Committed to transforming healthcare in Nagpur and beyond
                             </p>
 

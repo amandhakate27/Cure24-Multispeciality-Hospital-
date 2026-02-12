@@ -57,7 +57,7 @@ const Doctors = () => {
                             </h3>
 
                             <div className="mt-6 space-y-5 text-sm text-blue-700">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg md:text-xl">
@@ -70,14 +70,14 @@ const Doctors = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <GraduationCap className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Qualifications</p>
                                         <p>MBBS, MD (Medicine), DM (Cardiology)</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <Stethoscope className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Expertise</p>
@@ -138,7 +138,7 @@ const Doctors = () => {
 
                         <motion.div className="order-2 lg:order-2 lg:self-center" variants={cardVariants}>
                             <div className="mt-2 space-y-5 text-sm text-blue-700">
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg md:text-xl">
@@ -151,14 +151,14 @@ const Doctors = () => {
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <GraduationCap className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Qualifications</p>
                                         <p>MBBS, DM (Cardiology)</p>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-3">
+                                <div className="flex items-start gap-4">
                                     <Stethoscope className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Expertise</p>
