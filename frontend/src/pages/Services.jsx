@@ -1,6 +1,5 @@
 import { Cpu, HeartHandshake, Stethoscope } from "lucide-react";
 import { motion } from "framer-motion";
-import LoadingImage from "../components/common/LoadingImage";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 
@@ -140,8 +139,7 @@ const Services = () => {
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                         variants={gridVariants}
                         initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
+                        animate="visible"
                     >
                         {services.map((service) => (
                             <motion.div
@@ -151,11 +149,12 @@ const Services = () => {
                                 transition={{ type: "spring", stiffness: 260, damping: 18 }}
                                 className="group bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-5 hover:shadow-lg transition-shadow duration-300"
                             >
-                                <LoadingImage
+                                <img
                                     src={service.image}
                                     alt={service.title}
-                                    className="h-40 md:h-44 rounded-xl"
-                                    imgClassName="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                    className="h-40 md:h-44 w-full rounded-xl object-cover transition-transform duration-500 group-hover:scale-105"
+                                    loading="eager"
+                                    decoding="async"
                                 />
                                 <h3 className="text-base font-semibold text-blue-800 mt-4 text-center">
                                     {service.title}

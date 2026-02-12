@@ -41,19 +41,19 @@ const Footer = () => {
 
                     <div className="flex flex-col items-center lg:items-start">
                         <h3 className="text-lg font-semibold">Contact Us</h3>
-                        <ul className="mt-4 space-y-3 text-blue-100 text-sm w-full max-w-sm mx-auto text-left lg:mx-0">
-                            <li className="flex items-start gap-3">
+                        <ul className="mt-4 space-y-3 text-blue-100 text-sm w-full max-w-sm mx-auto text-center md:text-left lg:mx-0">
+                            <li className="flex items-start gap-2 justify-center md:justify-start text-center md:text-left">
                                 <MapPin className="w-5 h-5 text-blue-200 shrink-0 mt-0.5" aria-hidden="true" />
                                 <span className="leading-relaxed">
                                     Plot No 5, Daddu's Kitchen, Diamond Nagar,
                                     Besa Road, Nagpur-440037, Maharashtra
                                 </span>
                             </li>
-                            <li className="flex items-center gap-3">
+                            <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Phone className="w-4 h-4 text-blue-200" aria-hidden="true" />
                                 <span>+91 9654317717</span>
                             </li>
-                            <li className="flex items-center gap-3">
+                            <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Clock className="w-4 h-4 text-blue-200" aria-hidden="true" />
                                 <span>Open 24/7</span>
                             </li>

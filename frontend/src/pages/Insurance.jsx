@@ -141,7 +141,7 @@ const Insurance = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Cashless Hospitalization Made Easy
                     </h3>
-                    <p className="text-blue-700 mt-3 text-sm md:text-base max-w-5xl mx-auto">
+                    <p className="text-blue-700 mt-3 text-sm md:text-base max-w-6xl mx-auto">
                         At Cure 24 Hospital, we understand that medical expenses can be a concern. That's why
                         we've partnered with all major insurance companies and Third Party Administrators
                         (TPAs) to provide seamless cashless hospitalization services, making quality
@@ -194,7 +194,7 @@ const Insurance = () => {
                             <motion.div
                                 key={step.title}
                                 variants={cardVariants}
-                                className="flex gap-16 items-center justify-center"
+                                className="flex flex-col md:flex-row gap-4 md:gap-16 items-start md:items-center justify-center"
                             >
                                 <div className="w-10 h-10 rounded-full bg-blue-700 text-white font-semibold flex items-center justify-center flex-shrink-0">
                                     {index + 1}
