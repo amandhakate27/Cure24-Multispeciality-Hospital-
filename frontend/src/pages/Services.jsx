@@ -160,7 +160,7 @@ const Services = () => {
                                 <h3 className="text-base font-semibold text-blue-800 mt-4 text-center">
                                     {service.title}
                                 </h3>
-                                <p className="text-slate-600 text-sm mt-2 text-center">
+                                <p className="text-blue-700 text-sm mt-2 text-center">
                                     {service.description}
                                 </p>
                             </motion.div>
@@ -193,7 +193,7 @@ const Services = () => {
                                 <h4 className="text-base font-semibold text-blue-800 mt-4">
                                     {item.title}
                                 </h4>
-                                <p className="text-slate-600 text-sm mt-2">
+                                <p className="text-blue-700 text-sm mt-2">
                                     {item.description}
                                 </p>
                             </motion.div>
@@ -208,3 +208,4 @@ const Services = () => {
 };
 
 export default Services;
+

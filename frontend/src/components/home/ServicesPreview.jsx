@@ -78,7 +78,7 @@ const ServicesPreview = () => {
                     <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
                         Why Choose Cure24?
                     </h2>
-                    <p className="text-slate-600 mt-3">
+                    <p className="text-blue-700 mt-3">
                         Comprehensive healthcare solutions with cutting-edge technology
                     </p>
                 </div>
@@ -104,7 +104,7 @@ const ServicesPreview = () => {
                             <h3 className="text-lg font-semibold text-blue-800 mt-4">
                                 {item.title}
                             </h3>
-                            <p className="text-slate-600 mt-2 text-sm leading-relaxed">
+                            <p className="text-blue-700 mt-2 text-sm leading-relaxed">
                                 {item.description}
                             </p>
                         </motion.div>
@@ -116,4 +116,5 @@ const ServicesPreview = () => {
 };
 
 export default ServicesPreview;
+
 

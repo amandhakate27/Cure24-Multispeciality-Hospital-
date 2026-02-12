@@ -54,9 +54,9 @@ const Contact = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
     const inputClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const textareaClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -106,7 +106,7 @@ const Contact = () => {
                             transition={{ type: "spring", stiffness: 240, damping: 18 }}
                         >
                             <h3 className="text-lg font-semibold text-blue-800">Contact Details</h3>
-                            <div className="mt-6 space-y-5 text-sm text-slate-600">
+                            <div className="mt-6 space-y-5 text-sm text-blue-700">
                                 <div className="flex items-start gap-3">
                                     <Phone className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
@@ -154,7 +154,7 @@ const Contact = () => {
                         >
                             <div className="text-center">
                                 <h3 className="text-lg font-semibold text-blue-800">Get in touch</h3>
-                                <p className="text-slate-600 text-sm mt-1">
+                                <p className="text-blue-700 text-sm mt-1">
                                     We'd love to hear from you. Reach out for reservations,
                                     feedback, or any queries.
                                 </p>
@@ -220,7 +220,7 @@ const Contact = () => {
                                 <motion.div variants={fieldVariants} className="flex justify-center mt-2">
                                     <LoadingButton
                                         type="submit"
-                                        className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                                        className="bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                     >
                                         Send
                                     </LoadingButton>
@@ -261,12 +261,12 @@ const Contact = () => {
             <section className="pb-16">
                 <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
                     <h3 className="text-2xl font-bold text-blue-800">Medical Emergency?</h3>
-                    <p className="text-slate-600 mt-2 text-sm md:text-base">
+                    <p className="text-blue-700 mt-2 text-sm md:text-base">
                         Call our emergency hotline immediately for urgent medical assistance
                     </p>
                     <motion.a
                         href="tel:+919654317717"
-                        className="inline-flex items-center justify-center gap-2 mt-6 bg-blue-700 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-blue-800 transition-all duration-200 hover:scale-[1.04] hover:shadow-lg active:scale-95"
+                        className="inline-flex items-center justify-center gap-2 mt-6 bg-blue-700 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-blue-800 transition-all duration-200 hover:scale-[1.04] hover:shadow-lg active:scale-95"
                         initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: false, amount: 0.4 }}
@@ -284,3 +284,4 @@ const Contact = () => {
 };
 
 export default Contact;
+

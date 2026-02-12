@@ -73,7 +73,7 @@ const KeyServices = () => {
                     <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
                         Our Key Services
                     </h2>
-                    <p className="text-slate-600 mt-3">
+                    <p className="text-blue-700 mt-3">
                         Specialized medical departments for comprehensive care
                     </p>
                 </div>
@@ -102,7 +102,7 @@ const KeyServices = () => {
                             <h3 className="text-base font-semibold text-blue-800 mt-4 text-center">
                                 {service.title}
                             </h3>
-                            <p className="text-slate-600 text-sm mt-2 text-center">
+                            <p className="text-blue-700 text-sm mt-2 text-center">
                                 {service.description}
                             </p>
                         </motion.div>
@@ -112,7 +112,7 @@ const KeyServices = () => {
                 <div className="flex justify-center mt-10">
                     <LoadingLink
                         to="/services"
-                        className="bg-blue-700 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95"
+                        className="bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95"
                     >
                         View All Services
                     </LoadingLink>
@@ -123,3 +123,4 @@ const KeyServices = () => {
 };
 
 export default KeyServices;
+

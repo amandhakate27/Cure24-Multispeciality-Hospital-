@@ -21,7 +21,7 @@ const Privacy = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-6xl mx-auto px-6 lg:px-10 text-slate-700">
+                <div className="max-w-6xl mx-auto px-6 lg:px-10 text-blue-800">
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800 text-center">
                         Introduction
                     </h3>
@@ -194,7 +194,7 @@ const Privacy = () => {
                 <div className="max-w-4xl mx-auto px-6 lg:px-10">
                     <div className="bg-blue-100/80 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8 text-center">
                         <h3 className="text-xl md:text-2xl font-bold text-blue-800">Contact Us</h3>
-                        <p className="text-slate-600 mt-2 text-sm md:text-base">
+                        <p className="text-blue-700 mt-2 text-sm md:text-base">
                             If you have questions or concerns about this Privacy Policy or our data practices, please contact:
                         </p>
                         <div className="mt-4 text-sm md:text-base text-blue-800 font-semibold">
@@ -214,3 +214,4 @@ const Privacy = () => {
 };
 
 export default Privacy;
+

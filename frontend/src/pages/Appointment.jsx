@@ -46,11 +46,11 @@ const Appointment = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
     const inputClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const inputWithIconClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 pl-10 pr-4 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 pl-10 pr-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const textareaClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-slate-700 placeholder:text-slate-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -183,7 +183,7 @@ const Appointment = () => {
                             <motion.div variants={fieldVariants} className="flex justify-center">
                                 <LoadingButton
                                     type="submit"
-                                    className="bg-blue-700 text-white px-8 py-2.5 rounded-full text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                                    className="bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                 >
                                     Confirm Appointment
                                 </LoadingButton>
@@ -203,7 +203,7 @@ const Appointment = () => {
                             <h3 className="text-base font-semibold text-blue-800 mt-4">
                                 Flexible Scheduling
                             </h3>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 Choose a convenient date and time that works for you
                             </p>
                         </div>
@@ -214,7 +214,7 @@ const Appointment = () => {
                             <h3 className="text-base font-semibold text-blue-800 mt-4">
                                 Quick Confirmation
                             </h3>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 Receive instant confirmation via email and SMS
                             </p>
                         </div>
@@ -225,7 +225,7 @@ const Appointment = () => {
                             <h3 className="text-base font-semibold text-blue-800 mt-4">
                                 Expert Care
                             </h3>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 Consult with experienced specialists in your chosen field
                             </p>
                         </div>
@@ -239,3 +239,4 @@ const Appointment = () => {
 };
 
 export default Appointment;
+

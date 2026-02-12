@@ -47,7 +47,7 @@ const About = () => {
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                                 Cure 24 Clinic Hospital, Nagpur
                             </h3>
-                            <p className="text-slate-600 mt-4 text-sm leading-relaxed [text-align:justify]">
+                            <p className="text-blue-700 mt-4 text-sm leading-relaxed [text-align:justify]">
                                 Cure 24 Clinic is a patient-centric healthcare facility located in Nagpur,
                                 dedicated to providing reliable, compassionate, and accessible medical care
                                 for individuals and families. Our clinic focuses on delivering a complete
@@ -82,7 +82,7 @@ const About = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Our Mission & Vision
                     </h3>
-                            <p className="text-slate-600 mt-2 text-sm md:text-base [text-align:justify]">
+                            <p className="text-blue-700 mt-2 text-sm md:text-base [text-align:justify]">
                                 Committed to transforming healthcare in Nagpur and beyond
                             </p>
 
@@ -103,7 +103,7 @@ const About = () => {
                                 <Target className="w-6 h-6" aria-hidden="true" />
                             </div>
                             <h4 className="text-base font-semibold text-blue-800 mt-4">Our Mission</h4>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 To provide world-class, patient-centered healthcare services that are
                                 accessible, affordable, and delivered with compassion. We strive to be the
                                 first choice for comprehensive medical care in Central India.
@@ -119,7 +119,7 @@ const About = () => {
                                 <Eye className="w-6 h-6" aria-hidden="true" />
                             </div>
                             <h4 className="text-base font-semibold text-blue-800 mt-4">Our Vision</h4>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 To be recognized as the leading multi-specialty healthcare institution in
                                 Maharashtra, setting benchmarks in medical excellence, innovation, and
                                 patient satisfaction through continuous improvement.
@@ -135,7 +135,7 @@ const About = () => {
                                 <Heart className="w-6 h-6" aria-hidden="true" />
                             </div>
                             <h4 className="text-base font-semibold text-blue-800 mt-4">Our Values</h4>
-                            <p className="text-slate-600 text-sm mt-2">
+                            <p className="text-blue-700 text-sm mt-2">
                                 Excellence in care, integrity in practice, compassion in service, innovation
                                 in treatment, and commitment to our community. These core values guide
                                 every decision we make.
@@ -151,3 +151,4 @@ const About = () => {
 };
 
 export default About;
+

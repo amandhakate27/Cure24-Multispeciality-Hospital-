@@ -30,12 +30,12 @@ const Navbar = () => {
                     </Link>
 
                     {/* DESKTOP MENU */}
-                    <nav className="hidden lg:flex items-center gap-8 text-lg font-medium text-slate-700">
+                    <nav className="hidden lg:flex items-center gap-8 text-base font-medium text-blue-800">
                         {navLinks.map((link) => (
                             <div key={link.label} className="relative">
                                 <Link
                                     to={link.to}
-                                    className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-600 text-slate-700"
+                                    className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-900 text-blue-800"
                                 >
                                     {link.label}
                                 </Link>
@@ -44,7 +44,7 @@ const Navbar = () => {
 
                         <LoadingLink
                             to="/appointment"
-                            className="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
                         </LoadingLink>
@@ -52,7 +52,7 @@ const Navbar = () => {
 
                     {/* MOBILE MENU BUTTON */}
                     <button
-                        className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-blue-100 text-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                        className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-blue-100 text-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
                         onClick={() => setOpen(!open)}
                         aria-label="Toggle menu"
                     >
@@ -76,18 +76,18 @@ const Navbar = () => {
             {/* MOBILE MENU */}
             {open && (
                 <div className="lg:hidden bg-white/95 backdrop-blur-md shadow-md">
-                    <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 text-slate-700">
-                        <Link to="/" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">Home</Link>
-                        <Link to="/about" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">About Us</Link>
-                        <Link to="/services" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">Services</Link>
-                        <Link to="/doctors" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">Doctors</Link>
-                        <Link to="/insurance" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">Insurance</Link>
-                        <Link to="/contact" onClick={() => setOpen(false)} className="hover:underline underline-offset-4">Contact</Link>
+                    <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 text-base text-blue-800">
+                        <Link to="/" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Home</Link>
+                        <Link to="/about" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">About Us</Link>
+                        <Link to="/services" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Services</Link>
+                        <Link to="/doctors" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Doctors</Link>
+                        <Link to="/insurance" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Insurance</Link>
+                        <Link to="/contact" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Contact</Link>
 
                         <LoadingLink
                             to="/appointment"
                             onClick={() => setOpen(false)}
-                            className="bg-blue-600 text-white px-4 py-2 rounded-full w-fit transition-transform hover:scale-[1.03] active:scale-95"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl w-fit transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
                         </LoadingLink>
@@ -99,3 +99,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

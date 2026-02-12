@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Clock, MapPin, Phone } from "lucide-react";
+ 
 
 const Footer = () => {
     return (
@@ -8,7 +9,7 @@ const Footer = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center lg:text-left">
                     <div className="flex flex-col items-center lg:items-start">
                         <Link to="/" className="text-2xl font-bold text-white">
-                            Cure<span className="text-blue-300">24</span>
+                            Cure<span className="text-blue-300">24</span> Hospital
                         </Link>
                         <p className="text-blue-100 mt-4 text-sm leading-relaxed">
                             Providing quality healthcare services 24/7 in Nagpur with
@@ -40,19 +41,19 @@ const Footer = () => {
 
                     <div className="flex flex-col items-center lg:items-start">
                         <h3 className="text-lg font-semibold">Contact Us</h3>
-                        <ul className="mt-4 space-y-3 text-blue-100 text-sm text-center lg:text-left">
-                            <li className="flex items-start gap-3 justify-center lg:justify-start text-center lg:text-left">
-                                <MapPin className="w-5 h-5 text-blue-200 shrink-0" aria-hidden="true" />
+                        <ul className="mt-4 space-y-3 text-blue-100 text-sm w-full max-w-sm mx-auto text-left lg:mx-0">
+                            <li className="flex items-start gap-3">
+                                <MapPin className="w-5 h-5 text-blue-200 shrink-0 mt-0.5" aria-hidden="true" />
                                 <span className="leading-relaxed">
                                     Plot No 5, Daddu's Kitchen, Diamond Nagar,
                                     Besa Road, Nagpur-440037, Maharashtra
                                 </span>
                             </li>
-                            <li className="flex items-center gap-3 justify-center lg:justify-start">
+                            <li className="flex items-center gap-3">
                                 <Phone className="w-4 h-4 text-blue-200" aria-hidden="true" />
                                 <span>+91 9654317717</span>
                             </li>
-                            <li className="flex items-center gap-3 justify-center lg:justify-start">
+                            <li className="flex items-center gap-3">
                                 <Clock className="w-4 h-4 text-blue-200" aria-hidden="true" />
                                 <span>Open 24/7</span>
                             </li>

@@ -22,7 +22,7 @@ const SimplePage = ({ title, subtitle, children }) => {
                         {title}
                     </h1>
                     {subtitle && (
-                        <p className="text-slate-600 mt-3">
+                        <p className="text-blue-700 mt-3">
                             {subtitle}
                         </p>
                     )}
@@ -32,7 +32,7 @@ const SimplePage = ({ title, subtitle, children }) => {
             <main className="relative -mt-6 pb-16">
                 {children ?? (
                     <div className="max-w-3xl mx-auto px-6 lg:px-10">
-                        <div className="bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-8 text-center text-slate-600">
+                        <div className="bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-8 text-center text-blue-700">
                             We are updating this page. Please check back soon.
                         </div>
                     </div>
@@ -45,3 +45,4 @@ const SimplePage = ({ title, subtitle, children }) => {
 };
 
 export default SimplePage;
+

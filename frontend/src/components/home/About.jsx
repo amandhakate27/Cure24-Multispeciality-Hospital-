@@ -5,7 +5,7 @@ import ctScanImg from "../../assets/images/ct-scan.jpg";
 import nurseImg from "../../assets/images/medical-nurse.jpg";
 import seniorWomanImg from "../../assets/images/senior-woman.jpg";
 import treatmentTechImg from "../../assets/images/treatment-tech.jpg";
-import womanDoctorImg from "../../assets/images/woman-doctor-service.jpg";
+import womanDoctorImg from "../../assets/images/women-doctor-service.png";
 
 const gridVariants = {
     hidden: {},
@@ -40,26 +40,26 @@ const About = () => {
                             Nagpur
                         </h2>
 
-                        <p className="text-slate-600 mt-4 [text-align:justify]">
+                        <p className="text-blue-700 mt-4 [text-align:justify]">
                             Cure 24 Clinic Hospital has been at the forefront of healthcare excellence in
                             Nagpur for nearly two decades. Founded with a vision to provide accessible,
                             affordable, and advanced medical care, we have grown to become one of the most
                             trusted healthcare institutions in Central India.
                         </p>
 
-                        <p className="text-slate-600 mt-4 [text-align:justify]">
+                        <p className="text-blue-700 mt-4 [text-align:justify]">
                             Our state-of-the-art facility combines modern infrastructure with compassionate
                             care. Led by Dr. Ritesh K. Bhondankar and a team of over 50 specialist doctors,
                             we serve more than 5,000 patients annually across 15+ medical specialties.
                         </p>
 
-                        <p className="text-slate-600 mt-4 [text-align:justify]">
+                        <p className="text-blue-700 mt-4 [text-align:justify]">
                             From routine checkups to complex surgeries, emergency care to preventive health programs , we offer comprehensive medical service under one roof, backed by the latest diagnostic and treatment technologies.
                         </p>
 
                         <LoadingLink
                             to="/about"
-                            className="mt-6 bg-blue-700 text-white px-5 py-3 rounded-full font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95 mx-auto lg:mx-0 inline-flex justify-center"
+                            className="mt-6 bg-blue-700 text-white px-5 py-3 rounded-xl font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95 mx-auto lg:mx-0 inline-flex justify-center"
                         >
                             Learn More About Us
                         </LoadingLink>
@@ -142,3 +142,4 @@ const About = () => {
 };
 
 export default About;
+

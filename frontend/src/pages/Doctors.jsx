@@ -56,7 +56,7 @@ const Doctors = () => {
                                 Meet Our Lead Consultant
                             </h3>
 
-                            <div className="mt-6 space-y-5 text-sm text-slate-600">
+                            <div className="mt-6 space-y-5 text-sm text-blue-700">
                                 <div className="flex items-start gap-3">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
@@ -137,7 +137,7 @@ const Doctors = () => {
                         </motion.div>
 
                         <motion.div className="order-2 lg:order-2" variants={cardVariants}>
-                            <div className="mt-2 space-y-5 text-sm text-slate-600">
+                            <div className="mt-2 space-y-5 text-sm text-blue-700">
                                 <div className="flex items-start gap-3">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
@@ -181,3 +181,4 @@ const Doctors = () => {
 };
 
 export default Doctors;
+

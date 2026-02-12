@@ -141,7 +141,7 @@ const Insurance = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Cashless Hospitalization Made Easy
                     </h3>
-                    <p className="text-slate-600 mt-3 text-sm md:text-base max-w-3xl mx-auto">
+                    <p className="text-blue-700 mt-3 text-sm md:text-base max-w-3xl mx-auto">
                         At Cure 24 Hospital, we understand that medical expenses can be a concern. That's why
                         we've partnered with all major insurance companies and Third Party Administrators
                         (TPAs) to provide seamless cashless hospitalization services, making quality
@@ -167,7 +167,7 @@ const Insurance = () => {
                                     <item.Icon className="w-6 h-6" aria-hidden="true" />
                                 </div>
                                 <h4 className="text-base font-semibold text-blue-800 mt-4">{item.title}</h4>
-                                <p className="text-slate-600 text-sm mt-2">{item.description}</p>
+                                <p className="text-blue-700 text-sm mt-2">{item.description}</p>
                             </motion.div>
                         ))}
                     </motion.div>
@@ -179,7 +179,7 @@ const Insurance = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800 text-center">
                         How Cashless Hospitalization Works
                     </h3>
-                    <p className="text-slate-600 mt-2 text-sm md:text-base text-center">
+                    <p className="text-blue-700 mt-2 text-sm md:text-base text-center">
                         Simple 5-step process for cashless treatment
                     </p>
 
@@ -208,7 +208,7 @@ const Insurance = () => {
                                         <BadgeCheck className="w-4 h-4" aria-hidden="true" />
                                         {step.title}
                                     </div>
-                                    <p className="text-slate-600 text-sm mt-2">{step.description}</p>
+                                    <p className="text-blue-700 text-sm mt-2">{step.description}</p>
                                 </motion.div>
                             </motion.div>
                         ))}
@@ -219,7 +219,7 @@ const Insurance = () => {
             <section className="py-12">
                 <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">Our TPA Partners</h3>
-                    <p className="text-slate-600 mt-2 text-sm md:text-base">
+                    <p className="text-blue-700 mt-2 text-sm md:text-base">
                         We work with all major Third Party Administrators in India
                     </p>
                     <motion.div
@@ -253,7 +253,7 @@ const Insurance = () => {
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Accepted Insurance Companies
                     </h3>
-                    <p className="text-slate-600 mt-2 text-sm md:text-base">
+                    <p className="text-blue-700 mt-2 text-sm md:text-base">
                         Partnerships with leading health insurance providers
                     </p>
                     <motion.div
@@ -298,7 +298,7 @@ const Insurance = () => {
                                 <FileText className="w-5 h-5" aria-hidden="true" />
                                 Documents Required
                             </h4>
-                            <ul className="mt-4 space-y-2 text-sm text-slate-600 list-disc list-inside">
+                            <ul className="mt-4 space-y-2 text-sm text-blue-700 list-disc list-inside">
                                 {documents.map((item) => (
                                     <li key={item}>{item}</li>
                                 ))}
@@ -314,7 +314,7 @@ const Insurance = () => {
                                 <ShieldCheck className="w-5 h-5" aria-hidden="true" />
                                 Important Notes
                             </h4>
-                            <ul className="mt-4 space-y-2 text-sm text-slate-600 list-disc list-inside">
+                            <ul className="mt-4 space-y-2 text-sm text-blue-700 list-disc list-inside">
                                 {notes.map((item) => (
                                     <li key={item}>{item}</li>
                                 ))}
@@ -338,7 +338,7 @@ const Insurance = () => {
                         <h3 className="text-xl md:text-2xl font-bold text-blue-800">
                             Need Help with Insurance?
                         </h3>
-                        <p className="text-slate-600 mt-2 text-sm md:text-base">
+                        <p className="text-blue-700 mt-2 text-sm md:text-base">
                             Our dedicated insurance help desk is available 24/7 to assist you with all
                             insurance-related queries, pre-authorization, and claim processing.
                         </p>
@@ -354,7 +354,7 @@ const Insurance = () => {
                                 <span className="text-blue-600">insurance@cure24hospital.com</span>
                             </div>
                         </div>
-                        <p className="text-xs text-slate-500 mt-4">
+                        <p className="text-xs text-blue-600 mt-4">
                             Visit our insurance desk on the ground floor near the main reception.
                         </p>
                     </motion.div>
@@ -367,3 +367,4 @@ const Insurance = () => {
 };
 
 export default Insurance;
+
