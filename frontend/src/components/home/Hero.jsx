@@ -9,7 +9,6 @@ const Hero = () => {
             () => import("../../assets/images/slideimg2.jpeg?url"),
             () => import("../../assets/images/slideimg3.jpg?url"),
             () => import("../../assets/images/slideimg4.jpeg?url"),
-            () => import("../../assets/images/slideimg5.jpeg?url"),
         ],
         []
     );
@@ -40,7 +39,7 @@ const Hero = () => {
                     setCurrentSlide((prev) => (prev + 1) % slides.length);
                     setIsFading(false);
                 }, 600);
-            }, 7000);
+            }, 3000);
         };
 
         const stop = () => {
@@ -94,7 +93,7 @@ const Hero = () => {
                         decoding="async"
                         loading={currentSlide === 0 ? "eager" : "lazy"}
                         fetchPriority={currentSlide === 0 ? "high" : "auto"}
-                        className={`w-full h-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${isFading ? "opacity-0" : "opacity-80"}`}
+                        className={`w-full h-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${isFading ? "opacity-0" : "opacity-[0.65]"}`}
                         style={{ willChange: "opacity" }}
                     />
                 )}

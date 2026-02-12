@@ -107,37 +107,37 @@ const Contact = () => {
                         >
                             <h3 className="text-lg font-semibold text-blue-800">Contact Details</h3>
                             <div className="mt-6 space-y-5 text-sm text-blue-700">
-                                <div className="flex items-start gap-3">
-                                    <Phone className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
+                                <div className="flex items-center gap-3">
+                                    <Phone className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
-                                        <p className="font-semibold text-blue-800">Contact Number</p>
-                                        <p>+91 9654317717</p>
+                                        <p className="font-bold text-blue-800">Contact Number</p>
+                                        <p className="text-blue-800">+91 9654317717</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-3">
-                                    <MapPin className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
+                                <div className="flex items-center gap-3">
+                                    <MapPin className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
-                                        <p className="font-semibold text-blue-800">Location</p>
-                                        <p>
+                                        <p className="font-bold text-blue-800">Location</p>
+                                        <p className="text-blue-800">
                                             Plot No 5, Daddu's Kitchen, Diamond Nagar,
                                             Besa Road, Nagpur-440037, Maharashtra
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-3">
-                                    <Clock className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
+                                <div className="flex items-center gap-3">
+                                    <Clock className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-semibold text-blue-800">Work Days</p>
-                                        <p>Emergency Services: 24/7</p>
-                                        <p>OPD Timings: Mon - Sat 9:00 AM - 8:00 PM</p>
-                                        <p>Sunday: 9:00 AM - 2:00 PM</p>
+                                        <p className="text-blue-800">Emergency Services: 24/7</p>
+                                        <p className="text-blue-800">OPD Timings: Mon - Sat 9:00 AM - 8:00 PM</p>
+                                        <p className="text-blue-800">Sunday: 9:00 AM - 2:00 PM</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start gap-3">
-                                    <Mail className="w-5 h-5 text-blue-700 flex-shrink-0" aria-hidden="true" />
+                                <div className="flex items-center gap-3">
+                                    <Mail className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-semibold text-blue-800">Email</p>
-                                        <p>support@cure24hospital.com</p>
+                                        <p className="text-blue-800">support@cure24hospital.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +245,7 @@ const Contact = () => {
                         whileHover={{ y: -4 }}
                         transition={{ type: "spring", stiffness: 220, damping: 18 }}
                     >
-                        <div className="w-full h-80 md:h-[420px]">
+                        <div className="w-full h-80 md:h-105">
                             <iframe
                                 title="Cure24 Location"
                                 className="w-full h-full"
@@ -284,4 +284,3 @@ const Contact = () => {
 };
 
 export default Contact;
-

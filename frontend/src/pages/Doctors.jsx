@@ -45,25 +45,25 @@ const Doctors = () => {
             <section className="py-12">
                 <div className="max-w-7xl mx-auto px-12 lg:px-16">
                     <motion.div
-                        className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-start"
+                        className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-10 items-start lg:items-center"
                         variants={gridVariants}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.25 }}
                     >
-                        <motion.div className="order-2 lg:order-1" variants={cardVariants}>
+                        <motion.div className="order-2 lg:order-1 lg:self-center" variants={cardVariants}>
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                                 Meet Our Lead Consultant
                             </h3>
 
                             <div className="mt-6 space-y-5 text-sm text-blue-700">
-                                <div className="flex items-start gap-3">
+                                <div className="flex items-center gap-3">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg md:text-xl">
                                             Dr. Jitesh K. Bhandarkar
                                         </p>
-                                        <p>
+                                        <p className="text-blue-800">
                                             Consulting Physician, Cardiologist, Diabetologist
                                             <br />
                                             &amp; Emergency Specialist
@@ -113,7 +113,7 @@ const Doctors = () => {
                     </motion.div>
 
                     <motion.div
-                        className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start mt-12"
+                        className="grid grid-cols-1 lg:grid-cols-[0.8fr_1.2fr] gap-10 items-start lg:items-center mt-12"
                         variants={gridVariants}
                         initial="hidden"
                         whileInView="visible"
@@ -136,15 +136,15 @@ const Doctors = () => {
                             </p>
                         </motion.div>
 
-                        <motion.div className="order-2 lg:order-2" variants={cardVariants}>
+                        <motion.div className="order-2 lg:order-2 lg:self-center" variants={cardVariants}>
                             <div className="mt-2 space-y-5 text-sm text-blue-700">
-                                <div className="flex items-start gap-3">
+                                <div className="flex items-center gap-3">
                                     <User className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg md:text-xl">
                                             Dr. Prajakta Bhandarkar
                                         </p>
-                                        <p>
+                                        <p className="text-blue-800">
                                             Consulting Physician, Cardiologist, Diabetologist
                                             <br />
                                             &amp; Emergency Specialist
