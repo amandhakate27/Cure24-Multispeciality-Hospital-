@@ -1,19 +1,32 @@
 import { useEffect, useMemo, useState } from "react";
 import LoadingLink from "../common/LoadingLink";
-import slideImg0 from "../../assets/images/slideimg0.jpg";
-import slideImg1 from "../../assets/images/slideimg1.jpeg";
-import slideImg2 from "../../assets/images/slideimg2.jpeg";
-import slideImg3 from "../../assets/images/slideimg3.jpg";
-import slideImg4 from "../../assets/images/slideimg4.jpeg";
-import slideImg5 from "../../assets/images/slideimg5.jpeg";
 
 const Hero = () => {
     const slides = useMemo(
-        () => [slideImg0, slideImg1, slideImg2, slideImg3, slideImg4, slideImg5],
+        () => [
+            () => import("../../assets/images/slideimg0.jpg?url"),
+            () => import("../../assets/images/slideimg1.jpeg?url"),
+            () => import("../../assets/images/slideimg2.jpeg?url"),
+            () => import("../../assets/images/slideimg3.jpg?url"),
+            () => import("../../assets/images/slideimg4.jpeg?url"),
+            () => import("../../assets/images/slideimg5.jpeg?url"),
+        ],
         []
     );
+
     const [currentSlide, setCurrentSlide] = useState(0);
     const [isFading, setIsFading] = useState(false);
+    const [loadedImages, setLoadedImages] = useState({});
+    const [currentImageUrl, setCurrentImageUrl] = useState("");
+
+    useEffect(() => {
+        // Load current image
+        slides[currentSlide]()
+            .then(module => {
+                setCurrentImageUrl(module.default);
+                setLoadedImages(prev => ({ ...prev, [currentSlide]: module.default }));
+            });
+    }, [currentSlide, slides]);
 
     useEffect(() => {
         let fadeTimer;
@@ -57,25 +70,34 @@ const Hero = () => {
         };
     }, [slides.length]);
 
+    // Preload next image
     useEffect(() => {
         const nextIndex = (currentSlide + 1) % slides.length;
-        const img = new Image();
-        img.src = slides[nextIndex];
-    }, [currentSlide, slides]);
+        if (!loadedImages[nextIndex]) {
+            slides[nextIndex]()
+                .then(module => {
+                    setLoadedImages(prev => ({ ...prev, [nextIndex]: module.default }));
+                    const img = new Image();
+                    img.src = module.default;
+                });
+        }
+    }, [currentSlide, slides, loadedImages]);
 
     return (
         <section className="relative overflow-hidden pt-28 pb-16 md:pt-32">
             <div className="absolute inset-0 overflow-hidden">
-                <img
-                    src={slides[currentSlide]}
-                    alt=""
-                    aria-hidden="true"
-                    decoding="async"
-                    loading="eager"
-                    fetchPriority="high"
-                    className={`w-full h-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${isFading ? "opacity-0" : "opacity-80"}`}
-                    style={{ willChange: "opacity" }}
-                />
+                {currentImageUrl && (
+                    <img
+                        src={currentImageUrl}
+                        alt=""
+                        aria-hidden="true"
+                        decoding="async"
+                        loading={currentSlide === 0 ? "eager" : "lazy"}
+                        fetchPriority={currentSlide === 0 ? "high" : "auto"}
+                        className={`w-full h-full object-cover transition-opacity duration-700 motion-reduce:transition-none ${isFading ? "opacity-0" : "opacity-80"}`}
+                        style={{ willChange: "opacity" }}
+                    />
+                )}
             </div>
 
             <div className="relative max-w-6xl mx-auto px-6 lg:px-10">
