@@ -74,14 +74,14 @@ const Doctors = () => {
                                     <GraduationCap className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Qualifications</p>
-                                        <p>MBBS, MD (Medicine), DM (Cardiology)</p>
+                                        <p className="text-blue-800">MBBS, MD (Medicine), DM (Cardiology)</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
                                     <Stethoscope className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Expertise</p>
-                                        <p>
+                                        <p className="text-blue-800">
                                             Multi-Specialty Expert: Cardiology, Diabetes Management,
                                             <br />
                                             General Medicine, Emergency Care
@@ -155,14 +155,14 @@ const Doctors = () => {
                                     <GraduationCap className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Qualifications</p>
-                                        <p>MBBS, DM (Cardiology)</p>
+                                        <p className="text-blue-800">MBBS, DM (Cardiology)</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-4">
                                     <Stethoscope className="w-6 h-6 text-blue-700 flex-shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-bold text-blue-800 text-lg">Expertise</p>
-                                        <p>
+                                        <p className="text-blue-800">
                                             Multi-Specialty Expert: Cardiology, Diabetes Management,
                                             <br />
                                             General Medicine, Emergency Care
