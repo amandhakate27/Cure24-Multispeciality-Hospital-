@@ -9,22 +9,22 @@ const AdminLogin = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-
         setError("");
 
         try {
-            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-            const response = await fetch(`${apiBase}/api/admin/login`, {
+            // 🔥 Single Web Service → relative API call
+            const response = await fetch("/api/admin/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                throw new Error("Invalid username or password");
+                throw new Error(data.message || "Invalid username or password");
             }
 
-            const data = await response.json();
             localStorage.setItem("adminToken", data.token);
             navigate("/admin/dashboard");
         } catch (err) {
@@ -40,7 +40,10 @@ const AdminLogin = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center" style={{ backgroundColor: "#041AA9" }}>
+        <div
+            className="min-h-screen flex items-center justify-center"
+            style={{ backgroundColor: "#041AA9" }}
+        >
             <div className="w-full max-w-md mx-4">
                 <div className="bg-white rounded-2xl shadow-2xl p-8">
                     <h1 className="text-3xl font-bold text-center text-blue-900 mb-2">
@@ -58,7 +61,10 @@ const AdminLogin = () => {
 
                     <form onSubmit={handleLogin} className="space-y-6">
                         <div>
-                            <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label
+                                htmlFor="username"
+                                className="block text-sm font-medium text-gray-700 mb-2"
+                            >
                                 Username
                             </label>
                             <input
@@ -74,7 +80,10 @@ const AdminLogin = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+                            <label
+                                htmlFor="password"
+                                className="block text-sm font-medium text-gray-700 mb-2"
+                            >
                                 Password
                             </label>
                             <input
@@ -96,9 +105,6 @@ const AdminLogin = () => {
                             Login
                         </button>
                     </form>
-
-                    <div className="mt-6 text-center text-sm text-gray-500">
-                    </div>
                 </div>
             </div>
         </div>
