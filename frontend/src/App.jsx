@@ -12,6 +12,8 @@ const Doctors = lazy(() => import("./pages/Doctors"));
 const Insurance = lazy(() => import("./pages/Insurance"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Services = lazy(() => import("./pages/Services"));
+const AdminLogin = lazy(() => import("./pages/AdminLogin"));
+const AdminDashboard = lazy(() => import("./pages/AdminDashboard"));
 
 const App = () => {
   return (
@@ -27,6 +29,8 @@ const App = () => {
           <Route path="/appointment" element={<Appointment />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/admin" element={<AdminLogin />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

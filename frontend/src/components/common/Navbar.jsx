@@ -18,7 +18,7 @@ const Navbar = () => {
     return (
         <header className="fixed top-0 left-0 w-full z-50">
             <div className=" backdrop-blur-md ">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 sm:h-20 flex items-center justify-between">
+                <div className="max-w-7xl mx-auto px-6 lg:px-10 xl:max-w-none xl:px-12 2xl:px-16 h-16 sm:h-20 flex items-center justify-between">
 
                     {/* LOGO */}
                     <Link to="/" className="inline-flex items-center h-full cursor-pointer">
@@ -47,6 +47,13 @@ const Navbar = () => {
                             className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
+                        </LoadingLink>
+
+                        <LoadingLink
+                            to="/admin"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Admin
                         </LoadingLink>
                     </nav>
 
@@ -77,12 +84,12 @@ const Navbar = () => {
             {open && (
                 <div className="lg:hidden bg-white/95 backdrop-blur-md shadow-md">
                     <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 text-base text-blue-800">
-                        <Link to="/" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Home</Link>
-                        <Link to="/about" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">About Us</Link>
-                        <Link to="/services" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Services</Link>
-                        <Link to="/doctors" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Doctors</Link>
-                        <Link to="/insurance" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Insurance</Link>
-                        <Link to="/contact" onClick={() => setOpen(false)} className="hover:text-blue-900 hover:underline underline-offset-4">Contact</Link>
+                        <Link to="/" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Home</Link>
+                        <Link to="/about" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">About Us</Link>
+                        <Link to="/services" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Services</Link>
+                        <Link to="/doctors" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Doctors</Link>
+                        <Link to="/insurance" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Insurance</Link>
+                        <Link to="/contact" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Contact</Link>
 
                         <LoadingLink
                             to="/appointment"
@@ -90,6 +97,14 @@ const Navbar = () => {
                             className="bg-blue-600 text-white px-4 py-2 rounded-xl w-fit transition-transform hover:scale-[1.03] active:scale-95"
                         >
                             Book Now
+                        </LoadingLink>
+
+                        <LoadingLink
+                            to="/admin"
+                            onClick={() => setOpen(false)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl w-fit transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Admin Login
                         </LoadingLink>
                     </div>
                 </div>

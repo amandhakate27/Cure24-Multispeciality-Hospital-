@@ -38,16 +38,10 @@ const LoadingButton = ({
             type={type}
             onClick={handleClick}
             disabled={disabled || loading}
-            className={`relative inline-flex items-center justify-center ${className}`}
+            className={`inline-flex items-center justify-center ${className}`}
             aria-busy={loading}
         >
-            <span className={loading ? "opacity-0" : "opacity-100"}>{children}</span>
-            {loading && (
-                <span
-                    className="absolute inline-flex w-4 h-4 rounded-full border-2 border-current border-t-transparent animate-spin"
-                    aria-hidden="true"
-                />
-            )}
+            {children}
         </button>
     );
 };

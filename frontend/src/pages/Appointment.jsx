@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Calendar, CircleCheckBig, Clock, User } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
-import LoadingButton from "../components/common/LoadingButton";
+import Toast from "../components/common/Toast";
 
 const initialFormState = {
     name: "",
@@ -41,6 +41,8 @@ const fieldVariants = {
 
 const Appointment = () => {
     const [formData, setFormData] = useState(initialFormState);
+    const [toast, setToast] = useState(null);
+    const toastTimer = useRef(null);
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -52,15 +54,70 @@ const Appointment = () => {
     const textareaClasses =
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
 
-    const handleSubmit = (event) => {
+    const normalizePhone = (value) => String(value || "").replace(/[\s-]/g, "").trim();
+    const isValidIndianMobile = (value) => /^(?:\+91|0)?[6-9]\d{9}$/.test(value);
+
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        const payload = { ...formData };
-        console.log("Appointment booking:", payload);
-        setFormData(initialFormState);
+        const normalizedPhone = normalizePhone(formData.phone);
+        if (!isValidIndianMobile(normalizedPhone)) {
+            setToast({
+                variant: "error",
+                title: "Invalid mobile number",
+                message: "Enter a valid Indian mobile number (10 digits, starts with 6-9).",
+            });
+            return;
+        }
+
+        const payload = { ...formData, phone: normalizedPhone };
+
+        try {
+            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+            const response = await fetch(`${apiBase}/api/appointments`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to book appointment");
+            }
+
+            setToast({
+                variant: "success",
+                title: "Appointment booked",
+                message: "Our team will contact you soon.",
+            });
+            setFormData(initialFormState);
+        } catch (error) {
+            console.warn("Appointment booking failed:", error);
+            setToast({
+                variant: "error",
+                title: "Booking failed",
+                message: "Something went wrong. Please try again.",
+            });
+        }
     };
+
+    useEffect(() => {
+        if (!toast) return undefined;
+        if (toastTimer.current) clearTimeout(toastTimer.current);
+        toastTimer.current = setTimeout(() => setToast(null), 3200);
+        return () => clearTimeout(toastTimer.current);
+    }, [toast]);
 
     return (
         <div className="min-h-screen bg-[#F5F9FF]">
+            {toast && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm px-4">
+                    <Toast
+                        variant={toast.variant}
+                        title={toast.title}
+                        message={toast.message}
+                        onClose={() => setToast(null)}
+                    />
+                </div>
+            )}
             <Navbar />
 
             <section className="pt-16 md:pt-20">
@@ -106,6 +163,8 @@ const Appointment = () => {
                                         value={formData.phone}
                                         onChange={handleChange}
                                         placeholder="Phone No."
+                                        inputMode="numeric"
+                                        maxLength={13}
                                         required
                                         className={inputClasses}
                                     />
@@ -148,15 +207,21 @@ const Appointment = () => {
                                     </div>
                                 </motion.div>
                                 <motion.div className="space-y-1" variants={fieldVariants}>
-                                    <input
-                                        type="text"
+                                    <select
                                         name="department"
                                         value={formData.department}
                                         onChange={handleChange}
-                                        placeholder="Department"
                                         required
                                         className={inputClasses}
-                                    />
+                                    >
+                                        <option value="" disabled>
+                                            Select Department
+                                        </option>
+                                        <option value="Emergency Care">Emergency Care</option>
+                                        <option value="Cardiology">Cardiology</option>
+                                        <option value="Orthopedics">Orthopedics</option>
+                                        <option value="Pediatrics">Pediatrics</option>
+                                    </select>
                                 </motion.div>
                                 <motion.div className="space-y-1" variants={fieldVariants}>
                                     <input
@@ -181,12 +246,12 @@ const Appointment = () => {
                                 />
                             </motion.div>
                             <motion.div variants={fieldVariants} className="flex justify-center">
-                                <LoadingButton
+                                <button
                                     type="submit"
                                     className="bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                 >
                                     Confirm Appointment
-                                </LoadingButton>
+                                </button>
                             </motion.div>
                         </form>
                     </motion.div>
@@ -239,4 +304,3 @@ const Appointment = () => {
 };
 
 export default Appointment;
-
