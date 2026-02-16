@@ -1,3 +1,19 @@
+# Dependencies
+node_modules
+package-lock.json
+yarn.lock
+
+# Build output
+dist
+dist-ssr
+build/
+out/
+
+# Environment variables (NEVER commit these!)
+.env
+.env.local
+.env.*.local
+
 # Logs
 logs
 *.log
@@ -7,12 +23,32 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+
+# IDE & Editor
+.vscode/
+.idea/
+.sublime-project
+.sublime-workspace
+*.swp
+*.swo
+*~
+.emacs.desktop
+.emacs.desktop.lock
+.elc
+
+# Runtime files
+*.pid
+*.seed
+.cache/
 
 # Unnecessary assets
 *.zip
 *.7z
+*.rar
+*.tar.gz
 
