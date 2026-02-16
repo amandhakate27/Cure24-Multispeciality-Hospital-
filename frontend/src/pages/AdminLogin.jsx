@@ -13,16 +13,34 @@ const AdminLogin = () => {
 
         try {
             // 🔥 Single Web Service → relative API call
-            const response = await fetch("/api/admin/login", {
+            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+            const response = await fetch(`${apiBase}/api/admin/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
+            const contentType = response.headers.get("content-type") || "";
+            let data = null;
+            let rawText = "";
+
+            if (contentType.includes("application/json")) {
+                data = await response.json();
+            } else {
+                rawText = await response.text();
+            }
 
             if (!response.ok) {
-                throw new Error(data.message || "Invalid username or password");
+                const message =
+                    data?.message ||
+                    rawText ||
+                    response.statusText ||
+                    "Invalid username or password";
+                throw new Error(message);
+            }
+
+            if (!data?.token) {
+                throw new Error("Login failed. No token received.");
             }
 
             localStorage.setItem("adminToken", data.token);
