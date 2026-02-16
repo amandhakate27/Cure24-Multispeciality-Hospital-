@@ -1,0 +1,117 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import LoadingLink from "./LoadingLink";
+import hospitalLogo from "../../assets/images/reallogo1.png";
+
+const navLinks = [
+    { label: "Home", to: "/" },
+    { label: "About Us", to: "/about" },
+    { label: "Services", to: "/services" },
+    { label: "Doctors", to: "/doctors" },
+    { label: "Insurance", to: "/insurance" },
+    { label: "Contact", to: "/contact" },
+];
+
+const Navbar = () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <header className="fixed top-0 left-0 w-full z-50">
+            <div className=" backdrop-blur-md ">
+                <div className="max-w-7xl mx-auto px-6 lg:px-10 xl:max-w-none xl:px-12 2xl:px-16 h-16 sm:h-20 flex items-center justify-between">
+
+                    {/* LOGO */}
+                    <Link to="/" className="inline-flex items-center h-full cursor-pointer">
+                        <img
+                            src={hospitalLogo}
+                            alt="Cure 24 Hospital"
+                            className="h-[70%] w-auto max-h-full max-w-[100px] sm:max-w-[150px] md:max-w-[200px] object-contain transition-transform hover:scale-105  "
+                        />
+                    </Link>
+
+                    {/* DESKTOP MENU */}
+                    <nav className="hidden lg:flex items-center gap-8 text-base font-medium text-blue-800">
+                        {navLinks.map((link) => (
+                            <div key={link.label} className="relative">
+                                <Link
+                                    to={link.to}
+                                    className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-900 text-blue-800"
+                                >
+                                    {link.label}
+                                </Link>
+                            </div>
+                        ))}
+
+                        <LoadingLink
+                            to="/appointment"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Book Now
+                        </LoadingLink>
+
+                        <LoadingLink
+                            to="/admin"
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Admin
+                        </LoadingLink>
+                    </nav>
+
+                    {/* MOBILE MENU BUTTON */}
+                    <button
+                        className="lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-xl border border-blue-100 text-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                        onClick={() => setOpen(!open)}
+                        aria-label="Toggle menu"
+                    >
+                        <svg
+                            className="w-5 h-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                        >
+                            <path d="M4 6h16" />
+                            <path d="M4 12h16" />
+                            <path d="M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* MOBILE MENU */}
+            {open && (
+                <div className="lg:hidden bg-white/95 backdrop-blur-md shadow-md">
+                    <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-4 text-base text-blue-800">
+                        <Link to="/" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Home</Link>
+                        <Link to="/about" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">About Us</Link>
+                        <Link to="/services" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Services</Link>
+                        <Link to="/doctors" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Doctors</Link>
+                        <Link to="/insurance" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Insurance</Link>
+                        <Link to="/contact" onClick={() => setOpen(false)} className="px-2 py-1 -mx-2 rounded-md transition-colors hover:bg-blue-50/80 hover:text-blue-900 active:bg-blue-100/80 active:text-blue-900 focus-visible:bg-blue-50/80 focus-visible:text-blue-900">Contact</Link>
+
+                        <LoadingLink
+                            to="/appointment"
+                            onClick={() => setOpen(false)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl w-fit transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Book Now
+                        </LoadingLink>
+
+                        <LoadingLink
+                            to="/admin"
+                            onClick={() => setOpen(false)}
+                            className="bg-blue-600 text-white px-4 py-2 rounded-xl w-fit transition-transform hover:scale-[1.03] active:scale-95"
+                        >
+                            Admin Login
+                        </LoadingLink>
+                    </div>
+                </div>
+            )}
+        </header>
+    );
+};
+
+export default Navbar;
+

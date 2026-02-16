@@ -1,133 +1,151 @@
-# Cure24 Frontend
+# Cure24 - Hospital Management System
 
-A modern, responsive hospital management frontend application built with React and Vite. This application provides a comprehensive user interface for patients to explore hospital services, book appointments, view doctor profiles, and access essential healthcare information.
+A modern, full-stack hospital management system with appointment booking, doctor listings, insurance information, and an admin dashboard.
 
-## Overview
+## Live Demo
 
-Cure24 Frontend is a professional healthcare web application designed to streamline patient interactions with hospital services. The application features a clean, intuitive interface built with modern web technologies, ensuring optimal performance and user experience across all devices.
+- **Frontend**: [Cure24 Hospital](https://your-frontend-url.onrender.com)
+- **Backend API**: [API Server](https://your-backend-url.onrender.com)
+
+> Update the links above with your actual Render deployment URLs once deployed. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
 
 ## Features
 
-- **Responsive Design**: Fully responsive layout that works seamlessly on desktop, tablet, and mobile devices
-- **Service Information**: Comprehensive overview of hospital services and specialties
-- **Doctor Profiles**: Detailed information about medical professionals and their specializations
-- **Appointment Booking**: Easy-to-use appointment scheduling system
-- **Contact System**: Direct communication channel with the hospital
-- **Insurance Information**: Details about accepted insurance providers and coverage
-- **About Section**: Hospital history, mission, and values
-- **Privacy Policy**: Transparent data handling and privacy practices
+- **Home Page** - Hero section with call-to-action and key services
+- **Doctors Directory** - Browse and view doctor profiles
+- **Appointments** - Book appointments with doctors
+- **Services** - Comprehensive list of hospital services
+- **Insurance** - Insurance provider information and details
+- **About Us** - Hospital information and history
+- **Contact** - Get in touch with the hospital
+- **Admin Dashboard** - Manage appointments, doctors, and hospital data
+- **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-## Technology Stack
+## Tech Stack
 
-- **Framework**: React 19.2.0
-- **Build Tool**: Vite 7.2.4
-- **Routing**: React Router DOM 7.13.0
-- **Styling**: Tailwind CSS 4.1.18
-- **Icons**: Lucide React 0.542.0
-- **Linting**: ESLint 9.39.1
+### Frontend
+- **React** - UI library
+- **Vite** - Build tool and dev server
+- **Tailwind CSS** - Utility-first CSS framework
+- **ESLint** - Code quality tool
 
-## 🌐 Live Demo
-
-[Live Demo](https://cure24hospital.netlify.app/)
-
+### Backend
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - Database
+- **JWT** - Authentication
+- **Cors** - Cross-Origin Resource Sharing
+- **Helmet** - Security middleware
+- **Mongoose** - MongoDB ODM
 
 ## Project Structure
 
 ```
-cure24-frontend/
-├── public/                 # Static assets
-├── src/
-│   ├── assets/
-│   │   └── images/        # Image assets
-│   ├── components/
-│   │   ├── common/        # Reusable components
-│   │   │   ├── Footer.jsx
-│   │   │   ├── LoadingImage.jsx
-│   │   │   ├── Navbar.jsx
-│   │   │   └── SimplePage.jsx
-│   │   └── home/          # Home page specific components
-│   │       ├── About.jsx
-│   │       ├── CallToAction.jsx
-│   │       ├── Hero.jsx
-│   │       ├── KeyServices.jsx
-│   │       ├── ServicesPreview.jsx
-│   │       └── Stats.jsx
-│   ├── pages/             # Page components
-│   │   ├── About.jsx
-│   │   ├── Appointment.jsx
-│   │   ├── Contact.jsx
-│   │   ├── Doctors.jsx
-│   │   ├── Home.jsx
-│   │   ├── Insurance.jsx
-│   │   ├── Privacy.jsx
-│   │   └── Services.jsx
-│   ├── App.jsx            # Main application component
-│   ├── index.css          # Global styles
-│   └── main.jsx           # Application entry point
-├── eslint.config.js       # ESLint configuration
-├── index.html             # HTML template
-├── package.json           # Project dependencies
-├── tailwind.config.js     # Tailwind CSS configuration
-└── vite.config.js         # Vite configuration
+cure24/
+├── frontend/          # React frontend application
+│   ├── src/
+│   │   ├── components/    # Reusable React components
+│   │   ├── pages/         # Page components
+│   │   └── assets/        # Images and static files
+│   ├── public/            # Public assets
+│   └── package.json       # Frontend dependencies
+├── backend/           # Node.js backend API
+│   ├── server.js      # Main server file
+│   └── package.json   # Backend dependencies
+└── README.md          # Project documentation
 ```
 
-## Component Architecture
+## Installation & Setup
 
-### Common Components
+### Prerequisites
+- Node.js (v14 or higher)
+- npm or yarn
+- MongoDB (local or cloud instance)
 
-- **Navbar**: Navigation bar with links to all main pages
-- **Footer**: Site footer with contact information and links
-- **LoadingImage**: Loading state component for images
-- **SimplePage**: Template component for standard page layouts
+### Frontend Setup
 
-### Home Page Components
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-- **Hero**: Main landing section with call-to-action
-- **About**: Brief introduction to the hospital
-- **KeyServices**: Highlight of main medical services
-- **ServicesPreview**: Overview of available healthcare services
-- **CallToAction**: Engagement section for patient actions
-- **Stats**: Hospital statistics and achievements
+The frontend will start on `http://localhost:5173`
 
-### Pages
+### Backend Setup
 
-- **Home**: Main landing page with multiple sections
-- **About**: Detailed hospital information
-- **Services**: Complete list of medical services
-- **Doctors**: Medical staff profiles and specializations
-- **Appointment**: Appointment booking interface
-- **Contact**: Contact form and hospital location
-- **Insurance**: Insurance provider information
-- **Privacy**: Privacy policy and data protection details
+```bash
+cd backend
+npm install
+npm run dev
+```
 
-## Configuration
+The backend API will start on `http://localhost:3000` (or configured port)
 
-### Tailwind CSS
+## Environment Variables
 
-Tailwind CSS is configured via `tailwind.config.js`. The configuration uses the Vite plugin for optimal integration and performance.
+### Backend (.env)
+Copy `.env.example` to `.env` and fill in your values:
+```
+PORT=5000
+MONGO_URI=mongodb://localhost:27017/cure24
+JWT_SECRET=your_super_secret_jwt_key_change_this
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD=admin123
+CORS_ORIGIN=http://localhost:5173
+NODE_ENV=development
+```
 
-### Vite
+### Frontend (.env.local)
+Copy `.env.example` to `.env.local` and fill in your values:
+```
+VITE_API_BASE=http://localhost:5000
+VITE_CONTACT_ENDPOINT=/api/contact
+```
 
-Vite configuration is available in `vite.config.js`. The setup includes React plugin for fast refresh and optimal development experience.
+## Available Scripts
 
-### ESLint
+### Frontend
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
 
-Code quality rules are defined in `eslint.config.js`, including React-specific linting rules and best practices.
+### Backend
+- `npm start` - Start server
+- `npm run dev` - Start with nodemon (auto-reload on changes)
 
+## Usage
 
+1. Create `.env` file in backend folder (copy from `.env.example`)
+2. Create `.env.local` file in frontend folder (copy from `.env.example`)
+3. Start the backend server: `cd backend && npm run dev`
+4. Start the frontend development server: `cd frontend && npm run dev`
+5. Access the application at `http://localhost:5173`
+6. Navigate through the different pages and features
+7. Use the admin dashboard to manage content (default: username: `admin`, password: `admin123`)
+
+## Deployment
+
+For detailed instructions on deploying to Render.com, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+### Quick Deployment Summary
+- Backend: Deploy as Web Service on Render
+- Frontend: Deploy as Static Site on Render
+- Database: Use MongoDB Atlas (free tier available)
+- Environment Variables: Configure in Render dashboard
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is private and proprietary. All rights reserved.
-@amandhakate27
+This project is licensed under the ISC License.
 
-## Support
+##
+Developed By [@amandhakate27](https://github.com/amandhakate27)
 
-For questions or support, please contact the development team or open an issue in the repository.
+---
 
-Built with React and Vite for optimal performance and developer experience.
-
-
-
-
-
+**Last Updated:** February 2026
