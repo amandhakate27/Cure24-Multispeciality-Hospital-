@@ -4,6 +4,7 @@ import { Calendar, CircleCheckBig, Clock, User } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import Toast from "../components/common/Toast";
+import { buildApiUrl } from "../utils/api";
 
 const initialFormState = {
     name: "",
@@ -72,8 +73,7 @@ const Appointment = () => {
         const payload = { ...formData, phone: normalizedPhone };
 
         try {
-            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-            const response = await fetch(`${apiBase}/api/appointments`, {
+            const response = await fetch(buildApiUrl("/api/appointments"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
@@ -94,7 +94,10 @@ const Appointment = () => {
             setToast({
                 variant: "error",
                 title: "Booking failed",
-                message: "Something went wrong. Please try again.",
+                message:
+                    error?.message === "Failed to fetch"
+                        ? "Unable to reach server. Please try again later."
+                        : "Something went wrong. Please try again.",
             });
         }
     };

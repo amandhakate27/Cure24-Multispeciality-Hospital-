@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import hospitalLogo from "../assets/images/reallogo1.png";
 import Toast from "../components/common/Toast";
+import { buildApiUrl } from "../utils/api";
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
@@ -23,8 +24,7 @@ const AdminDashboard = () => {
 
         const fetchAppointments = async () => {
             try {
-                const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-                const response = await fetch(`${apiBase}/api/appointments`, {
+                const response = await fetch(buildApiUrl("/api/appointments"), {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -51,8 +51,7 @@ const AdminDashboard = () => {
         }
 
         try {
-            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-            const response = await fetch(`${apiBase}/api/appointments/${id}`, {
+            const response = await fetch(buildApiUrl(`/api/appointments/${id}`), {
                 method: "PATCH",
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -82,8 +81,7 @@ const AdminDashboard = () => {
         }
 
         try {
-            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-            const response = await fetch(`${apiBase}/api/appointments/${id}`, {
+            const response = await fetch(buildApiUrl(`/api/appointments/${id}`), {
                 method: "DELETE",
                 headers: { Authorization: `Bearer ${token}` },
             });

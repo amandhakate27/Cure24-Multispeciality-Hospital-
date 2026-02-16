@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { buildApiUrl } from "../utils/api";
 
 const AdminLogin = () => {
     const [username, setUsername] = useState("");
@@ -13,8 +14,7 @@ const AdminLogin = () => {
 
         try {
             // ✅ Relative API call (same domain)
-            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
-            const response = await fetch(`${apiBase}/api/admin/login`, {
+            const response = await fetch(buildApiUrl("/api/admin/login"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
@@ -46,7 +46,11 @@ const AdminLogin = () => {
             localStorage.setItem("adminToken", data.token);
             navigate("/admin/dashboard");
         } catch (err) {
-            setError(err.message || "Login failed");
+            const fallback =
+                err?.message === "Failed to fetch"
+                    ? "Unable to reach server. Check backend URL and CORS."
+                    : "Login failed";
+            setError(err?.message || fallback);
             setTimeout(() => setError(""), 3000);
         }
     };
