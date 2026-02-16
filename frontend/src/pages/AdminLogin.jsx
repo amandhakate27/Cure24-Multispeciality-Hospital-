@@ -13,16 +13,30 @@ const AdminLogin = () => {
 
         try {
             // ✅ Relative API call (same domain)
-            const response = await fetch("/api/admin/login", {
+            const apiBase = import.meta.env.VITE_API_BASE || "http://localhost:5000";
+            const response = await fetch(`${apiBase}/api/admin/login`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
+            const rawText = await response.text();
+            let data = null;
+            if (rawText) {
+                try {
+                    data = JSON.parse(rawText);
+                } catch (parseError) {
+                    data = null;
+                }
+            }
 
             if (!response.ok) {
-                throw new Error(data?.message || "Invalid username or password");
+                const message =
+                    data?.message ||
+                    rawText ||
+                    response.statusText ||
+                    "Invalid username or password";
+                throw new Error(message);
             }
 
             if (!data?.token) {
