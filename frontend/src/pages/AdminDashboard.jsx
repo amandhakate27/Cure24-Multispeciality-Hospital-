@@ -211,7 +211,7 @@ const AdminDashboard = () => {
     }, [toast]);
 
     return (
-        <div className="h-screen overflow-hidden py-4 px-4" style={{ backgroundColor: "#041AA9" }}>
+        <div className="min-h-screen py-6 px-4" style={{ backgroundColor: "#041AA9" }}>
             {toast && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 backdrop-blur-sm px-4">
                     <Toast
@@ -222,9 +222,9 @@ const AdminDashboard = () => {
                     />
                 </div>
             )}
-            <div className="max-w-7xl mx-auto h-full min-h-0 flex flex-col gap-4">
+            <div className="max-w-7xl mx-auto space-y-6">
                 {/* Header */}
-                <div className="bg-white rounded-2xl shadow-2xl p-6 mb-4">
+                <div className="bg-white rounded-2xl shadow-2xl p-6">
                     <div className="grid grid-cols-1 items-center gap-4 sm:grid-cols-[auto_1fr_auto]">
                         <div className="flex items-center gap-4 justify-self-center sm:justify-self-start">
                             <img
@@ -248,7 +248,7 @@ const AdminDashboard = () => {
                 </div>
 
                 {/* Appointments List */}
-                <div className="bg-white rounded-2xl shadow-2xl p-6 flex-1 min-h-0 flex flex-col">
+                <div className="bg-white rounded-2xl shadow-2xl p-6">
                     <div className="mb-4 rounded-xl border border-blue-100 bg-blue-50 p-4">
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
                             <div>
@@ -313,7 +313,7 @@ const AdminDashboard = () => {
                         Appointments ({filteredAppointments.length} of {appointments.length})
                     </h2>
 
-                    <div className="flex-1 min-h-0 overflow-y-auto pr-2 pb-4 snap-y snap-mandatory scroll-py-4">
+                    <div className="space-y-4">
                         {appointments.length === 0 ? (
                             <div className="text-center py-12">
                                 <p className="text-gray-500 text-lg">No appointments found</p>
@@ -324,7 +324,7 @@ const AdminDashboard = () => {
                                 {filteredAppointments.map((appointment) => (
                                     <div
                                         key={appointment._id}
-                                        className="border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-shadow bg-gray-50 snap-start scroll-mt-4"
+                                        className="border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-shadow bg-gray-50"
                                     >
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                             {/* Patient Info */}
