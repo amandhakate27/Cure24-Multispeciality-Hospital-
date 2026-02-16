@@ -57,6 +57,9 @@ const Contact = () => {
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const textareaClasses =
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+    const mapEmbedUrl =
+        import.meta.env.VITE_MAP_EMBED_URL ||
+        "https://www.google.com/maps?q=Nagpur%20Besa%20Road&output=embed";
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -251,7 +254,7 @@ const Contact = () => {
                                 className="w-full h-full"
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
-                                src="https://www.google.com/maps?q=Nagpur%20Besa%20Road&output=embed"
+                                src={mapEmbedUrl}
                             />
                         </div>
                     </motion.div>
