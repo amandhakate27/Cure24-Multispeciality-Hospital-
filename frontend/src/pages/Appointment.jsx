@@ -58,6 +58,14 @@ const Appointment = () => {
     const normalizePhone = (value) => String(value || "").replace(/[\s-]/g, "").trim();
     const isValidIndianMobile = (value) => /^(?:\+91|0)?[6-9]\d{9}$/.test(value);
 
+    const getTodayDateString = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, "0");
+        const day = String(today.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const normalizedPhone = normalizePhone(formData.phone);
@@ -191,6 +199,7 @@ const Appointment = () => {
                                             name="date"
                                             value={formData.date}
                                             onChange={handleChange}
+                                            min={getTodayDateString()}
                                             required
                                             className={inputWithIconClasses}
                                         />
@@ -251,7 +260,7 @@ const Appointment = () => {
                             <motion.div variants={fieldVariants} className="flex justify-center">
                                 <button
                                     type="submit"
-                                    className="bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                                    className="cursor-pointer bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                 >
                                     Confirm Appointment
                                 </button>

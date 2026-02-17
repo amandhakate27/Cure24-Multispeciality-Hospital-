@@ -309,84 +309,52 @@ const AdminDashboard = () => {
                         </div>
                     </div>
 
-                    <h2 className="text-2xl font-bold text-blue-900 mb-4">
+                    <h2 className="text-2xl font-bold text-blue-900 mb-6">
                         Appointments ({filteredAppointments.length} of {appointments.length})
                     </h2>
 
-                    <div className="space-y-4">
-                        {appointments.length === 0 ? (
-                            <div className="text-center py-12">
-                                <p className="text-gray-500 text-lg">No appointments found</p>
-                                <p className="text-gray-400 mt-2">Appointments booked through the website will appear here</p>
-                            </div>
-                        ) : (
-                            <div className="space-y-4">
-                                {filteredAppointments.map((appointment) => (
-                                    <div
-                                        key={appointment._id}
-                                        className="border border-gray-200 rounded-xl p-5 hover:shadow-lg transition-shadow bg-gray-50"
-                                    >
-                                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                            {/* Patient Info */}
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Patient Name</h3>
-                                                <p className="text-lg font-semibold text-gray-900">{appointment.name || "N/A"}</p>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Email</h3>
-                                                <p className="text-base text-gray-900">{appointment.email || "N/A"}</p>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Phone</h3>
-                                                <p className="text-base text-gray-900">{appointment.phone || "N/A"}</p>
-                                            </div>
-
-                                            {/* Appointment Details */}
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Date</h3>
-                                                <p className="text-base font-semibold text-blue-900">
-                                                    {formatDate(appointment.date)}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Time</h3>
-                                                <p className="text-base font-semibold text-blue-900">
-                                                    {formatTime(appointment.time)}
-                                                </p>
-                                            </div>
-
-                                            <div>
-                                                <h3 className="text-sm font-medium text-gray-500 mb-1">Department</h3>
-                                                <p className="text-base text-gray-900">{appointment.department || "N/A"}</p>
-                                            </div>
-
-                                            {appointment.doctor && (
-                                                <div>
-                                                    <h3 className="text-sm font-medium text-gray-500 mb-1">Doctor</h3>
-                                                    <p className="text-base text-gray-900">{appointment.doctor}</p>
-                                                </div>
-                                            )}
-
-                                            {appointment.message && (
-                                                <div className="md:col-span-2 lg:col-span-3">
-                                                    <h3 className="text-sm font-medium text-gray-500 mb-1">Message</h3>
-                                                    <p className="text-base text-gray-700">{appointment.message}</p>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <div className="mt-4 flex flex-col md:flex-row md:items-center gap-3">
-                                            <div className="flex items-center gap-2">
-                                                <span className="text-sm font-medium text-gray-500">Status:</span>
+                    {appointments.length === 0 ? (
+                        <div className="text-center py-12 bg-gray-50 rounded-lg">
+                            <p className="text-gray-500 text-lg">No appointments found</p>
+                            <p className="text-gray-400 mt-2">Appointments booked through the website will appear here</p>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto border border-gray-200 rounded-lg shadow-sm">
+                            <table className="w-full text-sm">
+                                <thead className="bg-blue-50 border-b border-gray-200">
+                                    <tr>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Patient Name</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Email</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Phone</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Date</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Time</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Department</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Doctor</th>
+                                        <th className="px-4 py-3 text-left font-semibold text-gray-700">Status</th>
+                                        <th className="px-4 py-3 text-center font-semibold text-gray-700">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {filteredAppointments.map((appointment, index) => (
+                                        <tr
+                                            key={appointment._id}
+                                            className={`border-b border-gray-100 hover:bg-blue-50 transition-colors ${index % 2 === 0 ? "bg-white" : "bg-gray-50"
+                                                }`}
+                                        >
+                                            <td className="px-4 py-3 font-medium text-gray-900">{appointment.name || "N/A"}</td>
+                                            <td className="px-4 py-3 text-gray-700">{appointment.email || "N/A"}</td>
+                                            <td className="px-4 py-3 text-gray-700">{appointment.phone || "N/A"}</td>
+                                            <td className="px-4 py-3 font-semibold text-blue-900">{formatDate(appointment.date)}</td>
+                                            <td className="px-4 py-3 font-semibold text-blue-900">{formatTime(appointment.time)}</td>
+                                            <td className="px-4 py-3 text-gray-700">{appointment.department || "N/A"}</td>
+                                            <td className="px-4 py-3 text-gray-700">{appointment.doctor || "N/A"}</td>
+                                            <td className="px-4 py-3">
                                                 <select
                                                     value={appointment.status || "pending"}
                                                     onChange={(event) =>
                                                         updateStatus(appointment._id, event.target.value)
                                                     }
-                                                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 bg-white hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+                                                    className="border border-gray-300 rounded-md px-2 py-1 text-xs font-semibold text-gray-700 bg-white hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                                                 >
                                                     {statusOptions.map((status) => (
                                                         <option key={status} value={status}>
@@ -394,28 +362,21 @@ const AdminDashboard = () => {
                                                         </option>
                                                     ))}
                                                 </select>
-                                            </div>
-                                            <button
-                                                onClick={() => setPendingDelete(appointment)}
-                                                className="text-sm font-semibold text-red-600 hover:text-red-700"
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-
-                                        {/* Booking Timestamp */}
-                                        {appointment.createdAt && (
-                                            <div className="mt-4 pt-4 border-t border-gray-200">
-                                                <p className="text-xs text-gray-400">
-                                                    Booked on: {formatDateTime(appointment.createdAt)}
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                                            </td>
+                                            <td className="px-4 py-3 text-center">
+                                                <button
+                                                    onClick={() => setPendingDelete(appointment)}
+                                                    className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             </div>
 

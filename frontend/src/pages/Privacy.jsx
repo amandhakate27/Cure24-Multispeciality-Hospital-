@@ -198,11 +198,11 @@ const Privacy = () => {
                             If you have questions or concerns about this Privacy Policy or our data practices, please contact:
                         </p>
                         <div className="mt-4 text-sm md:text-base text-blue-800 font-semibold">
-                            <p>Privacy Officer - Cure 24 Clinic Hospital</p>
-                            <p>Medical Square, Civil Lines</p>
-                            <p>Nagpur, Maharashtra 440001</p>
-                            <p>Email: privacy@cure24hospital.com</p>
-                            <p>Phone: +91 712-2456790</p>
+                            <p>Cure 24 Clinic Hospital</p>
+                            <p>Deshpande Lay-out, Vaishnavi Devi Chowk</p>
+                            <p>C.A. Road, Nagpur</p>
+                            <p>Email: cure24hospital@gmail.com</p>
+                            <p>Phone: +91 9654317717</p>
                         </div>
                     </div>
                 </div>

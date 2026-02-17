@@ -103,9 +103,9 @@ const Hero = () => {
                 <div className="text-center flex flex-col items-center">
                     <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight">
                         <span className="bg-linear-to-r from-blue-900 via-blue-700 to-blue-500 text-transparent bg-clip-text">
-                            Your Health, Our
+                            CARE THAT, NEVER
                             <br />
-                            Priority
+                            SLEEPS
                         </span>
                     </h1>
 
@@ -116,7 +116,7 @@ const Hero = () => {
 
                     <div className="flex flex-wrap items-center gap-4 mt-8 justify-center">
                         <a
-                            href="tel:+919654317717"
+                            href="tel:+919665151746"
                             className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"
                         >
                             <Phone className="w-4 h-4" aria-hidden="true" />
@@ -124,7 +124,7 @@ const Hero = () => {
                         </a>
 
                         <a
-                            href="https://wa.me/919654317717"
+                            href="https://wa.me/919665151746"
                             target="_blank"
                             rel="noreferrer"
                             className="bg-[#25D366] text-white px-4 py-3 rounded-xl font-semibold hover:bg-[#1EBE5D] transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"

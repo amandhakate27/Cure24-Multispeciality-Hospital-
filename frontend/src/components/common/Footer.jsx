@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Clock, MapPin, Phone } from "lucide-react";
- 
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
+
 
 const Footer = () => {
     return (
@@ -45,8 +45,8 @@ const Footer = () => {
                             <li className="flex items-start gap-2 justify-center md:justify-start text-center md:text-left">
                                 <MapPin className="w-5 h-5 text-blue-200 shrink-0 mt-0.5" aria-hidden="true" />
                                 <span className="leading-relaxed">
-                                    Plot No 5, Daddu's Kitchen, Diamond Nagar,
-                                    Besa Road, Nagpur-440037, Maharashtra
+                                    Deshpande Lay-out, Vaishnavi Devi Chowk,
+                                    C.A. Road, Nagpur
                                 </span>
                             </li>
                             <li className="flex items-center gap-3 justify-center md:justify-start">
@@ -56,6 +56,12 @@ const Footer = () => {
                             <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Clock className="w-4 h-4 text-blue-200" aria-hidden="true" />
                                 <span>Open 24/7</span>
+                            </li>
+                            <li className="flex items-center gap-3 justify-center md:justify-start">
+                                <Mail className="w-4 h-4 text-blue-200" aria-hidden="true" />
+                                <a href="mailto:cure24hospital@gmail.com" className="hover:underline underline-offset-4">
+                                    cure24hospital@gmail.com
+                                </a>
                             </li>
                         </ul>
                     </div>

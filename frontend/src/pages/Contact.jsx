@@ -57,14 +57,10 @@ const Contact = () => {
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const textareaClasses =
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
-    const fallbackMapEmbedUrl =
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.789!2d79.07365!3d21.10125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4978d7d7d7d7d%3A0x1a1a1a1a1a1a1a1a!2sBesa%20Road%2C%20Nagpur!5e0!3m2!1sen!2sin!4v1629123456789";
-    const rawMapEmbedUrl = import.meta.env.VITE_MAP_EMBED_URL;
+
     const mapEmbedUrl =
-        rawMapEmbedUrl &&
-            (rawMapEmbedUrl.includes("/maps/embed") || rawMapEmbedUrl.includes("output=embed"))
-            ? rawMapEmbedUrl
-            : fallbackMapEmbedUrl;
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.120000862208!2d79.13550111005296!3d21.147622180450426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c76b577c7ddb%3A0xd2bd1c7d5e55aaf5!2sAuro%20Critical%20Care%20Hospital%20%7C%20Orthopedic%20Hospital%20in%20Nagpur%20%7C%20Kne%20Replacement%20Hospital%20in%20Nagpur%20%7C%20Join%20Replacement%20Surgeon%20in%20Nagpur%20%7C!5e0!3m2!1sen!2sin!4v1771320732076!5m2!1sen!2sin";
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -127,8 +123,8 @@ const Contact = () => {
                                     <div>
                                         <p className="font-extrabold text-blue-800">Location</p>
                                         <p className="text-blue-800">
-                                            Plot No 5, Daddu's Kitchen, Diamond Nagar,
-                                            Besa Road, Nagpur-440037, Maharashtra
+                                            Deshpande Lay-out, Vaishnavi Devi Chowk,
+                                            C.A. Road, Nagpur
                                         </p>
                                     </div>
                                 </div>
@@ -145,7 +141,7 @@ const Contact = () => {
                                     <Mail className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-extrabold text-blue-800">Email</p>
-                                        <p className="text-blue-800">support@cure24hospital.com</p>
+                                        <p className="text-blue-800">cure24hospital@gmail.com</p>
                                     </div>
                                 </div>
                             </div>
@@ -255,14 +251,14 @@ const Contact = () => {
                     >
                         <div className="w-full h-80 md:h-105">
                             <iframe
-                                title="Cure24 Location"
-                                className="w-full h-full"
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                                allow="fullscreen; picture-in-picture"
-                                allowFullScreen
+                                title="Auro Critical Care Hospital Location"
                                 src={mapEmbedUrl}
+                                className="w-full h-full border-0"
+                                loading="lazy"
+                                allowFullScreen
+                                referrerPolicy="strict-origin-when-cross-origin"
                             />
+
                         </div>
                     </motion.div>
                 </div>
