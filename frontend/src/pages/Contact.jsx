@@ -57,9 +57,14 @@ const Contact = () => {
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const textareaClasses =
         "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
-    const mapEmbedUrl =
-        import.meta.env.VITE_MAP_EMBED_URL ||
+    const fallbackMapEmbedUrl =
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3722.789!2d79.07365!3d21.10125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4978d7d7d7d7d%3A0x1a1a1a1a1a1a1a1a!2sBesa%20Road%2C%20Nagpur!5e0!3m2!1sen!2sin!4v1629123456789";
+    const rawMapEmbedUrl = import.meta.env.VITE_MAP_EMBED_URL;
+    const mapEmbedUrl =
+        rawMapEmbedUrl &&
+            (rawMapEmbedUrl.includes("/maps/embed") || rawMapEmbedUrl.includes("output=embed"))
+            ? rawMapEmbedUrl
+            : fallbackMapEmbedUrl;
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -255,6 +260,7 @@ const Contact = () => {
                                 loading="lazy"
                                 referrerPolicy="no-referrer-when-downgrade"
                                 allow="fullscreen; picture-in-picture"
+                                allowFullScreen
                                 src={mapEmbedUrl}
                             />
                         </div>
