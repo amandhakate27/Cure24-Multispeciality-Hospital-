@@ -11,6 +11,7 @@ const AdminDashboard = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [showPastOnly, setShowPastOnly] = useState(false);
+    const [searchQuery, setSearchQuery] = useState("");
     const [toast, setToast] = useState(null);
     const [pendingDelete, setPendingDelete] = useState(null);
     const toastTimer = useRef(null);
@@ -176,6 +177,14 @@ const AdminDashboard = () => {
                 if (appointmentDate && appointmentDate > end) return false;
             }
 
+            if (searchQuery.trim()) {
+                const query = searchQuery.toLowerCase().trim();
+                const matchesName = appointment.name?.toLowerCase().includes(query);
+                const matchesEmail = appointment.email?.toLowerCase().includes(query);
+                const matchesPhone = appointment.phone?.replace(/[\s-]/g, "").includes(query.replace(/[\s-]/g, ""));
+                if (!matchesName && !matchesEmail && !matchesPhone) return false;
+            }
+
             return true;
         })
         .sort((a, b) => {
@@ -259,7 +268,18 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-4">
+                        <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-5">
+                            <div className="flex flex-col">
+                                <label className="text-xs font-semibold text-blue-900">Search Patient</label>
+                                <input
+                                    type="text"
+                                    value={searchQuery}
+                                    onChange={(event) => setSearchQuery(event.target.value)}
+                                    placeholder="Name, Email, or Phone"
+                                    className="mt-1 rounded-md border border-blue-200 px-3 py-2 text-sm text-blue-900 placeholder:text-blue-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                />
+                            </div>
+
                             <div className="flex flex-col">
                                 <label className="text-xs font-semibold text-blue-900">View</label>
                                 <select
@@ -300,10 +320,11 @@ const AdminDashboard = () => {
                                         setStartDate("");
                                         setEndDate("");
                                         setShowPastOnly(false);
+                                        setSearchQuery("");
                                     }}
-                                    className="mt-1 rounded-md border border-blue-300 bg-white px-3 py-2 text-sm font-semibold text-blue-900 hover:bg-blue-100"
+                                    className="mt-1 rounded-md border border-blue-300 bg-white px-3 py-2 text-sm font-semibold text-blue-900 hover:bg-blue-100 transition-colors"
                                 >
-                                    Clear filters
+                                    Clear all
                                 </button>
                             </div>
                         </div>
@@ -366,7 +387,7 @@ const AdminDashboard = () => {
                                             <td className="px-4 py-3 text-center">
                                                 <button
                                                     onClick={() => setPendingDelete(appointment)}
-                                                    className="text-xs font-semibold text-red-600 hover:text-red-700 hover:underline"
+                                                    className="bg-red-600 text-white px-4 py-2 rounded-md font-semibold text-xs hover:bg-red-700 transition-all active:scale-95 shadow-sm hover:shadow-md"
                                                 >
                                                     Delete
                                                 </button>
@@ -381,18 +402,18 @@ const AdminDashboard = () => {
             </div>
 
             {pendingDelete && (
-                <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 px-4">
-                    <div className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl">
-                        <h3 className="text-lg font-semibold text-blue-900">Delete appointment?</h3>
-                        <p className="mt-2 text-sm text-gray-600">
+                <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 px-4 backdrop-blur-sm">
+                    <div className="w-full max-w-md rounded-2xl border-2 border-red-200 bg-white p-7 shadow-2xl">
+                        <h3 className="text-xl font-semibold text-red-900">Delete Appointment?</h3>
+                        <p className="mt-3 text-sm text-gray-700">
                             Are you sure you want to delete the appointment
-                            {pendingDelete.name ? ` for ${pendingDelete.name}` : ""}?
+                            {pendingDelete.name && <span className="font-semibold"> for {pendingDelete.name}</span>}? This action cannot be undone.
                         </p>
-                        <div className="mt-6 flex justify-end gap-3">
+                        <div className="mt-7 flex justify-end gap-4">
                             <button
                                 type="button"
                                 onClick={() => setPendingDelete(null)}
-                                className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-semibold text-gray-600 hover:bg-gray-100"
+                                className="rounded-lg border-2 border-gray-300 px-6 py-2.5 text-sm font-semibold text-gray-700 hover:bg-gray-50 transition-colors"
                             >
                                 Cancel
                             </button>
@@ -403,7 +424,7 @@ const AdminDashboard = () => {
                                     setPendingDelete(null);
                                     handleDelete(targetId);
                                 }}
-                                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700"
+                                className="rounded-lg bg-red-600 px-6 py-2.5 text-sm font-semibold text-white hover:bg-red-700 transition-colors shadow-md"
                             >
                                 Delete
                             </button>
