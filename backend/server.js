@@ -25,7 +25,17 @@ const ADMIN_EFFECTIVE_HASH =
 
 
 app.disable('x-powered-by');
-app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            useDefaults: true,
+            directives: {
+                "frame-src": ["'self'", "https://www.google.com"],
+                "child-src": ["'self'", "https://www.google.com"],
+            },
+        },
+    })
+);
 
 app.use(
     cors({
