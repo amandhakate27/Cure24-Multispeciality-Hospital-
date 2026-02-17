@@ -9,6 +9,7 @@ const Hero = () => {
             () => import("../../assets/images/slideimg2.jpeg?url"),
             () => import("../../assets/images/slideimg3.jpg?url"),
             () => import("../../assets/images/slideimg4.jpeg?url"),
+            () => import("../../assets/images/slideimage.jpg?url"),
         ],
         []
     );

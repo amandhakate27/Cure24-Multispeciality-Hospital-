@@ -1,7 +1,6 @@
 import {
     BadgeCheck,
     Building2,
-    CircleCheck,
     Clock,
     FileText,
     Mail,
@@ -11,6 +10,26 @@ import {
 import { motion } from "framer-motion";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+
+import hdfc from "../assets/company logos tpa/hdfc ergo.png";
+import maxBupa from "../assets/company logos tpa/max bupa health ins.svg";
+import reliance from "../assets/company logos tpa/reliance health ins.png";
+import religare from "../assets/company logos tpa/relligare_logo.svg";
+import safeway from "../assets/company logos tpa/safeway ins.png";
+import healthIndia from "../assets/company logos tpa/health india.png";
+import paramount from "../assets/company logos tpa/paramount ins.png";
+import dhs from "../assets/company logos tpa/DHS tpa.png";
+import medicare from "../assets/company logos tpa/medicare-logo-green.svg";
+import nvgt from "../assets/company logos tpa/NVGT.png";
+import heritage from "../assets/company logos tpa/heritage health ins.png";
+import ericson from "../assets/company logos tpa/ericson health isn.jpg";
+import liberty from "../assets/company logos tpa/liberty general insurance.avif";
+import fhpl from "../assets/company logos tpa/fhpl ins.png";
+import adityaBirla from "../assets/company logos tpa/aditya birla ins.webp";
+import raksha from "../assets/company logos tpa/raksha health ins.png";
+import sbi from "../assets/company logos tpa/sbi general ins.svg";
+import acko from "../assets/company logos tpa/acko ins.svg";
+import manipal from "../assets/company logos tpa/manipal ins.png";
 
 const highlights = [
     {
@@ -58,30 +77,28 @@ const processSteps = [
     },
 ];
 
-const tpaPartners = [
-    "Medi Assist",
-    "Paramount Health Services",
-    "Vidal Health",
-    "Good Health Plan TPA",
-    "Raksha TPA",
-    "Heritage Health TPA",
-    "MD India Healthcare Services",
-    "Family Health Plan TPA",
-    "Health India TPA",
-    "Dedicated Healthcare Services",
-    "Grand Healthcare Services",
-    "Park Mediclaim",
-];
-
 const insurers = [
-    "Star Health Insurance",
-    "ICICI Lombard",
-    "Aditya Birla Health Insurance",
-    "Care Health Insurance",
-    "Tata AIG",
-    "Reliance General Insurance",
-    "Bajaj Allianz",
-    "HDFC Ergo",
+    { name: "Apollo Munich Insurance Co. / HDFC Ergo General Insurance", logo: hdfc },
+    { name: "Max Bupa Health Insurance", logo: maxBupa },
+    { name: "Reliance Health Insurance / Reliance General Insurance", logo: reliance },
+    { name: "Religare Health Insurance", logo: religare },
+    { name: "Safe Way TPA", logo: safeway },
+    { name: "Health India Insurance TPA", logo: healthIndia },
+    { name: "Paramount Health Insurance TPA", logo: paramount },
+    { name: "Unique Health Care", logo: null },
+    { name: "DHS TPA", logo: dhs },
+    { name: "Medicare Health Insurance", logo: medicare },
+    { name: "NVGT", logo: nvgt },
+    { name: "Heritage Health Insurance TPA", logo: heritage },
+    { name: "Ericson Health Insurance TPA", logo: ericson },
+    { name: "Liberty General Insurance", logo: liberty },
+    { name: "Vision E Meditek", logo: null },
+    { name: "FHPL TPA", logo: fhpl },
+    { name: "Aditya Birla Insurance", logo: adityaBirla },
+    { name: "Raksha TPA (Only for New India Assurance)", logo: raksha },
+    { name: "SBI General Insurance", logo: sbi },
+    { name: "Acko General Insurance", logo: acko },
+    { name: "Manipal Cigna", logo: manipal },
 ];
 
 const documents = [
@@ -216,38 +233,6 @@ const Insurance = () => {
                 </div>
             </section>
 
-            <section className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
-                    <h3 className="text-2xl md:text-3xl font-bold text-blue-800">Our TPA Partners</h3>
-                    <p className="text-blue-700 mt-2 text-sm md:text-base">
-                        We work with all major Third Party Administrators in India
-                    </p>
-                    <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8"
-                        variants={gridVariants}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                    >
-                        {tpaPartners.map((name) => (
-                            <motion.div
-                                key={name}
-                                variants={cardVariants}
-                                whileHover={{ y: -5, scale: 1.02 }}
-                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex flex-col items-center gap-1 justify-center transition-shadow duration-300 hover:shadow-lg"
-                            >
-                                <div className="flex items-center gap-2">
-                                    <CircleCheck className="w-4 h-4 text-green-600" aria-hidden="true" />
-                                    <span>{name}</span>
-                                </div>
-                                <span className="text-xs text-blue-500 font-medium">Leading TPA</span>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-                </div>
-            </section>
-
             <section className="pb-12">
                 <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
@@ -263,16 +248,29 @@ const Insurance = () => {
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.2 }}
                     >
-                        {insurers.map((name) => (
+                        {insurers.map((insurer) => (
                             <motion.div
-                                key={name}
+                                key={insurer.name}
                                 variants={cardVariants}
                                 whileHover={{ y: -5, scale: 1.02 }}
                                 transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex items-center gap-2 justify-center transition-shadow duration-300 hover:shadow-lg"
+                                className="bg-white/90 border border-blue-100 rounded-xl shadow-sm p-4 text-sm font-semibold text-blue-800 flex items-center gap-3 justify-start transition-shadow duration-300 hover:shadow-lg"
                             >
-                                <ShieldCheck className="w-4 h-4 text-blue-700" aria-hidden="true" />
-                                <span>{name}</span>
+                                <div className="h-12 w-12 shrink-0 rounded-lg border border-blue-200 bg-blue-50 flex items-center justify-center overflow-hidden p-1">
+                                    {insurer.logo ? (
+                                        <img
+                                            src={insurer.logo}
+                                            alt={`${insurer.name} logo`}
+                                            className="w-full h-full object-contain"
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <ShieldCheck className="w-7 h-7 text-blue-600" aria-hidden="true" />
+                                    )}
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-sm text-blue-800 font-semibold leading-snug">{insurer.name}</span>
+                                </div>
                             </motion.div>
                         ))}
                     </motion.div>
