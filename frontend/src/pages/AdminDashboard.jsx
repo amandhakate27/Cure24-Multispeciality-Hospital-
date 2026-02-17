@@ -380,28 +380,28 @@ const AdminDashboard = () => {
 
                                         <div className="mt-4 flex flex-col md:flex-row md:items-center gap-3">
                                             <div className="flex items-center gap-2">
-                                                <span className="text-sm font-medium text-gray-500">Status</span>
+                                                <span className="text-sm font-medium text-gray-500">Status:</span>
                                                 <select
                                                     value={appointment.status || "pending"}
                                                     onChange={(event) =>
                                                         updateStatus(appointment._id, event.target.value)
                                                     }
-                                                    className="border border-gray-300 rounded-md px-2 py-1 text-sm text-gray-700"
+                                                    className="border border-gray-300 rounded-lg px-3 py-2 text-sm font-semibold text-gray-700 bg-white hover:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
                                                 >
                                                     {statusOptions.map((status) => (
                                                         <option key={status} value={status}>
-                                                            {status}
+                                                            {status.charAt(0).toUpperCase() + status.slice(1)}
                                                         </option>
                                                     ))}
                                                 </select>
                                             </div>
-                                        <button
-                                            onClick={() => setPendingDelete(appointment)}
-                                            className="text-sm font-semibold text-red-600 hover:text-red-700"
-                                        >
-                                            Delete
-                                        </button>
-                                    </div>
+                                            <button
+                                                onClick={() => setPendingDelete(appointment)}
+                                                className="text-sm font-semibold text-red-600 hover:text-red-700"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
 
                                         {/* Booking Timestamp */}
                                         {appointment.createdAt && (

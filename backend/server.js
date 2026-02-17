@@ -164,6 +164,26 @@ app.get('/api/appointments', authenticate, async (req, res) => {
     }
 });
 
+// Update appointment status
+app.patch('/api/appointments/:id', authenticate, async (req, res) => {
+    try {
+        const { status } = req.body;
+        const appointment = await Appointment.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            { new: true, runValidators: true }
+        );
+
+        if (!appointment) {
+            return res.status(404).json({ success: false, message: 'Appointment not found' });
+        }
+
+        res.json({ success: true, appointment });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Delete appointment
 app.delete('/api/appointments/:id', authenticate, async (req, res) => {
     try {
