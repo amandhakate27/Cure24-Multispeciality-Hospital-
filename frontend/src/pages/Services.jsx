@@ -6,7 +6,6 @@ import Navbar from "../components/common/Navbar";
 import anesthesiologyImg from "../assets/images/anesthesiology.png";
 import cardiologyImg from "../assets/images/cardiology.jpg";
 import criticalCareImg from "../assets/images/critical care.jpg";
-import diabeticsImg from "../assets/images/diabetics.png";
 import emergencyCareImg from "../assets/images/emergency-care.jpg";
 import generalMedicineImg from "../assets/images/general medicin.png";
 import inpatientImg from "../assets/images/inpatient services.png";
@@ -15,6 +14,21 @@ import pathologyImg from "../assets/images/pathology labs.png";
 import pharmacyImg from "../assets/images/pharmacy.png";
 import preventiveImg from "../assets/images/preventive health checkups.png";
 import icuImg from "../assets/images/icu.png";
+import ctScanImg from "../assets/images/ct-scan.jpg";
+import diabeticsImg from "../assets/images/diabetics.png";
+import entImg from "../assets/images/ent.jpg";
+import gastroenterologyImg from "../assets/images/Gastroenterology.webp";
+import gynaecologyImg from "../assets/images/gynaecology.webp";
+import laparoscopicImg from "../assets/images/laparoscopic surgery.webp";
+import neurosurgeryImg from "../assets/images/neurosurgery.jpg";
+import orthopedicImg from "../assets/images/orthopedic and joint replacement surgery.png";
+import paediatricsImg from "../assets/images/PAEDIATRICS.png";
+import physiotherapyImg from "../assets/images/physiotherapy.jpg";
+import plasticSurgeryImg from "../assets/images/Plastic-surgery.jpg";
+import psychiatryImg from "../assets/images/psychiatry.png";
+import pulmonologyImg from "../assets/images/Pulmonology.jpg";
+import radiologyImg from "../assets/images/radiology.jpg";
+import urologyImg from "../assets/images/urology.png";
 
 const services = [
     {
@@ -36,11 +50,6 @@ const services = [
         title: "General Medicine",
         description: "Complete primary and preventive healthcare",
         image: generalMedicineImg,
-    },
-    {
-        title: "Diabetics",
-        description: "Expert treatment for personalized insulin therapy and lifestyle management",
-        image: diabeticsImg,
     },
     {
         title: "Critical Care",
@@ -76,6 +85,81 @@ const services = [
         title: "Pharmacy",
         description: "24/7 in house pharmacy stocked with all essential medicines , surgical supplies, and medical equipement.",
         image: pharmacyImg,
+    },
+    {
+        title: "Orthopaedic & Joint Replacement",
+        description: "Advanced orthopedic care including joint replacement surgeries, fracture management, and spine surgery by expert orthopedic surgeons.",
+        image: orthopedicImg,
+    },
+    {
+        title: "Gynaecology",
+        description: "Comprehensive women's healthcare including maternity services, gynecological surgeries, and prenatal and postnatal care.",
+        image: gynaecologyImg,
+    },
+    {
+        title: "Paediatrics",
+        description: "Specialized child healthcare services with expert pediatricians for newborns, infants, and children up to adolescence.",
+        image: paediatricsImg,
+    },
+    {
+        title: "Neurosurgery",
+        description: "Advanced neurosurgical procedures for brain and spine conditions with state-of-the-art equipment and experienced neurosurgeons.",
+        image: neurosurgeryImg,
+    },
+    {
+        title: "ENT (Ear, Nose & Throat)",
+        description: "Comprehensive ENT care including treatment for ear infections, sinus issues, throat disorders, and ENT surgeries.",
+        image: entImg,
+    },
+    {
+        title: "Gastroenterology",
+        description: "Expert care for digestive system disorders including endoscopy, colonoscopy, and treatment of liver and stomach conditions.",
+        image: gastroenterologyImg,
+    },
+    {
+        title: "Urology",
+        description: "Specialized urological care including kidney stone treatment, prostate care, and urinary tract disorder management.",
+        image: urologyImg,
+    },
+    {
+        title: "Pulmonology",
+        description: "Comprehensive respiratory care for lung diseases, asthma, COPD, and breathing disorders with advanced pulmonary function tests.",
+        image: pulmonologyImg,
+    },
+    {
+        title: "Psychiatry",
+        description: "Mental health services including counseling, psychiatric evaluation, and treatment for depression, anxiety, and other mental disorders.",
+        image: psychiatryImg,
+    },
+    {
+        title: "Diabetology",
+        description: "Specialized diabetes management with personalized treatment plans, diet counseling, and regular monitoring for blood sugar control.",
+        image: diabeticsImg,
+    },
+    {
+        title: "Physiotherapy",
+        description: "Rehabilitation and physical therapy services for recovery from injuries, surgeries, and chronic pain management with certified therapists.",
+        image: physiotherapyImg,
+    },
+    {
+        title: "Laparoscopic Surgery",
+        description: "Minimally invasive surgical procedures with faster recovery, less pain, and smaller incisions for various abdominal surgeries.",
+        image: laparoscopicImg,
+    },
+    {
+        title: "Plastic Surgery",
+        description: "Cosmetic and reconstructive surgery services including facial procedures, body contouring, and post-trauma reconstruction.",
+        image: plasticSurgeryImg,
+    },
+    {
+        title: "Radiology",
+        description: "Complete diagnostic imaging services including X-ray, ultrasound, mammography, and interventional radiology procedures.",
+        image: radiologyImg,
+    },
+    {
+        title: "CT Scan",
+        description: "Advanced CT scanning technology for detailed cross-sectional imaging to diagnose various medical conditions accurately.",
+        image: ctScanImg,
     },
 ];
 
