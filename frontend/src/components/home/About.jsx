@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import LoadingLink from "../common/LoadingLink";
 import LoadingImage from "../common/LoadingImage";
-import ctScanImg from "../../assets/images/ct-scan.jpg";
+import womanDoctorImg from "../../assets/images/women-doctor-service.png";
 import nurseImg from "../../assets/images/medical-nurse.jpg";
 import seniorWomanImg from "../../assets/images/senior-woman.jpg";
-import treatmentTechImg from "../../assets/images/treatment-tech.jpg";
-import womanDoctorImg from "../../assets/images/women-doctor-service.png";
+import icuImg from "../../assets/images/icu.png";
+import inpatientImg from "../../assets/images/inpatient services.png";
 
 const gridVariants = {
     hidden: {},
@@ -49,7 +49,7 @@ const About = () => {
 
                         <p className="text-blue-700 mt-4 [text-align:justify]">
                             Our state-of-the-art facility combines modern infrastructure with compassionate
-                            care. Led by Dr. Ritesh K. Bhondankar and a team of over 50 specialist doctors,
+                            care. Led by Dr. Jitesh K. Bhandankar and a team of over 50 specialist doctors,
                             we serve more than 5,000 patients annually across 15+ medical specialties.
                         </p>
 
@@ -103,8 +103,8 @@ const About = () => {
                             transition={{ type: "spring", stiffness: 260, damping: 18 }}
                         >
                             <LoadingImage
-                                src={ctScanImg}
-                                alt="CT scan room"
+                                src={icuImg}
+                                alt="ICU care"
                                 className="h-28 md:h-32 lg:h-36 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group"
                                 imgClassName="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                             />
@@ -115,8 +115,8 @@ const About = () => {
                             transition={{ type: "spring", stiffness: 260, damping: 18 }}
                         >
                             <LoadingImage
-                                src={treatmentTechImg}
-                                alt="Treatment technology"
+                                src={inpatientImg}
+                                alt="Inpatient services"
                                 className="h-28 md:h-32 lg:h-36 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 group"
                                 imgClassName="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
                             />

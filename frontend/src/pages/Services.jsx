@@ -4,7 +4,6 @@ import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 
 import anesthesiologyImg from "../assets/images/anesthesiology.png";
-import cardiologyImg from "../assets/images/cardiology.jpg";
 import criticalCareImg from "../assets/images/critical care.jpg";
 import emergencyCareImg from "../assets/images/emergency-care.jpg";
 import generalMedicineImg from "../assets/images/general medicin.png";
@@ -14,7 +13,6 @@ import pathologyImg from "../assets/images/pathology labs.png";
 import pharmacyImg from "../assets/images/pharmacy.png";
 import preventiveImg from "../assets/images/preventive health checkups.png";
 import icuImg from "../assets/images/icu.png";
-import ctScanImg from "../assets/images/ct-scan.jpg";
 import diabeticsImg from "../assets/images/diabetics.png";
 import entImg from "../assets/images/ent.jpg";
 import gastroenterologyImg from "../assets/images/Gastroenterology.webp";
@@ -35,11 +33,6 @@ const services = [
         title: "Emergency Care",
         description: "24/7 emergency services with rapid response team",
         image: emergencyCareImg,
-    },
-    {
-        title: "Cardiology",
-        description: "Advanced heart care and cardiovascular treatments",
-        image: cardiologyImg,
     },
     {
         title: "Neurology",
@@ -155,11 +148,6 @@ const services = [
         title: "Radiology",
         description: "Complete diagnostic imaging services including X-ray, ultrasound, mammography, and interventional radiology procedures.",
         image: radiologyImg,
-    },
-    {
-        title: "CT Scan",
-        description: "Advanced CT scanning technology for detailed cross-sectional imaging to diagnose various medical conditions accurately.",
-        image: ctScanImg,
     },
 ];
 

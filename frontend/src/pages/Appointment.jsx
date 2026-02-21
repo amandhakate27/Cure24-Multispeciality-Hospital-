@@ -230,7 +230,6 @@ const Appointment = () => {
                                             Select Department
                                         </option>
                                         <option value="Emergency Care">Emergency Care</option>
-                                        <option value="Cardiology">Cardiology</option>
                                         <option value="Orthopedics">Orthopedics</option>
                                         <option value="Pediatrics">Pediatrics</option>
                                     </select>

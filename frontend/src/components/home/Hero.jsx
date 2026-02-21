@@ -6,7 +6,7 @@ const Hero = () => {
         () => [
             () => import("../../assets/images/slideimg0.jpg?url"),
             () => import("../../assets/images/slideimg1.jpeg?url"),
-            () => import("../../assets/images/slideimg2.jpeg?url"),
+            () => import("../../assets/images/medical-nurse.jpg?url"),
             () => import("../../assets/images/slideimg3.jpg?url"),
             () => import("../../assets/images/slideimg4.jpeg?url"),
             () => import("../../assets/images/slideimage.jpg?url"),
@@ -117,15 +117,15 @@ const Hero = () => {
 
                     <div className="flex flex-wrap items-center gap-4 mt-8 justify-center">
                         <a
-                            href="tel:+919665151746"
+                            href="tel:+919665151747"
                             className="bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"
                         >
                             <Phone className="w-4 h-4" aria-hidden="true" />
-                            Call Now
+                            Book Now
                         </a>
 
                         <a
-                            href="https://wa.me/919665151746"
+                            href="https://wa.me/919665151747"
                             target="_blank"
                             rel="noreferrer"
                             className="bg-[#25D366] text-white px-4 py-3 rounded-xl font-semibold hover:bg-[#1EBE5D] transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"

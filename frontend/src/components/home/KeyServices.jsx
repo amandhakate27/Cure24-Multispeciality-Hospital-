@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import LoadingImage from "../common/LoadingImage";
 import LoadingLink from "../common/LoadingLink";
-import cardiologyImg from "../../assets/images/cardiology.jpg";
 import criticalCareImg from "../../assets/images/critical care.jpg";
 import emergencyCareImg from "../../assets/images/emergency-care.jpg";
 import neurologyImg from "../../assets/images/neurology.jpeg";
@@ -14,11 +13,6 @@ const services = [
         title: "Emergency Care",
         description: "24/7 emergency services with rapid response team",
         image: emergencyCareImg,
-    },
-    {
-        title: "Cardiology",
-        description: "Advanced heart care and cardiovascular treatments",
-        image: cardiologyImg,
     },
     {
         title: "Neurology",

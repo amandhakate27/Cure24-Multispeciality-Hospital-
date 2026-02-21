@@ -33,7 +33,6 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold">Our Services</h3>
                         <ul className="mt-4 space-y-2 text-blue-100 text-sm">
                             <li>Emergency Care</li>
-                            <li>Cardiology</li>
                             <li>Orthopedics</li>
                             <li>Pediatrics</li>
                         </ul>
