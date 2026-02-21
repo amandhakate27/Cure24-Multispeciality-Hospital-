@@ -6,6 +6,7 @@ import emergencyCareImg from "../../assets/images/emergency-care.jpg";
 import neurologyImg from "../../assets/images/neurology.jpeg";
 import diabeticsImg from "../../assets/images/diabetics.png";
 import generalMedicineImg from "../../assets/images/general medicin.png";
+import anesthesiologyImg from "../../assets/images/anesthesiology.png";
 
 
 const services = [
@@ -33,6 +34,11 @@ const services = [
         title: "Critical Care",
         description: "ICU and intensive monitoring for critical patients",
         image: criticalCareImg,
+    },
+    {
+        title: "Anesthesiology",
+        description: "Safe perioperative care and anesthesia support for surgeries.",
+        image: anesthesiologyImg,
     },
 ];
 
