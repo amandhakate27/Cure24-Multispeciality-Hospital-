@@ -35,6 +35,11 @@ const Footer = () => {
                             <li>Emergency Care</li>
                             <li>Orthopedics</li>
                             <li>Pediatrics</li>
+                            <li>Cardiology</li>
+                            <li>Neurology</li>
+                            <li>General Surgery</li>
+                            <li>Diagnostic Imaging</li>
+                            <li>Pharmacy</li>
                         </ul>
                     </div>
 
@@ -50,7 +55,7 @@ const Footer = () => {
                             </li>
                             <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Phone className="w-4 h-4 text-blue-200" aria-hidden="true" />
-                                <span>+91 9654317717</span>
+                                <span>+91 9665151747</span>
                             </li>
                             <li className="flex items-center gap-3 justify-center md:justify-start">
                                 <Clock className="w-4 h-4 text-blue-200" aria-hidden="true" />

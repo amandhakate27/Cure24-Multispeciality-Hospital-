@@ -202,7 +202,7 @@ const Privacy = () => {
                             <p>Deshpande Lay-out, Vaishnavi Devi Chowk</p>
                             <p>C.A. Road, Nagpur</p>
                             <p>Email: cure24hospital@gmail.com</p>
-                            <p>Phone: +91 9654317717</p>
+                            <p>Phone: +91 9665151747</p>
                         </div>
                     </div>
                 </div>

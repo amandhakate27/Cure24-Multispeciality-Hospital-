@@ -29,14 +29,14 @@ const CallToAction = () => {
 
                 <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
                     <a
-                        href="tel:+919654317717"
+                        href="tel:+919665151747"
                         className="bg-blue-700 text-white px-6 py-3 rounded-xl font-semibold hover:bg-blue-800 transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"
                     >
                         <Phone className="w-4 h-4" aria-hidden="true" />
                         Call Now
                     </a>
                     <a
-                        href="https://wa.me/919654317717"
+                        href="https://wa.me/919665151747"
                         target="_blank"
                         rel="noreferrer"
                         className="bg-[#25D366] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#1EBE5D] transition-transform hover:scale-[1.03] active:scale-95 inline-flex items-center gap-2"

@@ -115,7 +115,7 @@ const Contact = () => {
                                     <Phone className="w-5 h-5 text-blue-700 shrink-0" aria-hidden="true" />
                                     <div>
                                         <p className="font-extrabold text-blue-800">Contact Number</p>
-                                        <p className="text-blue-800">+91 9654317717</p>
+                                        <p className="text-blue-800">+91 9665151747</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3">
@@ -271,7 +271,7 @@ const Contact = () => {
                         Call our emergency hotline immediately for urgent medical assistance
                     </p>
                     <motion.a
-                        href="tel:+919654317717"
+                        href="tel:+919665151747"
                         className="inline-flex items-center justify-center gap-2 mt-6 bg-blue-700 text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-blue-800 transition-all duration-200 hover:scale-[1.04] hover:shadow-lg active:scale-95"
                         initial={{ opacity: 0, y: 16 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -279,7 +279,7 @@ const Contact = () => {
                         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
                     >
                         <Phone className="w-4 h-4" aria-hidden="true" />
-                        Call: +91 9654317717
+                        Call: +91 9665151747
                     </motion.a>
                 </div>
             </section>
