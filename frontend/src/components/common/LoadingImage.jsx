@@ -8,6 +8,7 @@ const LoadingImage = ({
     loading = "lazy",
     decoding = "async",
     fetchPriority,
+    onError,
 }) => {
     const [loaded, setLoaded] = useState(false);
     const imgRef = useRef(null);
@@ -33,7 +34,10 @@ const LoadingImage = ({
                 src={src}
                 alt={alt}
                 onLoad={() => setLoaded(true)}
-                onError={() => setLoaded(true)}
+                onError={(event) => {
+                    setLoaded(true);
+                    if (onError) onError(event);
+                }}
                 className={`transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"} ${imgClassName}`}
                 loading={loading}
                 decoding={decoding}
