@@ -4,7 +4,7 @@ import { BriefcaseMedical, GraduationCap } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingImage from "../components/common/LoadingImage";
-import maleDoctorImg from "../assets/images/male dr staff.png";
+import drBhandarkarDummyImg from "../assets/images/dummyImg.jpeg";
 import drJaiswalImg from "../assets/images/Dr. Jaiswal.jpeg";
 import drPravinImg from "../assets/images/Dr. Pravin.jpeg";
 import drTriptiImg from "../assets/images/Dr. Tripti Sawlani.jpeg";
@@ -32,7 +32,8 @@ const cardVariants = {
 const existingDoctors = [
     {
         name: "Dr. Jitesh K. Bhandarkar",
-        image: maleDoctorImg,
+        image: drBhandarkarDummyImg,
+        useCenterCrop: true,
         role: "Managing Director",
         qualifications: "MBBS, DNS (Emergency Medicine)",
     },
@@ -76,8 +77,8 @@ const DoctorCard = ({ doctor }) => {
             <LoadingImage
                 src={imgSrc}
                 alt={doctor.name}
-                className="mt-3 w-full aspect-[4/3] rounded-xl overflow-hidden bg-blue-50"
-                imgClassName="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                className="mt-3 w-full aspect-[9/8] rounded-xl overflow-hidden bg-blue-50"
+                imgClassName={`w-full h-full object-cover ${doctor.useCenterCrop ? "object-center" : "object-top"} transition-transform duration-500 group-hover:scale-105`}
                 onError={() => setImgSrc(dummyDoctorImg)}
             />
             <div className="mt-3 space-y-2">
