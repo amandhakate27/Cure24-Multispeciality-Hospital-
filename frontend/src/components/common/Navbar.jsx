@@ -5,7 +5,7 @@ import LoadingLink from "./LoadingLink";
 import hospitalLogo from "../../assets/images/reallogo1.png";
 
 const aboutMenuLinks = [
-    { label: "About", to: "/about" },
+    { label: "About Us", to: "/about" },
     { label: "Gallery", to: "/gallery" },
 ];
 

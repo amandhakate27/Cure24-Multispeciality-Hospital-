@@ -4,7 +4,7 @@ import { BriefcaseMedical, GraduationCap } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingImage from "../components/common/LoadingImage";
-import drBhandarkarDummyImg from "../assets/images/dummyImg.jpeg";
+import maleDoctorImg from "../assets/images/male dr staff.png";
 import drJaiswalImg from "../assets/images/Dr. Jaiswal.jpeg";
 import drPravinImg from "../assets/images/Dr. Pravin.jpeg";
 import drTriptiImg from "../assets/images/Dr. Tripti Sawlani.jpeg";
@@ -32,8 +32,7 @@ const cardVariants = {
 const existingDoctors = [
     {
         name: "Dr. Jitesh K. Bhandarkar",
-        image: drBhandarkarDummyImg,
-        useCenterCrop: true,
+        image: maleDoctorImg,
         role: "Managing Director",
         qualifications: "MBBS, DNS (Emergency Medicine)",
     },
@@ -50,9 +49,10 @@ const additionalDoctors = [
         name: "Mr. Pravin Giripunje",
         image: drPravinImg,
         role: "Managing Director",
+        qualifications: "Profile details to be updated soon.",
     },
     {
-        name: "Dr. Tripti Sawlani",
+        name: "Dr. Tripti Sawlani", 
         image: drTriptiImg,
         role: "Managing Director",
         qualifications: "BDS, MHA (Hospital Administration)",
@@ -77,8 +77,8 @@ const DoctorCard = ({ doctor }) => {
             <LoadingImage
                 src={imgSrc}
                 alt={doctor.name}
-                className="mt-3 w-full aspect-[9/8] rounded-xl overflow-hidden bg-blue-50"
-                imgClassName={`w-full h-full object-cover ${doctor.useCenterCrop ? "object-center" : "object-top"} transition-transform duration-500 group-hover:scale-105`}
+                className="mt-3 h-48 md:h-52 w-full rounded-xl overflow-hidden bg-blue-50"
+                imgClassName="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 onError={() => setImgSrc(dummyDoctorImg)}
             />
             <div className="mt-3 space-y-2">
@@ -89,15 +89,13 @@ const DoctorCard = ({ doctor }) => {
                         {doctor.role}
                     </p>
                 </div>
-                {doctor.qualifications && (
-                    <div className="flex items-start gap-2 text-blue-700">
-                        <GraduationCap className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
-                        <p className="text-sm leading-relaxed">
-                            <span className="font-semibold text-blue-800">Qualifications: </span>
-                            {doctor.qualifications}
-                        </p>
-                    </div>
-                )}
+                <div className="flex items-start gap-2 text-blue-700">
+                    <GraduationCap className="h-4 w-4 mt-0.5 shrink-0" aria-hidden="true" />
+                    <p className="text-sm leading-relaxed">
+                        <span className="font-semibold text-blue-800">Qualifications: </span>
+                        {doctor.qualifications}
+                    </p>
+                </div>
             </div>
         </motion.div>
     );
@@ -124,7 +122,7 @@ const Doctors = () => {
                 <div className="max-w-7xl mx-auto px-6 lg:px-10">
                     <div className="text-center max-w-3xl mx-auto">
                         <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
-                            Our Doctors 
+                            Our Doctors and Managing Staff
                         </h3>
                     </div>
 
@@ -148,3 +146,4 @@ const Doctors = () => {
 };
 
 export default Doctors;
+
