@@ -4,7 +4,7 @@ import { BriefcaseMedical, GraduationCap } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingImage from "../components/common/LoadingImage";
-import maleDoctorImg from "../assets/images/male dr staff.png";
+import maleDoctorImg from "../assets/images/dummyImg.jpeg";
 import drJaiswalImg from "../assets/images/Dr. Jaiswal.jpeg";
 import drPravinImg from "../assets/images/Dr. Pravin.jpeg";
 import drTriptiImg from "../assets/images/Dr. Tripti Sawlani.jpeg";
@@ -69,7 +69,7 @@ const DoctorCard = ({ doctor }) => {
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
             transition={{ type: "spring", stiffness: 240, damping: 18 }}
-            className="group bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-4 hover:shadow-lg transition-shadow duration-300 flex flex-col"
+            className="group w-full max-w-[320px] mx-auto bg-white/90 border border-blue-100 rounded-2xl shadow-sm p-4 hover:shadow-lg transition-shadow duration-300 flex flex-col"
         >
             <h3 className="text-base md:text-lg font-bold text-blue-800 text-center">
                 {doctor.name}
@@ -77,7 +77,7 @@ const DoctorCard = ({ doctor }) => {
             <LoadingImage
                 src={imgSrc}
                 alt={doctor.name}
-                className="mt-3 h-48 md:h-52 w-full rounded-xl overflow-hidden bg-blue-50"
+                className="mt-3 h-52 w-full rounded-xl overflow-hidden bg-blue-50"
                 imgClassName="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                 onError={() => setImgSrc(dummyDoctorImg)}
             />
@@ -146,4 +146,3 @@ const Doctors = () => {
 };
 
 export default Doctors;
-
