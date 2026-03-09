@@ -232,6 +232,9 @@ const Appointment = () => {
                                         <option value="Emergency Care">Emergency Care</option>
                                         <option value="Orthopedics">Orthopedics</option>
                                         <option value="Pediatrics">Pediatrics</option>
+                                        <option value="General Medicine">General Medicine</option>
+                                        <option value="Neurology">Neurology</option>
+
                                     </select>
                                 </motion.div>
                                 <motion.div className="space-y-1" variants={fieldVariants}>

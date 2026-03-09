@@ -25,7 +25,7 @@ const AdminLogin = () => {
             if (rawText) {
                 try {
                     data = JSON.parse(rawText);
-                } catch (parseError) {
+                } catch (_parseError) {
                     data = null;
                 }
             }

@@ -1,69 +1,66 @@
 import { Link } from "react-router-dom";
 import { Clock, Mail, MapPin, Phone } from "lucide-react";
 
-
 const Footer = () => {
     return (
-        <footer className="bg-blue-900 text-white">
-            <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 text-center lg:text-left">
-                    <div className="flex flex-col items-center lg:items-start">
+        <footer className="border-t border-white/10 bg-[linear-gradient(180deg,#0620AF_0%,#04156F_100%)] text-white">
+            <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+                <div className="grid gap-8 lg:grid-cols-[1.1fr_0.8fr_0.8fr_1fr]">
+                    <div className="rounded-[26px] border border-white/10 bg-white/6 p-6 text-center shadow-lg shadow-blue-950/20 lg:text-left">
                         <Link to="/" className="text-2xl font-bold text-white">
                             Cure<span className="text-blue-300">24</span> Hospital
                         </Link>
-                        <p className="text-blue-100 mt-4 text-sm leading-relaxed">
-                            Providing quality healthcare services 24/7 in Nagpur with
-                            state-of-the-art facilities and experienced medical professionals.
+                        <p className="mt-4 text-sm leading-7 text-blue-100">
+                            Compassionate multi-speciality healthcare in Nagpur with emergency-ready support,
+                            modern treatment infrastructure, and patient-focused care.
                         </p>
                     </div>
 
-                    <div className="flex flex-col items-center lg:items-start">
-                        <h3 className="text-lg font-semibold">Quick Links</h3>
-                        <ul className="mt-4 space-y-2 text-blue-100 text-sm">
-                            <li><Link to="/" className="hover:underline underline-offset-4">Home</Link></li>
-                            <li><Link to="/services" className="hover:underline underline-offset-4">Services</Link></li>
-                            <li><Link to="/doctors" className="hover:underline underline-offset-4">Doctors</Link></li>
-                            <li><Link to="/appointment" className="hover:underline underline-offset-4">Book Appointment</Link></li>
-                            <li><Link to="/privacy" className="hover:underline underline-offset-4">Privacy Policy</Link></li>
-                            <li><Link to="/insurance" className="hover:underline underline-offset-4">Insurance & TPA</Link></li>
+                    <div className="text-center lg:text-left">
+                        <h3 className="text-lg font-semibold text-white">Quick Links</h3>
+                        <ul className="mt-4 space-y-2.5 text-sm text-blue-100">
+                            <li><Link to="/" className="transition hover:text-white">Home</Link></li>
+                            <li><Link to="/about" className="transition hover:text-white">About Us</Link></li>
+                            <li><Link to="/gallery" className="transition hover:text-white">Gallery</Link></li>
+                            <li><Link to="/services" className="transition hover:text-white">Services</Link></li>
+                            <li><Link to="/doctors" className="transition hover:text-white">Doctors</Link></li>
+                            <li><Link to="/appointment" className="transition hover:text-white">Book Appointment</Link></li>
                         </ul>
                     </div>
 
-                    <div className="flex flex-col items-center lg:items-start">
-                        <h3 className="text-lg font-semibold">Our Services</h3>
-                        <ul className="mt-4 space-y-2 text-blue-100 text-sm">
+                    <div className="text-center lg:text-left">
+                        <h3 className="text-lg font-semibold text-white">Support</h3>
+                        <ul className="mt-4 space-y-2.5 text-sm text-blue-100">
+                            <li><Link to="/insurance" className="transition hover:text-white">Insurance & TPA</Link></li>
+                            <li><Link to="/privacy" className="transition hover:text-white">Privacy Policy</Link></li>
+                            <li><Link to="/contact" className="transition hover:text-white">Contact Page</Link></li>
                             <li>Emergency Care</li>
-                            <li>Orthopedics</li>
-                            <li>Pediatrics</li>
-                            <li>Cardiology</li>
-                            <li>Neurology</li>
-                            <li>General Surgery</li>
-                            <li>Diagnostic Imaging</li>
-                            <li>Pharmacy</li>
+                            <li>General Medicine</li>
+                            <li>Diagnostics</li>
                         </ul>
                     </div>
 
-                    <div className="flex flex-col items-center lg:items-start">
-                        <h3 className="text-lg font-semibold">Contact Us</h3>
-                        <ul className="mt-4 space-y-3 text-blue-100 text-sm w-full max-w-sm mx-auto text-center md:text-left lg:mx-0">
-                            <li className="flex items-start gap-2 justify-center md:justify-start text-center md:text-left">
-                                <MapPin className="w-5 h-5 text-blue-200 shrink-0 mt-0.5" aria-hidden="true" />
-                                <span className="leading-relaxed">
+                    <div className="text-center lg:text-left">
+                        <h3 className="text-lg font-semibold text-white">Contact</h3>
+                        <ul className="mt-4 space-y-4 text-sm text-blue-100">
+                            <li className="flex items-start justify-center gap-3 lg:justify-start">
+                                <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-blue-200" aria-hidden="true" />
+                                <span className="leading-6">
                                     Deshpande Lay-out, Vaishnavi Devi Chowk,
                                     C.A. Road, Nagpur
                                 </span>
                             </li>
-                            <li className="flex items-center gap-3 justify-center md:justify-start">
-                                <Phone className="w-4 h-4 text-blue-200" aria-hidden="true" />
+                            <li className="flex items-center justify-center gap-3 lg:justify-start">
+                                <Phone className="h-4 w-4 text-blue-200" aria-hidden="true" />
                                 <span>+91 9665151747</span>
                             </li>
-                            <li className="flex items-center gap-3 justify-center md:justify-start">
-                                <Clock className="w-4 h-4 text-blue-200" aria-hidden="true" />
+                            <li className="flex items-center justify-center gap-3 lg:justify-start">
+                                <Clock className="h-4 w-4 text-blue-200" aria-hidden="true" />
                                 <span>Open 24/7</span>
                             </li>
-                            <li className="flex items-center gap-3 justify-center md:justify-start">
-                                <Mail className="w-4 h-4 text-blue-200" aria-hidden="true" />
-                                <a href="mailto:cure24hospital@gmail.com" className="hover:underline underline-offset-4">
+                            <li className="flex items-center justify-center gap-3 lg:justify-start">
+                                <Mail className="h-4 w-4 text-blue-200" aria-hidden="true" />
+                                <a href="mailto:cure24hospital@gmail.com" className="transition hover:text-white">
                                     cure24hospital@gmail.com
                                 </a>
                             </li>

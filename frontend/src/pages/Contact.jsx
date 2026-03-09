@@ -4,6 +4,7 @@ import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingButton from "../components/common/LoadingButton";
+import { buildApiUrl } from "../utils/api";
 
 const initialFormState = {
     name: "",
@@ -49,6 +50,7 @@ const cardVariants = {
 
 const Contact = () => {
     const [formData, setFormData] = useState(initialFormState);
+    const [feedbackStatus, setFeedbackStatus] = useState({ type: "", message: "" });
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
@@ -64,20 +66,36 @@ const Contact = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const payload = { ...formData };
-        console.log("Contact form submit:", payload);
+        setFeedbackStatus({ type: "", message: "" });
 
         try {
-            const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT || "/api/contact";
-            await fetch(endpoint, {
+            const response = await fetch(buildApiUrl("/api/feedback"), {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(formData),
             });
-        } catch (error) {
-            console.warn("Contact form submit failed:", error);
-        } finally {
+
+            let data = {};
+            try {
+                data = await response.json();
+            } catch {
+                data = {};
+            }
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Unable to submit feedback");
+            }
+
+            setFeedbackStatus({
+                type: "success",
+                message: "Thank you. Your feedback has been submitted successfully.",
+            });
             setFormData(initialFormState);
+        } catch (error) {
+            setFeedbackStatus({
+                type: "error",
+                message: error.message || "Unable to submit feedback right now.",
+            });
         }
     };
 
@@ -221,6 +239,17 @@ const Contact = () => {
                                         className={textareaClasses}
                                     />
                                 </motion.div>
+                            {feedbackStatus.message && (
+                                <motion.div
+                                    variants={fieldVariants}
+                                    className={`rounded-xl border px-4 py-3 text-sm ${feedbackStatus.type === "success"
+                                            ? "border-green-200 bg-green-50 text-green-800"
+                                            : "border-red-200 bg-red-50 text-red-700"
+                                        }`}
+                                >
+                                    {feedbackStatus.message}
+                                </motion.div>
+                            )}
                                 <motion.div variants={fieldVariants} className="flex justify-center mt-2">
                                     <LoadingButton
                                         type="submit"

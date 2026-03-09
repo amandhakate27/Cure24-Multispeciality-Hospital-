@@ -20,11 +20,27 @@ const MONGO_URI = process.env.MONGO_URI;
 const ADMIN_EFFECTIVE_HASH =
     ADMIN_PASSWORD_HASH || (ADMIN_PASSWORD ? bcrypt.hashSync(ADMIN_PASSWORD, 10) : null);
 
+const requiredEnv = [
+    ["JWT_SECRET", JWT_SECRET],
+    ["ADMIN_USERNAME", ADMIN_USERNAME],
+    ["ADMIN_PASSWORD or ADMIN_PASSWORD_HASH", ADMIN_EFFECTIVE_HASH],
+    ["MONGO_URI", MONGO_URI],
+].filter(([, value]) => !value);
+
+if (requiredEnv.length > 0) {
+    console.error(
+        "Missing required environment variables:",
+        requiredEnv.map(([name]) => name).join(", ")
+    );
+    process.exit(1);
+}
+
 
 // Security Middleware
 
 
 app.disable('x-powered-by');
+app.set('trust proxy', 1);
 app.use(
     helmet({
         contentSecurityPolicy: {
@@ -65,7 +81,7 @@ const connectToDatabase = async () => {
 
     try {
         await mongoose.connect(MONGO_URI);
-        console.log('✅ Connected to MongoDB');
+        console.log('Connected to MongoDB');
     } catch (error) {
         console.error('MongoDB connection failed:', error);
         process.exit(1);
@@ -93,6 +109,19 @@ const appointmentSchema = new mongoose.Schema(
 
 const Appointment = mongoose.model('Appointment', appointmentSchema);
 
+const feedbackSchema = new mongoose.Schema(
+    {
+        name: { type: String, required: true, trim: true, maxlength: 120 },
+        email: { type: String, trim: true, maxlength: 200 },
+        phone: { type: String, required: true, trim: true, maxlength: 20 },
+        subject: { type: String, required: true, trim: true, maxlength: 200 },
+        message: { type: String, required: true, trim: true, maxlength: 2000 },
+    },
+    { timestamps: true }
+);
+
+const Feedback = mongoose.model('Feedback', feedbackSchema);
+
 
 // Helpers
 
@@ -119,6 +148,10 @@ const authenticate = (req, res, next) => {
 
 // API Routes
 
+
+app.get("/api/health", (req, res) => {
+    res.json({ success: true, status: "ok" });
+});
 
 // Admin login
 app.post('/api/admin/login', async (req, res) => {
@@ -154,11 +187,58 @@ app.post('/api/appointments', async (req, res) => {
     }
 });
 
+
+// Create feedback (public)
+app.post('/api/feedback', async (req, res) => {
+    try {
+        const { name, email, phone, subject, message } = req.body || {};
+
+        if (!name || !phone || !subject || !message) {
+            return res
+                .status(400)
+                .json({ success: false, message: 'Name, phone, subject and message are required' });
+        }
+
+        const feedback = await Feedback.create({
+            name,
+            email,
+            phone,
+            subject,
+            message,
+        });
+
+        return res.status(201).json({ success: true, feedback });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Get appointments (admin)
 app.get('/api/appointments', authenticate, async (req, res) => {
     try {
         const appointments = await Appointment.find().sort({ createdAt: -1 });
         res.json({ success: true, appointments });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+
+// Get feedback (admin)
+app.get('/api/feedback', authenticate, async (req, res) => {
+    try {
+        const feedback = await Feedback.find().sort({ createdAt: -1 });
+        return res.json({ success: true, feedback });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Delete feedback (admin)
+app.delete('/api/feedback/:id', authenticate, async (req, res) => {
+    try {
+        await Feedback.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
@@ -207,3 +287,4 @@ connectToDatabase().then(() => {
         console.log(`Server running on port ${PORT}`);
     });
 });
+
