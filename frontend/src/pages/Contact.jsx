@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, FileText, Mail, MapPin, MessageSquare, Phone, Send, User } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import LoadingButton from "../components/common/LoadingButton";
@@ -56,9 +56,9 @@ const Contact = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
     const inputClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white px-4 py-3 pl-11 text-sm text-blue-900 placeholder:text-gray-400 outline-none shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:shadow-md";
     const textareaClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white px-4 py-3 pl-11 text-sm text-blue-900 placeholder:text-gray-400 outline-none shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:shadow-md resize-none";
 
     const mapEmbedUrl =
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.120000862208!2d79.13550111005296!3d21.147622180450426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c76b577c7ddb%3A0xd2bd1c7d5e55aaf5!2sAuro%20Critical%20Care%20Hospital%20%7C%20Orthopedic%20Hospital%20in%20Nagpur%20%7C%20Kne%20Replacement%20Hospital%20in%20Nagpur%20%7C%20Join%20Replacement%20Surgeon%20in%20Nagpur%20%7C!5e0!3m2!1sen!2sin!4v1771320732076!5m2!1sen!2sin";
@@ -166,17 +166,15 @@ const Contact = () => {
                         </motion.div>
 
                         <motion.div
-                            className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-md shadow-blue-200/40 p-6 md:p-8 h-full flex flex-col transition-all duration-300 hover:shadow-2xl hover:shadow-blue-300/50 hover:bg-blue-50/90"
+                            className="bg-white border border-blue-100 rounded-2xl shadow-lg shadow-blue-100/50 p-6 md:p-8 h-full flex flex-col transition-all duration-300 hover:shadow-xl"
                             variants={formVariants}
                             initial="hidden"
                             whileInView="visible"
                             viewport={{ once: false, amount: 0.25 }}
-                            whileHover={{ y: -6, scale: 1.01 }}
-                            transition={{ type: "spring", stiffness: 240, damping: 18 }}
                         >
                             <div className="text-center">
                                 <h3 className="text-lg font-semibold text-blue-800">Get in touch</h3>
-                                <p className="text-blue-700 text-sm mt-1">
+                                <p className="text-blue-600 text-sm mt-1">
                                     We'd love to hear from you. Reach out for reservations,
                                     feedback, or any queries.
                                 </p>
@@ -184,78 +182,99 @@ const Contact = () => {
                             <form className="mt-6 space-y-4 flex-1" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <motion.div variants={fieldVariants}>
-                                        <input
-                                            type="text"
-                                            placeholder="Name"
-                                            name="name"
-                                            value={formData.name}
-                                            onChange={handleChange}
-                                            required
-                                            className={inputClasses}
-                                        />
+                                        <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Full Name</label>
+                                        <div className="relative">
+                                            <User className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                            <input
+                                                type="text"
+                                                placeholder="John Doe"
+                                                name="name"
+                                                value={formData.name}
+                                                onChange={handleChange}
+                                                required
+                                                className={inputClasses}
+                                            />
+                                        </div>
                                     </motion.div>
                                     <motion.div variants={fieldVariants}>
-                                        <input
-                                            type="email"
-                                            placeholder="Email"
-                                            name="email"
-                                            value={formData.email}
-                                            onChange={handleChange}
-                                            required
-                                            className={inputClasses}
-                                        />
+                                        <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Email Address</label>
+                                        <div className="relative">
+                                            <Mail className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                            <input
+                                                type="email"
+                                                placeholder="you@example.com"
+                                                name="email"
+                                                value={formData.email}
+                                                onChange={handleChange}
+                                                required
+                                                className={inputClasses}
+                                            />
+                                        </div>
                                     </motion.div>
                                     <motion.div variants={fieldVariants}>
-                                        <input
-                                            type="tel"
-                                            placeholder="Phone No."
-                                            name="phone"
-                                            value={formData.phone}
-                                            onChange={handleChange}
-                                            required
-                                            className={inputClasses}
-                                        />
+                                        <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Phone Number</label>
+                                        <div className="relative">
+                                            <Phone className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                            <input
+                                                type="tel"
+                                                placeholder="+91 98765 43210"
+                                                name="phone"
+                                                value={formData.phone}
+                                                onChange={handleChange}
+                                                required
+                                                className={inputClasses}
+                                            />
+                                        </div>
                                     </motion.div>
                                     <motion.div variants={fieldVariants}>
-                                        <input
-                                            type="text"
-                                            placeholder="Subject"
-                                            name="subject"
-                                            value={formData.subject}
-                                            onChange={handleChange}
-                                            required
-                                            className={inputClasses}
-                                        />
+                                        <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Subject</label>
+                                        <div className="relative">
+                                            <FileText className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                            <input
+                                                type="text"
+                                                placeholder="How can we help?"
+                                                name="subject"
+                                                value={formData.subject}
+                                                onChange={handleChange}
+                                                required
+                                                className={inputClasses}
+                                            />
+                                        </div>
                                     </motion.div>
                                 </div>
                                 <motion.div variants={fieldVariants}>
-                                    <textarea
-                                        rows="4"
-                                        placeholder="Message"
-                                        name="message"
-                                        value={formData.message}
-                                        onChange={handleChange}
-                                        required
-                                        className={textareaClasses}
-                                    />
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Message</label>
+                                    <div className="relative">
+                                        <MessageSquare className="w-4 h-4 text-blue-600 absolute left-3.5 top-3.5 pointer-events-none" aria-hidden="true" />
+                                        <textarea
+                                            rows="4"
+                                            placeholder="Write your message here..."
+                                            name="message"
+                                            value={formData.message}
+                                            onChange={handleChange}
+                                            required
+                                            className={textareaClasses}
+                                        />
+                                    </div>
                                 </motion.div>
-                            {feedbackStatus.message && (
-                                <motion.div
-                                    variants={fieldVariants}
-                                    className={`rounded-xl border px-4 py-3 text-sm ${feedbackStatus.type === "success"
+                                {feedbackStatus.message && (
+                                    <motion.div
+                                        variants={fieldVariants}
+                                        className={`rounded-xl border px-4 py-3 text-sm ${feedbackStatus.type === "success"
                                             ? "border-green-200 bg-green-50 text-green-800"
                                             : "border-red-200 bg-red-50 text-red-700"
-                                        }`}
-                                >
-                                    {feedbackStatus.message}
-                                </motion.div>
-                            )}
-                                <motion.div variants={fieldVariants} className="flex justify-center mt-2">
+                                            }`}
+                                    >
+                                        {feedbackStatus.message}
+                                    </motion.div>
+                                )}
+                                <motion.div variants={fieldVariants} className="flex justify-center pt-2">
                                     <LoadingButton
                                         type="submit"
-                                        className="bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                                        className="inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-800 text-white px-8 py-3 rounded-xl text-sm font-semibold shadow-md shadow-blue-700/25 hover:shadow-lg hover:shadow-blue-700/35 hover:from-blue-800 hover:to-blue-900 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                     >
-                                        Send
+                                        <Send className="w-4 h-4" />
+                                        Send Message
                                     </LoadingButton>
                                 </motion.div>
                             </form>

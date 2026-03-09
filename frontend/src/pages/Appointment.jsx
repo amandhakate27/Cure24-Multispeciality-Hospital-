@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Calendar, CircleCheckBig, Clock, User } from "lucide-react";
+import { Calendar, CalendarCheck, CircleCheckBig, Clock, Building2, Mail, MessageSquare, Phone, Stethoscope, User } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import Toast from "../components/common/Toast";
@@ -48,12 +48,10 @@ const Appointment = () => {
         const { name, value } = event.target;
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
-    const inputClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
     const inputWithIconClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 pl-10 pr-4 py-2.5 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
-    const textareaClasses =
-        "w-full rounded-xl border border-blue-200/80 bg-white/95 px-4 py-3 text-sm text-blue-800 placeholder:text-blue-400 outline-none shadow-sm transition-shadow transition-colors duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-200/70 focus:shadow-md";
+        "w-full rounded-xl border border-blue-200/80 bg-white px-4 py-3 pl-11 text-sm text-blue-900 placeholder:text-gray-400 outline-none shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:shadow-md";
+    const textareaWithIconClasses =
+        "w-full rounded-xl border border-blue-200/80 bg-white px-4 py-3 pl-11 text-sm text-blue-900 placeholder:text-gray-400 outline-none shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:shadow-md resize-none";
 
     const normalizePhone = (value) => String(value || "").replace(/[\s-]/g, "").trim();
     const isValidIndianMobile = (value) => /^(?:\+91|0)?[6-9]\d{9}$/.test(value);
@@ -148,52 +146,65 @@ const Appointment = () => {
             <section className="py-12">
                 <div className="max-w-5xl mx-auto px-6 lg:px-10">
                     <motion.div
-                        className="bg-blue-100/70 border border-blue-100 rounded-2xl shadow-sm p-6 md:p-8"
+                        className="bg-white border border-blue-100 rounded-2xl shadow-lg shadow-blue-100/50 p-6 md:p-10"
                         variants={formVariants}
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.25 }}
                     >
-                        <form className="space-y-4" onSubmit={handleSubmit}>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <motion.div className="space-y-1" variants={fieldVariants}>
-                                    <input
-                                        type="text"
-                                        name="name"
-                                        value={formData.name}
-                                        onChange={handleChange}
-                                        placeholder="Name"
-                                        required
-                                        className={inputClasses}
-                                    />
-                                </motion.div>
-                                <motion.div className="space-y-1" variants={fieldVariants}>
-                                    <input
-                                        type="tel"
-                                        name="phone"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        placeholder="Phone No."
-                                        inputMode="numeric"
-                                        maxLength={13}
-                                        required
-                                        className={inputClasses}
-                                    />
-                                </motion.div>
-                                <motion.div className="space-y-1 md:col-span-2" variants={fieldVariants}>
-                                    <input
-                                        type="email"
-                                        name="email"
-                                        value={formData.email}
-                                        onChange={handleChange}
-                                        placeholder="Email"
-                                        required
-                                        className={inputClasses}
-                                    />
-                                </motion.div>
-                                <motion.div className="space-y-1" variants={fieldVariants}>
+                        <form className="space-y-5" onSubmit={handleSubmit}>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Full Name</label>
                                     <div className="relative">
-                                        <Calendar className="w-4 h-4 text-blue-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                                        <User className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            value={formData.name}
+                                            onChange={handleChange}
+                                            placeholder="John Doe"
+                                            required
+                                            className={inputWithIconClasses}
+                                        />
+                                    </div>
+                                </motion.div>
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Phone Number</label>
+                                    <div className="relative">
+                                        <Phone className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                        <input
+                                            type="tel"
+                                            name="phone"
+                                            value={formData.phone}
+                                            onChange={handleChange}
+                                            placeholder="+91 98765 43210"
+                                            inputMode="numeric"
+                                            maxLength={13}
+                                            required
+                                            className={inputWithIconClasses}
+                                        />
+                                    </div>
+                                </motion.div>
+                                <motion.div className="md:col-span-2" variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Email Address</label>
+                                    <div className="relative">
+                                        <Mail className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                        <input
+                                            type="email"
+                                            name="email"
+                                            value={formData.email}
+                                            onChange={handleChange}
+                                            placeholder="you@example.com"
+                                            required
+                                            className={inputWithIconClasses}
+                                        />
+                                    </div>
+                                </motion.div>
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Preferred Date</label>
+                                    <div className="relative">
+                                        <Calendar className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
                                         <input
                                             type="date"
                                             name="date"
@@ -205,9 +216,10 @@ const Appointment = () => {
                                         />
                                     </div>
                                 </motion.div>
-                                <motion.div className="space-y-1" variants={fieldVariants}>
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Preferred Time</label>
                                     <div className="relative">
-                                        <Clock className="w-4 h-4 text-blue-500 absolute left-3 top-1/2 -translate-y-1/2" aria-hidden="true" />
+                                        <Clock className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
                                         <input
                                             type="time"
                                             name="time"
@@ -218,52 +230,64 @@ const Appointment = () => {
                                         />
                                     </div>
                                 </motion.div>
-                                <motion.div className="space-y-1" variants={fieldVariants}>
-                                    <select
-                                        name="department"
-                                        value={formData.department}
-                                        onChange={handleChange}
-                                        required
-                                        className={inputClasses}
-                                    >
-                                        <option value="" disabled>
-                                            Select Department
-                                        </option>
-                                        <option value="Emergency Care">Emergency Care</option>
-                                        <option value="Orthopedics">Orthopedics</option>
-                                        <option value="Pediatrics">Pediatrics</option>
-                                        <option value="General Medicine">General Medicine</option>
-                                        <option value="Neurology">Neurology</option>
-
-                                    </select>
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Department</label>
+                                    <div className="relative">
+                                        <Building2 className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                        <select
+                                            name="department"
+                                            value={formData.department}
+                                            onChange={handleChange}
+                                            required
+                                            className={`${inputWithIconClasses} appearance-none`}
+                                        >
+                                            <option value="" disabled>
+                                                Select Department
+                                            </option>
+                                            <option value="Emergency Care">Emergency Care</option>
+                                            <option value="Orthopedics">Orthopedics</option>
+                                            <option value="Pediatrics">Pediatrics</option>
+                                            <option value="General Medicine">General Medicine</option>
+                                            <option value="Neurology">Neurology</option>
+                                        </select>
+                                    </div>
                                 </motion.div>
-                                <motion.div className="space-y-1" variants={fieldVariants}>
-                                    <input
-                                        type="text"
-                                        name="doctor"
-                                        value={formData.doctor}
-                                        onChange={handleChange}
-                                        placeholder="Doctor"
-                                        required
-                                        className={inputClasses}
-                                    />
+                                <motion.div variants={fieldVariants}>
+                                    <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Doctor Name</label>
+                                    <div className="relative">
+                                        <Stethoscope className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
+                                        <input
+                                            type="text"
+                                            name="doctor"
+                                            value={formData.doctor}
+                                            onChange={handleChange}
+                                            placeholder="Dr. Smith"
+                                            required
+                                            className={inputWithIconClasses}
+                                        />
+                                    </div>
                                 </motion.div>
                             </div>
                             <motion.div variants={fieldVariants}>
-                                <textarea
-                                    rows="4"
-                                    name="message"
-                                    value={formData.message}
-                                    onChange={handleChange}
-                                    placeholder="Message / Reason for visit (optional)"
-                                    className={textareaClasses}
-                                />
+                                <label className="block text-xs font-semibold text-blue-800 mb-1.5 ml-1">Message <span className="font-normal text-blue-400">(optional)</span></label>
+                                <div className="relative">
+                                    <MessageSquare className="w-4 h-4 text-blue-600 absolute left-3.5 top-3.5 pointer-events-none" aria-hidden="true" />
+                                    <textarea
+                                        rows="4"
+                                        name="message"
+                                        value={formData.message}
+                                        onChange={handleChange}
+                                        placeholder="Reason for visit, symptoms, or any notes..."
+                                        className={textareaWithIconClasses}
+                                    />
+                                </div>
                             </motion.div>
-                            <motion.div variants={fieldVariants} className="flex justify-center">
+                            <motion.div variants={fieldVariants} className="flex justify-center pt-2">
                                 <button
                                     type="submit"
-                                    className="cursor-pointer bg-blue-700 text-white px-8 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow-lg hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                                    className="cursor-pointer inline-flex items-center gap-2 bg-gradient-to-r from-blue-700 to-blue-800 text-white px-8 py-3 rounded-xl text-sm font-semibold shadow-md shadow-blue-700/25 hover:shadow-lg hover:shadow-blue-700/35 hover:from-blue-800 hover:to-blue-900 transition-all duration-200 hover:scale-[1.03] active:scale-95"
                                 >
+                                    <CalendarCheck className="w-4 h-4" />
                                     Confirm Appointment
                                 </button>
                             </motion.div>
