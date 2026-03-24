@@ -187,7 +187,7 @@ const Contact = () => {
                                             <User className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
                                             <input
                                                 type="text"
-                                                placeholder="John Doe"
+                                                placeholder="Enter your name"
                                                 name="name"
                                                 value={formData.name}
                                                 onChange={handleChange}
@@ -217,7 +217,7 @@ const Contact = () => {
                                             <Phone className="w-4 h-4 text-blue-600 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" aria-hidden="true" />
                                             <input
                                                 type="tel"
-                                                placeholder="+91 98765 43210"
+                                                placeholder="Enter your mobile number"
                                                 name="phone"
                                                 value={formData.phone}
                                                 onChange={handleChange}

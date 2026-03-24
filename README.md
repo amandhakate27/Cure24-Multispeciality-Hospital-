@@ -1,3 +1,60 @@
+## cure24 Project Wireframe Structure
+
+```
+cure24
+├─ README.md
+├─ backend
+│  ├─ package.json
+│  ├─ README.md
+│  └─ server.js
+├─ frontend
+│  ├─ eslint.config.js
+│  ├─ index.html
+│  ├─ package.json
+│  ├─ README.md
+│  ├─ tailwind.config.js
+│  ├─ vite.config.js
+│  ├─ public
+│  └─ src
+│     ├─ App.jsx
+│     ├─ index.css
+│     ├─ main.jsx
+│     ├─ assets
+│     │  ├─ company logos tpa
+│     │  │  └─ liberty general insurance.avif
+│     │  └─ images
+│     ├─ components
+│     │  ├─ common
+│     │  │  ├─ Footer.jsx
+│     │  │  ├─ LoadingButton.jsx
+│     │  │  ├─ LoadingImage.jsx
+│     │  │  ├─ LoadingLink.jsx
+│     │  │  ├─ Navbar.jsx
+│     │  │  ├─ ScrollToTop.jsx
+│     │  │  ├─ SimplePage.jsx
+│     │  │  └─ Toast.jsx
+│     │  └─ home
+│     │     ├─ About.jsx
+│     │     ├─ CallToAction.jsx
+│     │     ├─ Hero.jsx
+│     │     ├─ KeyServices.jsx
+│     │     ├─ ServicesPreview.jsx
+│     │     └─ Stats.jsx
+│     ├─ pages
+│     │  ├─ About.jsx
+│     │  ├─ AdminDashboard.jsx
+│     │  ├─ AdminLogin.jsx
+│     │  ├─ Appointment.jsx
+│     │  ├─ Contact.jsx
+│     │  ├─ Doctors.jsx
+│     │  ├─ Gallery.jsx
+│     │  ├─ Home.jsx
+│     │  ├─ Insurance.jsx
+│     │  ├─ Privacy.jsx
+│     │  └─ Services.jsx
+│     └─ utils
+│        └─ api.js
+```
 ## Cure24 Hospital Project
 
 Simple hospital website + admin appointment management. Frontend React (Vite) aur backend Express API.

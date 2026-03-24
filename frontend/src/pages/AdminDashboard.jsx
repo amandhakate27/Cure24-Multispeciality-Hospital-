@@ -231,6 +231,46 @@ const AdminDashboard = () => {
         setFeedbackFilters((prev) => ({ ...prev, [key]: value }));
     };
 
+    const toggleTestimonial = async (feedback) => {
+        const token = localStorage.getItem("adminToken");
+        if (!token) {
+            navigate("/admin");
+            return;
+        }
+
+        try {
+            const response = await fetch(buildApiUrl(`/api/feedback/${feedback._id}/testimonial`), {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ showOnTestimonials: !feedback.showOnTestimonials }),
+            });
+
+            if (response.status === 401) {
+                handleUnauthorized();
+                return;
+            }
+
+            if (!response.ok) throw new Error("Failed to update testimonial state");
+
+            const data = await response.json();
+            setFeedbackList((prev) => prev.map((item) => (item._id === feedback._id ? data.feedback : item)));
+            setToast({
+                variant: "success",
+                title: data.feedback.showOnTestimonials ? "Sent to testimonials" : "Removed from testimonials",
+                message: `${feedback.name || "Feedback"} was updated successfully.`,
+            });
+        } catch {
+            setToast({
+                variant: "error",
+                title: "Update failed",
+                message: "Testimonial state could not be updated.",
+            });
+        }
+    };
+
     const updateStatus = async (id, nextStatus) => {
         const token = localStorage.getItem("adminToken");
         if (!token) {
@@ -563,7 +603,7 @@ const AdminDashboard = () => {
                                                 <th className="px-4 py-3 font-semibold">Doctor</th>
                                                 <th className="px-4 py-3 font-semibold">Status</th>
                                                 <th className="px-4 py-3 font-semibold">Created</th>
-                                                <th className="px-4 py-3 text-center font-semibold">Action</th>
+                                                <th className="px-4 py-3 text-center font-semibold">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-blue-50 bg-white">
@@ -701,7 +741,7 @@ const AdminDashboard = () => {
                                                 <th className="px-4 py-3 font-semibold">Subject</th>
                                                 <th className="px-4 py-3 font-semibold">Message</th>
                                                 <th className="px-4 py-3 font-semibold">Submitted</th>
-                                                <th className="px-4 py-3 text-center font-semibold">Action</th>
+                                                <th className="px-4 py-3 text-center font-semibold">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-blue-50 bg-white">
@@ -720,14 +760,23 @@ const AdminDashboard = () => {
                                                     </td>
                                                     <td className="px-4 py-4 text-slate-700">{formatDateTime(feedback.createdAt)}</td>
                                                     <td className="px-4 py-4 text-center">
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => confirmDelete({ id: feedback._id, type: "feedback", name: feedback.name })}
-                                                            className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
-                                                        >
-                                                            <Trash2 className="h-4 w-4" />
-                                                            Delete
-                                                        </button>
+                                                        <div className="flex min-w-[170px] flex-col items-center gap-2">
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => toggleTestimonial(feedback)}
+                                                                className={`inline-flex w-full items-center justify-center rounded-xl px-3 py-2 text-xs font-semibold transition ${feedback.showOnTestimonials ? "border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100" : "border border-red-200 bg-red-50 text-red-700 hover:bg-red-100"}`}
+                                                            >
+                                                                {feedback.showOnTestimonials ? "In Testimonials" : "Send to Testimonials"}
+                                                            </button>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => confirmDelete({ id: feedback._id, type: "feedback", name: feedback.name })}
+                                                                className="inline-flex items-center gap-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+                                                            >
+                                                                <Trash2 className="h-4 w-4" />
+                                                                Delete
+                                                            </button>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                             ))}
@@ -779,6 +828,10 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
+
+
 
 
 

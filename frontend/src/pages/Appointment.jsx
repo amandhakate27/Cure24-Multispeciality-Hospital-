@@ -163,8 +163,7 @@ const Appointment = () => {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleChange}
-                                            placeholder="John Doe"
-                                            required
+                                            placeholder="Enter your name"
                                             className={inputWithIconClasses}
                                         />
                                     </div>
@@ -178,10 +177,9 @@ const Appointment = () => {
                                             name="phone"
                                             value={formData.phone}
                                             onChange={handleChange}
-                                            placeholder="+91 98765 43210"
+                                            placeholder="Enter your mobile number"
                                             inputMode="numeric"
                                             maxLength={13}
-                                            required
                                             className={inputWithIconClasses}
                                         />
                                     </div>
@@ -261,8 +259,7 @@ const Appointment = () => {
                                             name="doctor"
                                             value={formData.doctor}
                                             onChange={handleChange}
-                                            placeholder="Dr. Smith"
-                                            required
+                                            placeholder="Enter Dr. name"
                                             className={inputWithIconClasses}
                                         />
                                     </div>
@@ -342,3 +339,6 @@ const Appointment = () => {
 };
 
 export default Appointment;
+
+
+

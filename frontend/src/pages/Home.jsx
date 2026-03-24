@@ -4,6 +4,7 @@ import Stats from '../components/home/Stats';
 import About from '../components/home/About';
 import ServicesPreview from '../components/home/ServicesPreview';
 import KeyServices from '../components/home/KeyServices';
+import Testimonials from '../components/home/Testimonials';
 import CallToAction from '../components/home/CallToAction';
 import Footer from '../components/common/Footer';
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
             <About />
             <ServicesPreview />
             <KeyServices />
+            <Testimonials />
             <CallToAction />
             <Footer />
         </div>
@@ -22,3 +24,4 @@ const Home = () => {
 };
 
 export default Home;
+

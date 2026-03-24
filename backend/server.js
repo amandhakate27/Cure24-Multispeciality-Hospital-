@@ -46,6 +46,11 @@ app.use(
         contentSecurityPolicy: {
             useDefaults: true,
             directives: {
+                "connect-src": [
+                    "'self'",
+                    "https://apligrampanchayat.in",
+                    "https://cure24hospital.onrender.com"
+                ],
                 "frame-src": ["'self'", "https://www.google.com"],
                 "child-src": ["'self'", "https://www.google.com"],
             },
@@ -116,6 +121,7 @@ const feedbackSchema = new mongoose.Schema(
         phone: { type: String, required: true, trim: true, maxlength: 20 },
         subject: { type: String, required: true, trim: true, maxlength: 200 },
         message: { type: String, required: true, trim: true, maxlength: 2000 },
+        showOnTestimonials: { type: Boolean, default: false },
     },
     { timestamps: true }
 );
@@ -234,6 +240,39 @@ app.get('/api/feedback', authenticate, async (req, res) => {
     }
 });
 
+// Get testimonials (public)
+app.get('/api/testimonials', async (req, res) => {
+    try {
+        const testimonials = await Feedback.find({ showOnTestimonials: true })
+            .sort({ createdAt: -1 })
+            .select('name message createdAt');
+
+        return res.json({ success: true, testimonials });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Toggle feedback testimonial visibility (admin)
+app.patch('/api/feedback/:id/testimonial', authenticate, async (req, res) => {
+    try {
+        const { showOnTestimonials } = req.body;
+        const feedback = await Feedback.findByIdAndUpdate(
+            req.params.id,
+            { showOnTestimonials: Boolean(showOnTestimonials) },
+            { new: true, runValidators: true }
+        );
+
+        if (!feedback) {
+            return res.status(404).json({ success: false, message: 'Feedback not found' });
+        }
+
+        return res.json({ success: true, feedback });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Delete feedback (admin)
 app.delete('/api/feedback/:id', authenticate, async (req, res) => {
     try {
@@ -287,4 +326,8 @@ connectToDatabase().then(() => {
         console.log(`Server running on port ${PORT}`);
     });
 });
+
+
+
+
 
