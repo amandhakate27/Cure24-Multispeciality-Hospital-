@@ -10,6 +10,8 @@ const Hero = () => {
             () => import("../../assets/images/slideimg3.jpg?url"),
             () => import("../../assets/images/slideimg4.jpeg?url"),
             () => import("../../assets/images/slideimage.jpg?url"),
+            () => import("../../assets/images/slideimage5.jpeg?url"),
+            () => import("../../assets/images/slideimage6.jpeg?url"),
         ],
         []
     );
@@ -148,3 +150,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

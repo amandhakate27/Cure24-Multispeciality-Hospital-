@@ -13,18 +13,28 @@ const sectionVariants = {
     },
 };
 
-const trackAnimation = (name, duration, reverse = false) => ({
+const trackAnimation = (name, duration) => ({
     animation: `${name} ${duration}s linear infinite`,
-    animationDirection: reverse ? "reverse" : "normal",
 });
+
+const buildLoopItems = (items, minCount = 12) => {
+    if (!items.length) return [];
+
+    const loopItems = [];
+    while (loopItems.length < minCount) {
+        loopItems.push(...items);
+    }
+
+    return loopItems.slice(0, Math.max(minCount, items.length));
+};
 
 const splitTestimonials = (items) => {
     const primary = items.filter((_, index) => index % 2 === 0);
     const secondary = items.filter((_, index) => index % 2 === 1);
 
     return {
-        primaryTrack: primary.length >= 3 ? primary : items,
-        secondaryTrack: secondary.length >= 3 ? secondary : items,
+        primaryTrack: primary.length >= 4 ? primary : items,
+        secondaryTrack: secondary.length >= 4 ? secondary : items,
     };
 };
 
@@ -59,27 +69,31 @@ const TestimonialCard = ({ item, onPause, onResume }) => (
     </article>
 );
 
-const TestimonialTrack = ({ items, pause, onPause, onResume, reverse, animationName, duration }) => {
-    const repeatedItems = [...items, ...items];
+const TestimonialTrack = ({ items, pause, onPause, onResume, animationName, duration }) => {
+    const loopBaseItems = buildLoopItems(items);
 
     return (
         <div className="relative overflow-hidden">
             <div
-                className="flex w-max gap-3"
+                className="flex w-max"
                 style={{
-                    ...trackAnimation(animationName, duration, reverse),
+                    ...trackAnimation(animationName, duration),
                     animationPlayState: pause ? "paused" : "running",
                     willChange: "transform",
                     transform: "translate3d(0, 0, 0)",
                 }}
             >
-                {repeatedItems.map((item, index) => (
-                    <TestimonialCard
-                        key={`${item._id || item.name}-${index}`}
-                        item={item}
-                        onPause={onPause}
-                        onResume={onResume}
-                    />
+                {[0, 1, 2].map((groupIndex) => (
+                    <div key={groupIndex} className="flex gap-3 pr-3">
+                        {loopBaseItems.map((item, index) => (
+                            <TestimonialCard
+                                key={`${item._id || item.name}-${groupIndex}-${index}`}
+                                item={item}
+                                onPause={onPause}
+                                onResume={onResume}
+                            />
+                        ))}
+                    </div>
                 ))}
             </div>
         </div>
@@ -132,18 +146,16 @@ const Testimonials = () => {
             <style>{`
                 @keyframes testimonial-marquee-left {
                     from { transform: translate3d(0, 0, 0); }
-                    to { transform: translate3d(calc(-50% - 0.75rem), 0, 0); }
+                    to { transform: translate3d(calc(-33.333% - 0.25rem), 0, 0); }
                 }
 
                 @keyframes testimonial-marquee-right {
-                    from { transform: translate3d(calc(-50% - 0.75rem), 0, 0); }
+                    from { transform: translate3d(calc(-33.333% - 0.25rem), 0, 0); }
                     to { transform: translate3d(0, 0, 0); }
                 }
             `}</style>
 
             <div className="absolute inset-0 bg-[linear-gradient(180deg,#041AA9_0%,#0A2FC6_55%,#1237B8_100%)]" />
-            <div className="absolute left-0 top-10 h-44 w-44 rounded-full bg-blue-200/30 blur-3xl" />
-            <div className="absolute right-0 bottom-0 h-56 w-56 rounded-full bg-blue-300/20 blur-3xl" />
 
             <motion.div
                 className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-10"
@@ -169,7 +181,7 @@ const Testimonials = () => {
                         onPause={() => setIsPaused(true)}
                         onResume={() => setIsPaused(false)}
                         animationName="testimonial-marquee-right"
-                        duration={34}
+                        duration={72}
                     />
 
                     <TestimonialTrack
@@ -178,7 +190,7 @@ const Testimonials = () => {
                         onPause={() => setIsPaused(true)}
                         onResume={() => setIsPaused(false)}
                         animationName="testimonial-marquee-left"
-                        duration={26}
+                        duration={58}
                     />
                 </div>
             </motion.div>
@@ -187,7 +199,4 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
-
-
-
 

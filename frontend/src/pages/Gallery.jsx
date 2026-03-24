@@ -10,7 +10,9 @@ import medicalNurseImg from "../assets/images/medical-nurse.jpg";
 import preventiveHealthCheckupsImg from "../assets/images/preventive health checkups.png";
 import roomFacilitiesImg from "../assets/images/Room facilities.jpeg";
 import stretcherBedImg from "../assets/images/Stretcher Bed.jpeg";
-import receptionViewImg from "../assets/images/slideimage.jpg";
+import receptionViewImg from "../assets/images/slideimage5.jpeg";
+import fullHospitalViewImg from "../assets/images/slideimage6.jpeg";
+import slideimage7Img from "../assets/images/slideimage7.png";
 import womenDoctorServiceImg from "../assets/images/women-doctor-service.png";
 
 const cardsContainer = {
@@ -40,6 +42,8 @@ const galleryPhotos = [
     { id: "room-facilities", title: "Patient Room Facilities", image: roomFacilitiesImg },
     { id: "stretcher-bed", title: "Emergency Stretcher Support", image: stretcherBedImg },
     { id: "reception-view", title: "Reception and Front Desk", image: receptionViewImg },
+    { id: "full-hospital-view", title: "Full View of Hospital", image: fullHospitalViewImg },
+    { id: "hospital-care-view", title: "Hospital Care View", image: slideimage7Img },
     { id: "women-doctor-service", title: "Personalized Doctor Consultation", image: womenDoctorServiceImg },
 ];
 
@@ -247,3 +251,8 @@ const Gallery = () => {
 };
 
 export default Gallery;
+
+
+
+
+
