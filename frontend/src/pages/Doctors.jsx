@@ -160,8 +160,7 @@ const DoctorsSection = ({ title, doctors, detailsLabel }) => (
                 className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
                 variants={gridVariants}
                 initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.25 }}
+                animate="visible"
             >
                 {doctors.map((doctor) => (
                     <DoctorCard key={`${title}-${doctor.name}`} doctor={doctor} detailsLabel={detailsLabel} />
