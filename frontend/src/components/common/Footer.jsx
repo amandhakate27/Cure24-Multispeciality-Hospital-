@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Clock, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone, Facebook, Instagram } from "lucide-react";
 
 const Footer = () => {
     return (
@@ -14,6 +14,14 @@ const Footer = () => {
                             Compassionate multi-speciality healthcare in Nagpur with emergency-ready support,
                             modern treatment infrastructure, and patient-focused care.
                         </p>
+                        <div className="mt-6 flex items-center justify-center gap-4 lg:justify-start">
+                            <a href="https://www.facebook.com" target="_blank" rel="noreferrer" aria-label="Facebook" className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-blue-600 hover:scale-105">
+                                <Facebook className="h-4 w-4" />
+                            </a>
+                            <a href="https://www.instagram.com" target="_blank" rel="noreferrer" aria-label="Instagram" className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition hover:bg-pink-600 hover:scale-105">
+                                <Instagram className="h-4 w-4" />
+                            </a>
+                        </div>
                     </div>
 
                     <div className="text-center lg:text-left">

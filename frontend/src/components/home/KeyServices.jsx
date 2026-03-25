@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import LoadingImage from "../common/LoadingImage";
 import LoadingLink from "../common/LoadingLink";
 import criticalCareImg from "../../assets/images/critical care.jpg";
@@ -42,31 +41,10 @@ const services = [
     },
 ];
 
-const gridVariants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.12,
-        },
-    },
-};
-
-const cardVariants = {
-    hidden: { opacity: 0, y: 28, scale: 0.98 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-    },
-};
-
 const KeyServices = () => {
     return (
         <section className="relative overflow-hidden py-16 md:py-20">
-            <div className="absolute inset-0 bg-linear-to-br from-white via-blue-50 to-blue-100" />
-            <div className="absolute -left-24 -top-24 w-72 h-72 bg-blue-200/40 blur-3xl rounded-full" />
-            <div className="absolute -right-10 top-24 w-48 h-48 bg-blue-300/30 blur-2xl rounded-full" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
             <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
                 <div className="text-center max-w-3xl mx-auto">
@@ -78,26 +56,17 @@ const KeyServices = () => {
                     </p>
                 </div>
 
-                <motion.div
-                    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
-                    variants={gridVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                >
+                <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {services.map((service) => (
-                        <motion.div
+                        <div
                             key={service.title}
-                            variants={cardVariants}
-                            whileHover={{ y: -6, scale: 1.03 }}
-                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-5 hover:shadow-lg transition-shadow duration-300"
+                            className="group rounded-2xl border border-blue-100 bg-white p-5 shadow-sm transition-shadow duration-200 hover:shadow-md"
                         >
                             <LoadingImage
                                 src={service.image}
                                 alt={service.title}
                                 className="h-44 md:h-48 rounded-xl"
-                                imgClassName="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                imgClassName="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
                             />
                             <h3 className="text-base font-semibold text-blue-800 mt-4 text-center">
                                 {service.title}
@@ -105,9 +74,9 @@ const KeyServices = () => {
                             <p className="text-blue-700 text-sm mt-2 text-center">
                                 {service.description}
                             </p>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
 
                 <div className="flex justify-center mt-10">
                     <LoadingLink

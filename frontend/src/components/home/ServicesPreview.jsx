@@ -6,7 +6,6 @@ import {
     Stethoscope,
     Users,
 } from "lucide-react";
-import { motion } from "framer-motion";
 
 const features = [
     {
@@ -47,31 +46,10 @@ const features = [
     },
 ];
 
-const gridVariants = {
-    hidden: {},
-    visible: {
-        transition: {
-            staggerChildren: 0.12,
-        },
-    },
-};
-
-const cardVariants = {
-    hidden: { opacity: 0, y: 26, scale: 0.98 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
-    },
-};
-
 const ServicesPreview = () => {
     return (
         <section className="relative overflow-hidden py-16 md:py-20">
-            <div className="absolute inset-0 bg-linear-to-br from-white via-blue-50 to-blue-100" />
-            <div className="absolute -left-24 -top-24 w-72 h-72 bg-blue-200/40 blur-3xl rounded-full" />
-            <div className="absolute -right-10 top-24 w-48 h-48 bg-blue-300/30 blur-2xl rounded-full" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
             <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
                 <div className="text-center max-w-3xl mx-auto">
@@ -83,20 +61,11 @@ const ServicesPreview = () => {
                     </p>
                 </div>
 
-                <motion.div
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10"
-                    variants={gridVariants}
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                >
+                <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                     {features.map((item) => (
-                        <motion.div
+                        <div
                             key={item.title}
-                            variants={cardVariants}
-                            whileHover={{ y: -6, scale: 1.03 }}
-                            transition={{ type: "spring", stiffness: 260, damping: 18 }}
-                            className="group bg-white/90 backdrop-blur-sm border border-blue-100 rounded-2xl shadow-sm p-6 transition-shadow duration-300 hover:shadow-lg hover:border-blue-200"
+                            className="group rounded-2xl border border-blue-100 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-blue-200 hover:shadow-md"
                         >
                             <div className="flex items-center gap-3">
                                 <div className="w-11 h-11 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
@@ -109,9 +78,9 @@ const ServicesPreview = () => {
                             <p className="text-blue-700 mt-2 text-sm leading-relaxed">
                                 {item.description}
                             </p>
-                        </motion.div>
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

@@ -28,7 +28,7 @@ const cardVariants = {
 
 const About = () => {
     return (
-        <section className="bg-white py-16 md:py-20">
+        <section className="bg-white pt-12 pb-16 md:pt-16 md:pb-20">
             <div className="max-w-7xl mx-auto px-6 lg:px-10">
                 <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
 

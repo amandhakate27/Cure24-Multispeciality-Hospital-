@@ -1,27 +1,41 @@
+import { Suspense, lazy } from 'react';
 import Hero from '../components/home/Hero';
 import Navbar from '../components/common/Navbar';
-import Stats from '../components/home/Stats';
-import About from '../components/home/About';
-import ServicesPreview from '../components/home/ServicesPreview';
-import KeyServices from '../components/home/KeyServices';
-import Testimonials from '../components/home/Testimonials';
-import CallToAction from '../components/home/CallToAction';
 import Footer from '../components/common/Footer';
+
+const About = lazy(() => import('../components/home/About'));
+const ServicesPreview = lazy(() => import('../components/home/ServicesPreview'));
+const KeyServices = lazy(() => import('../components/home/KeyServices'));
+const Testimonials = lazy(() => import('../components/home/Testimonials'));
+const CallToAction = lazy(() => import('../components/home/CallToAction'));
+
+const SectionFallback = ({ height = 'min-h-[220px]' }) => (
+    <div className={`${height} bg-transparent`} />
+);
+
 const Home = () => {
     return (
         <div className="min-h-screen bg-[#F5F9FF]">
             <Navbar />
             <Hero />
-            <Stats />
-            <About />
-            <ServicesPreview />
-            <KeyServices />
-            <Testimonials />
-            <CallToAction />
+            <Suspense fallback={<SectionFallback height="min-h-[520px]" />}>
+                <About />
+            </Suspense>
+            <Suspense fallback={<SectionFallback height="min-h-[420px]" />}>
+                <ServicesPreview />
+            </Suspense>
+            <Suspense fallback={<SectionFallback height="min-h-[420px]" />}>
+                <KeyServices />
+            </Suspense>
+            <Suspense fallback={<SectionFallback height="min-h-[260px]" />}>
+                <CallToAction />
+            </Suspense>
+            <Suspense fallback={null}>
+                <Testimonials />
+            </Suspense>
             <Footer />
         </div>
     );
 };
 
 export default Home;
-

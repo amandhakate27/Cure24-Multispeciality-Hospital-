@@ -21,6 +21,7 @@ const Navbar = () => {
     const [open, setOpen] = useState(false);
     const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
     const [animateIn, setAnimateIn] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
     const menuRef = useRef(null);
     const location = useLocation();
 
@@ -50,6 +51,13 @@ const Navbar = () => {
         setMobileAboutOpen(false);
     }, [location.pathname]);
 
+    // Scroll blur effect — passive listener for zero perf impact
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 10);
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => window.removeEventListener("scroll", onScroll);
+    }, []);
+
     // Close menu on outside click
     useEffect(() => {
         if (!open) return;
@@ -71,9 +79,9 @@ const Navbar = () => {
     const isActive = (to) => location.pathname === to;
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50">
-            <div className="backdrop-blur-md">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10 xl:max-w-none xl:px-12 2xl:px-16 h-16 sm:h-20 flex items-center justify-between">
+        <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-md shadow-sm shadow-blue-100/60" : "bg-transparent"}`}>
+            <div>
+                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:h-20 lg:px-8 xl:px-10">
                     <Link to="/" className="inline-flex items-center h-full cursor-pointer">
                         <img
                             src={hospitalLogo}
@@ -82,10 +90,10 @@ const Navbar = () => {
                         />
                     </Link>
 
-                    <nav className="hidden lg:flex items-center gap-8 text-base font-medium text-blue-800">
+                    <nav className="hidden lg:flex items-center gap-7 text-[0.95rem] font-medium text-blue-800">
                         <Link
                             to="/"
-                            className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-900 text-blue-800"
+                            className="relative inline-block text-blue-800 transition-all duration-300 hover:scale-110 hover:text-blue-900"
                         >
                             Home
                         </Link>
@@ -93,7 +101,7 @@ const Navbar = () => {
                         <div className="relative group">
                             <button
                                 type="button"
-                                className="inline-flex items-center gap-1 transition-all duration-300 hover:scale-110 hover:text-blue-900 text-blue-800"
+                                className="inline-flex items-center gap-1 text-blue-800 transition-all duration-300 hover:scale-110 hover:text-blue-900"
                                 aria-haspopup="menu"
                             >
                                 About
@@ -119,7 +127,7 @@ const Navbar = () => {
                             <Link
                                 key={link.label}
                                 to={link.to}
-                                className="relative inline-block transition-all duration-300 hover:scale-110 hover:text-blue-900 text-blue-800"
+                                className="relative inline-block text-blue-800 transition-all duration-300 hover:scale-110 hover:text-blue-900"
                             >
                                 {link.label}
                             </Link>
@@ -127,14 +135,14 @@ const Navbar = () => {
 
                         <LoadingLink
                             to="/appointment"
-                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                            className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] hover:bg-blue-700 active:scale-95"
                         >
                             Book Now
                         </LoadingLink>
 
                         <LoadingLink
                             to="/admin"
-                            className="bg-blue-600 text-white px-4 py-2 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-transform hover:scale-[1.03] active:scale-95"
+                            className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] hover:bg-blue-700 active:scale-95"
                         >
                             Admin
                         </LoadingLink>
@@ -142,7 +150,7 @@ const Navbar = () => {
 
                     {/* Animated Hamburger / X button */}
                     <button
-                        className="lg:hidden relative inline-flex items-center justify-center w-10 h-10 rounded-xl border border-blue-100 text-blue-700 transition-all duration-300 hover:bg-blue-50 active:scale-90"
+                        className="relative inline-flex h-10 w-10 items-center justify-center rounded-xl border border-blue-100 text-blue-700 transition-all duration-300 hover:bg-blue-50 active:scale-90 lg:hidden"
                         onClick={toggleMobileMenu}
                         aria-label="Toggle menu"
                         aria-expanded={open}
@@ -302,3 +310,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
