@@ -1,3 +1,4 @@
+import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
@@ -48,12 +49,12 @@ const galleryPhotos = [
 ];
 
 const videoGallery = [
-    { id: "vid-1", title: "Advanced Healthcare Facilities", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "vid-2", title: "Patient Care Journey", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "vid-3", title: "Our Expert Panel of Doctors", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "vid-4", title: "Emergency & Critical Care", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "vid-5", title: "Diagnostic & Lab Infrastructure", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
-    { id: "vid-6", title: "Community Health Programs", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-1", title: "Advanced Healthcare Facilities", url: panelOfDoctorsVideo },
+    { id: "vid-2", title: "Patient Care Journey", url: panelOfDoctorsVideo },
+    { id: "vid-3", title: "Our Expert Panel of Doctors", url: panelOfDoctorsVideo },
+    { id: "vid-4", title: "Emergency & Critical Care", url: panelOfDoctorsVideo },
+    { id: "vid-5", title: "Diagnostic & Lab Infrastructure", url: panelOfDoctorsVideo },
+    { id: "vid-6", title: "Community Health Programs", url: panelOfDoctorsVideo },
 ];
 
 const Gallery = () => {
@@ -189,10 +190,11 @@ const Gallery = () => {
                                 className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
                             >
                                 <div className="relative aspect-video bg-blue-50">
-                                    <video 
+                                    <video
                                         src={video.url}
                                         controls
                                         preload="metadata"
+                                        muted
                                         className="w-full h-full object-cover"
                                     ></video>
                                 </div>
