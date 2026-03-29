@@ -47,6 +47,15 @@ const galleryPhotos = [
     { id: "women-doctor-service", title: "Personalized Doctor Consultation", image: womenDoctorServiceImg },
 ];
 
+const videoGallery = [
+    { id: "vid-1", title: "Advanced Healthcare Facilities", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-2", title: "Patient Care Journey", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-3", title: "Our Expert Panel of Doctors", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-4", title: "Emergency & Critical Care", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-5", title: "Diagnostic & Lab Infrastructure", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+    { id: "vid-6", title: "Community Health Programs", url: "https://www.w3schools.com/html/mov_bbb.mp4" },
+];
+
 const Gallery = () => {
     const [selectedPhotoId, setSelectedPhotoId] = useState(null);
     const [lightboxDirection, setLightboxDirection] = useState(1);
@@ -145,6 +154,54 @@ const Gallery = () => {
                                     {photo.title}
                                 </p>
                             </motion.button>
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* Video Gallery Section */}
+            <section className="pt-8">
+                <div className="bg-blue-800 text-white">
+                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                        <h2 className="text-2xl md:text-3xl font-semibold">Video Gallery</h2>
+                        <p className="text-blue-100 mt-2 text-sm md:text-base">
+                            Watch our hospital facilities and patient care in action
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section className="py-12">
+                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                    <motion.div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
+                        variants={cardsContainer}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, amount: 0.2 }}
+                    >
+                        {videoGallery.map((video) => (
+                            <motion.div
+                                key={video.id}
+                                variants={popCard}
+                                whileHover={{ y: -8, scale: 1.02 }}
+                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
+                                className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
+                            >
+                                <div className="relative aspect-video bg-blue-50">
+                                    <video 
+                                        src={video.url}
+                                        controls
+                                        preload="metadata"
+                                        className="w-full h-full object-cover"
+                                    ></video>
+                                </div>
+                                <div className="flex-1 flex items-center justify-center p-4">
+                                    <p className="text-sm md:text-base font-semibold text-blue-800 text-center">
+                                        {video.title}
+                                    </p>
+                                </div>
+                            </motion.div>
                         ))}
                     </motion.div>
                 </div>

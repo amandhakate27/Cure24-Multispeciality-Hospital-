@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Home, Stethoscope, UserRound, Shield, Phone, Image, Info, CalendarCheck, Lock } from "lucide-react";
+import { ChevronDown, Home, Stethoscope, UserRound, Shield, Phone, Image, Info, CalendarCheck, Facebook, Instagram } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import LoadingLink from "./LoadingLink";
 import hospitalLogo from "../../assets/images/reallogo1.png";
@@ -137,15 +137,17 @@ const Navbar = () => {
                             to="/appointment"
                             className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] hover:bg-blue-700 active:scale-95"
                         >
-                            Book Now
+                            Book Appointment 
                         </LoadingLink>
 
-                        <LoadingLink
-                            to="/admin"
-                            className="rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-[1.03] hover:bg-blue-700 active:scale-95"
-                        >
-                            Admin
-                        </LoadingLink>
+                        <div className="flex items-center gap-3 ml-2">
+                            <a href="https://www.facebook.com/share/17xjxcuYXM/" target="_blank" rel="noreferrer" aria-label="Facebook" className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-[#1877F2] hover:scale-110 shadow-sm hover:shadow-md">
+                                <Facebook className="h-[20px] w-[20px]" />
+                            </a>
+                            <a href="https://www.instagram.com/cure24multispecialityhospital?utm_source=qr&igsh=aGxsaDM0MGM4cWFr" target="_blank" rel="noreferrer" aria-label="Instagram" className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-blue-600 text-white transition-all duration-300 hover:bg-[#E1306C] hover:scale-110 shadow-sm hover:shadow-md">
+                                <Instagram className="h-[20px] w-[20px]" />
+                            </a>
+                        </div>
                     </nav>
 
                     {/* Animated Hamburger / X button */}
@@ -292,14 +294,14 @@ const Navbar = () => {
                                     Book Appointment
                                 </LoadingLink>
 
-                                <LoadingLink
-                                    to="/admin"
-                                    onClick={closeMobileMenu}
-                                    className="flex items-center justify-center gap-2 w-full bg-white/15 text-white px-4 py-3 rounded-xl font-medium transition-all duration-200 hover:bg-white/25 active:scale-[0.98]"
-                                >
-                                    <Lock className="w-4 h-4" />
-                                    Admin Login
-                                </LoadingLink>
+                                <div className="flex items-center justify-center gap-6 w-full pt-3 pb-2">
+                                    <a href="https://www.facebook.com/share/17xjxcuYXM/" target="_blank" rel="noreferrer" aria-label="Facebook" className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-blue-700 transition-all duration-300 hover:bg-[#1877F2] hover:text-white hover:scale-110 shadow-lg">
+                                        <Facebook className="h-6 w-6" />
+                                    </a>
+                                    <a href="https://www.instagram.com/cure24multispecialityhospital?utm_source=qr&igsh=aGxsaDM0MGM4cWFr" target="_blank" rel="noreferrer" aria-label="Instagram" className="inline-flex h-14 w-14 items-center justify-center rounded-full bg-white text-blue-700 transition-all duration-300 hover:bg-[#E1306C] hover:text-white hover:scale-110 shadow-lg">
+                                        <Instagram className="h-6 w-6" />
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
