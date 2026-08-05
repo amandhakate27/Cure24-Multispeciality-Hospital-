@@ -16,6 +16,23 @@ const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
 const MONGO_URI = process.env.MONGO_URI;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
+const allowedOrigins = (process.env.CORS_ORIGIN || '')
+    .split(',')
+    .map((o) => o.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+
+const DEFAULT_ALLOWED_ORIGINS = [
+    'https://apligrampanchayat.in',
+    'https://www.apligrampanchayat.in',
+    'https://cure24hospital.onrender.com',
+];
+
+const isAllowedOrigin = (origin) =>
+    !origin ||
+    allowedOrigins.includes(origin) ||
+    DEFAULT_ALLOWED_ORIGINS.includes(origin);
 
 const ADMIN_EFFECTIVE_HASH =
     ADMIN_PASSWORD_HASH || (ADMIN_PASSWORD ? bcrypt.hashSync(ADMIN_PASSWORD, 10) : null);
@@ -31,6 +48,20 @@ if (requiredEnv.length > 0) {
     console.error(
         "Missing required environment variables:",
         requiredEnv.map(([name]) => name).join(", ")
+    );
+    process.exit(1);
+}
+
+const WEAK_SECRETS = [
+    'change-this-to-a-strong-secret',
+    'your_super_secret_jwt_key_change_this_in_production',
+    'secret',
+];
+
+if (NODE_ENV === 'production' && WEAK_SECRETS.includes(JWT_SECRET)) {
+    console.error(
+        'Refusing to start in production: JWT_SECRET is a known weak/default value. ' +
+        'Set a strong random secret and NODE_ENV=production on your host.'
     );
     process.exit(1);
 }
@@ -60,7 +91,13 @@ app.use(
 
 app.use(
     cors({
-        origin: true,
+        origin: (origin, callback) => {
+            if (isAllowedOrigin(origin)) {
+                callback(null, true);
+            } else {
+                callback(new Error('Not allowed by CORS'));
+            }
+        },
         credentials: true,
     })
 );
@@ -186,7 +223,26 @@ app.post('/api/admin/login', async (req, res) => {
 // Create appointment
 app.post('/api/appointments', async (req, res) => {
     try {
-        const appointment = await Appointment.create(req.body);
+        const { name, phone, email, date, time, department, doctor, message } = req.body || {};
+
+        if (!name || !phone || !date || !time || !department) {
+            return res.status(400).json({
+                success: false,
+                message: 'Name, phone, date, time and department are required',
+            });
+        }
+
+        const appointment = await Appointment.create({
+            name: String(name).trim().slice(0, 120),
+            phone: String(phone).trim().slice(0, 20),
+            email: email ? String(email).trim().slice(0, 200) : undefined,
+            date: String(date).trim().slice(0, 20),
+            time: String(time).trim().slice(0, 20),
+            department: String(department).trim().slice(0, 120),
+            doctor: doctor ? String(doctor).trim().slice(0, 120) : undefined,
+            message: message ? String(message).trim().slice(0, 2000) : undefined,
+        });
+
         res.status(201).json({ success: true, appointment });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
