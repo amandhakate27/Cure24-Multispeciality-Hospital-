@@ -2,7 +2,9 @@
 import { createElement, useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-    ClipboardList, MessageSquareQuote,
+    ClipboardList,
+    MessageSquareQuote,
+    Home,
     Search,
     Trash2,
 } from "lucide-react";
@@ -53,7 +55,6 @@ const formatTime = (timeString) => {
     if (/am|pm/i.test(normalized)) {
         return normalized.replace(/\s*(am|pm)\s*/i, (_, period) => ` ${period.toUpperCase()}`);
     }
-
     const [hoursStr, minutesStr] = normalized.split(":");
     const hours = Number.parseInt(hoursStr, 10);
     if (!Number.isFinite(hours) || minutesStr === undefined) return normalized;
@@ -94,7 +95,7 @@ const SectionTab = ({ active, onClick, label, count, icon: Icon }) => (
     <button
         type="button"
         onClick={onClick}
-        className={`flex items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition ${active
+        className={`flex w-full items-center justify-between gap-3 rounded-2xl border px-4 py-3 text-sm font-semibold transition ${active
             ? "border-blue-700 bg-blue-700 text-white"
             : "border-blue-100 bg-white text-blue-900 hover:border-blue-300 hover:bg-blue-50"
             }`}
@@ -103,9 +104,11 @@ const SectionTab = ({ active, onClick, label, count, icon: Icon }) => (
             {createElement(Icon, { className: "h-4 w-4", "aria-hidden": "true" })}
             {label}
         </span>
-        <span className={`rounded-full px-2.5 py-1 text-xs ${active ? "bg-white/15 text-white" : "bg-blue-100 text-blue-800"}`}>
-            {count}
-        </span>
+        {count !== undefined && (
+            <span className={`rounded-full px-2.5 py-1 text-xs ${active ? "bg-white/15 text-white" : "bg-blue-100 text-blue-800"}`}>
+                {count}
+            </span>
+        )}
     </button>
 );
 
@@ -445,24 +448,24 @@ const AdminDashboard = () => {
         });
 
     return (
-        <div className="min-h-screen bg-[linear-gradient(180deg,#041AA9_0%,#0A2FC6_30%,#1E3FAE_60%,#0D2B9A_100%)] px-4 py-6">
+        <div className="h-screen overflow-hidden bg-[linear-gradient(180deg,#041AA9_0%,#0A2FC6_30%,#1E3FAE_60%,#0D2B9A_100%)] px-4 py-4">
             {toast && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 px-4 backdrop-blur-sm">
                     <Toast variant={toast.variant} title={toast.title} message={toast.message} onClose={() => setToast(null)} />
                 </div>
             )}
 
-            <div className="mx-auto max-w-7xl space-y-6">
-                <section className="rounded-[28px] border border-white/15 bg-white/10 shadow-[0_30px_80px_-35px_rgba(2,12,74,0.75)] backdrop-blur-sm">
-                    <div className="grid gap-6 px-5 py-6 sm:px-7 lg:grid-cols-[auto_1fr_auto] lg:items-center">
+            <div className="mx-auto flex h-full w-full flex-col gap-4">
+                <section className="shrink-0 rounded-[28px] border border-white/15 bg-white/10 shadow-[0_30px_80px_-35px_rgba(2,12,74,0.75)] backdrop-blur-sm">
+                    <div className="grid gap-4 px-5 py-4 sm:px-6 lg:grid-cols-[auto_1fr_auto] lg:items-center">
                         <div className="flex items-center justify-center lg:justify-start">
-                            <div className="rounded-2xl bg-white/95 px-4 py-3 shadow-lg shadow-blue-950/10">
-                                <img src={hospitalLogo} alt="Cure24 Hospital" className="h-12 w-auto" loading="eager" />
+                            <div className="rounded-2xl bg-white/95 px-4 py-2 shadow-lg shadow-blue-950/10">
+                                <img src={hospitalLogo} alt="Cure24 Hospital" className="h-10 w-auto" loading="eager" />
                             </div>
                         </div>
                         <div className="text-center">
-                            <h1 className="text-3xl font-bold text-white sm:text-4xl">Admin Dashboard</h1>
-                            <p className="mt-2 text-sm text-blue-100/90">Manage appointments, patient feedback, and daily operations of Cure24 Hospital.</p>
+                            <h1 className="text-2xl font-bold text-white sm:text-3xl">Admin Dashboard</h1>
+                            <p className="mt-1 text-sm text-blue-100/90">Manage appointments, patient feedback, and daily operations of Cure24 Hospital.</p>
                         </div>
                         <div className="flex justify-center lg:justify-end">
                             <button
@@ -470,7 +473,7 @@ const AdminDashboard = () => {
                                     localStorage.removeItem("adminToken");
                                     navigate("/admin");
                                 }}
-                                className="rounded-2xl border border-red-400/30 bg-red-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-red-700"
+                                className="rounded-2xl border border-red-400/30 bg-red-600 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700"
                             >
                                 Logout
                             </button>
@@ -478,32 +481,40 @@ const AdminDashboard = () => {
                     </div>
                 </section>
                 {loadError && (
-                    <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 shadow-sm">
+                    <div className="shrink-0 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 shadow-sm">
                         {loadError}
                     </div>
                 )}
 
-                <section className="mx-auto max-w-md rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-5">
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center sm:gap-6">
-                        <SectionTab
-                            active={activeSection === "appointments"}
-                            onClick={() => setActiveSection("appointments")}
-                            icon={ClipboardList}
-                            label="Appointments"
-                            count={appointments.length}
-                        />
-                        <SectionTab
-                            active={activeSection === "feedback"}
-                            onClick={() => setActiveSection("feedback")}
-                            icon={MessageSquareQuote}
-                            label="Feedback"
-                            count={feedbackList.length}
-                        />
-                    </div>
-                </section>
+                <div className="grid min-h-0 flex-1 gap-4 lg:grid-cols-[220px_minmax(0,1fr)] lg:items-stretch">
+                    <aside className="rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-5 lg:flex lg:h-full lg:flex-col">
+                        <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-1">
+                            <SectionTab
+                                active={activeSection === "appointments"}
+                                onClick={() => setActiveSection("appointments")}
+                                icon={ClipboardList}
+                                label="Appointments"
+                                count={appointments.length}
+                            />
+                            <SectionTab
+                                active={activeSection === "feedback"}
+                                onClick={() => setActiveSection("feedback")}
+                                icon={MessageSquareQuote}
+                                label="Feedback"
+                                count={feedbackList.length}
+                            />
+                            <SectionTab
+                                active={false}
+                                onClick={() => navigate("/")}
+                                icon={Home}
+                                label="Website"
+                            />
+                        </div>
+                    </aside>
 
-                {activeSection === "appointments" && (
-                    <section className="rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-6">
+                    <div className="min-h-0 min-w-0">
+                        {activeSection === "appointments" && (
+                    <section className="flex h-full min-h-0 flex-col rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-6">
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Appointments</p>
@@ -511,7 +522,7 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        <div className="mt-6 grid gap-3 rounded-[24px] border border-blue-100 bg-[linear-gradient(135deg,#EFF6FF_0%,#F8FBFF_100%)] p-4 md:grid-cols-2 xl:grid-cols-6">
+<div className="mt-6 shrink-0 grid gap-3 rounded-[24px] border border-blue-100 bg-[linear-gradient(135deg,#EFF6FF_0%,#F8FBFF_100%)] p-3 md:grid-cols-2 xl:grid-cols-7">
                             <label className="flex flex-col gap-2 text-sm text-slate-700 xl:col-span-2">
                                 <span className="font-semibold text-slate-900">Search</span>
                                 <div className="relative">
@@ -570,12 +581,11 @@ const AdminDashboard = () => {
                                     className="rounded-2xl border border-blue-200 bg-white px-4 py-2.5 outline-none transition focus:border-blue-500"
                                 />
                             </label>
-                            <div className="flex flex-col gap-2 text-sm text-slate-700 xl:justify-end">
-                                <span className="font-semibold text-slate-900">Reset</span>
+                            <div className="flex items-end xl:self-end">
                                 <button
                                     type="button"
                                     onClick={() => setAppointmentFilters(emptyAppointmentFilters)}
-                                    className="rounded-2xl border border-blue-200 bg-white px-4 py-2.5 font-semibold text-blue-900 transition hover:bg-blue-100"
+                                    className="rounded-2xl border border-blue-200 bg-white px-4 py-2.5 font-semibold text-blue-900 transition hover:bg-blue-100 whitespace-nowrap"
                                 >
                                     Clear filters
                                 </button>
@@ -583,17 +593,17 @@ const AdminDashboard = () => {
                         </div>
 
                         {isLoading ? (
-                            <div className="mt-6 rounded-3xl border border-blue-100 bg-slate-50 p-10 text-center text-slate-500">Loading appointments...</div>
+                            <div className="mt-6 flex min-h-0 flex-1 items-center justify-center rounded-3xl border border-blue-100 bg-slate-50 p-10 text-center text-slate-500">Loading appointments...</div>
                         ) : filteredAppointments.length === 0 ? (
-                            <div className="mt-6 rounded-3xl border border-dashed border-blue-200 bg-slate-50 p-10 text-center">
+                            <div className="mt-6 flex min-h-0 flex-1 flex-col items-center justify-center rounded-3xl border border-dashed border-blue-200 bg-slate-50 p-10 text-center">
                                 <p className="text-lg font-semibold text-slate-700">No appointments found</p>
                                 <p className="mt-2 text-sm text-slate-500">Try clearing filters or changing the date range.</p>
                             </div>
                         ) : (
-                            <div className="mt-6 overflow-hidden rounded-[24px] border border-blue-100">
-                                <div className="overflow-x-auto">
+                            <div className="mt-6 min-h-0 flex-1 overflow-hidden rounded-[24px] border border-blue-100">
+                                <div className="h-full overflow-auto">
                                     <table className="w-full min-w-[1120px] divide-y divide-blue-100 text-sm">
-                                        <thead className="bg-blue-50 text-left text-slate-700">
+                                        <thead className="sticky top-0 z-10 bg-blue-50 text-left text-slate-700">
                                             <tr>
                                                 <th className="px-4 py-3 font-semibold">Patient</th>
                                                 <th className="px-4 py-3 font-semibold">Contact</th>
@@ -660,7 +670,7 @@ const AdminDashboard = () => {
                 )}
 
                 {activeSection === "feedback" && (
-                    <section className="rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-6">
+                    <section className="flex h-full min-h-0 flex-col rounded-[28px] border border-blue-100 bg-white p-4 shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)] sm:p-6">
                         <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
                             <div>
                                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Feedback</p>
@@ -668,7 +678,7 @@ const AdminDashboard = () => {
                             </div>
                         </div>
 
-                        <div className="mt-6 grid gap-3 rounded-[24px] border border-blue-100 bg-[linear-gradient(135deg,#EFF6FF_0%,#F8FBFF_100%)] p-4 md:grid-cols-2 xl:grid-cols-5">
+<div className="mt-6 shrink-0 grid gap-3 rounded-[24px] border border-blue-100 bg-[linear-gradient(135deg,#EFF6FF_0%,#F8FBFF_100%)] p-3 md:grid-cols-2 xl:grid-cols-6">
                             <label className="flex flex-col gap-2 text-sm text-slate-700 xl:col-span-2">
                                 <span className="font-semibold text-slate-900">Search</span>
                                 <div className="relative">
@@ -711,12 +721,11 @@ const AdminDashboard = () => {
                                     <option value="oldest">Oldest first</option>
                                 </select>
                             </label>
-                            <div className="flex flex-col gap-2 text-sm text-slate-700 xl:justify-end">
-                                <span className="font-semibold text-slate-900">Reset</span>
+                            <div className="flex items-end xl:self-end">
                                 <button
                                     type="button"
                                     onClick={() => setFeedbackFilters(emptyFeedbackFilters)}
-                                    className="rounded-2xl border border-blue-200 bg-white px-4 py-2.5 font-semibold text-blue-900 transition hover:bg-blue-100"
+                                    className="rounded-2xl border border-blue-200 bg-white px-4 py-2.5 font-semibold text-blue-900 transition hover:bg-blue-100 whitespace-nowrap"
                                 >
                                     Clear filters
                                 </button>
@@ -724,17 +733,17 @@ const AdminDashboard = () => {
                         </div>
 
                         {isLoading ? (
-                            <div className="mt-6 rounded-3xl border border-blue-100 bg-slate-50 p-10 text-center text-slate-500">Loading feedback...</div>
+                            <div className="mt-6 flex min-h-0 flex-1 items-center justify-center rounded-3xl border border-blue-100 bg-slate-50 p-10 text-center text-slate-500">Loading feedback...</div>
                         ) : filteredFeedback.length === 0 ? (
-                            <div className="mt-6 rounded-3xl border border-dashed border-blue-200 bg-slate-50 p-10 text-center">
+                            <div className="mt-6 flex min-h-0 flex-1 flex-col items-center justify-center rounded-3xl border border-dashed border-blue-200 bg-slate-50 p-10 text-center">
                                 <p className="text-lg font-semibold text-slate-700">No feedback found</p>
                                 <p className="mt-2 text-sm text-slate-500">Try clearing filters or changing the date range.</p>
                             </div>
                         ) : (
-                            <div className="mt-6 overflow-hidden rounded-[24px] border border-blue-100">
-                                <div className="overflow-x-auto">
+                            <div className="mt-6 min-h-0 flex-1 overflow-hidden rounded-[24px] border border-blue-100">
+                                <div className="h-full overflow-auto">
                                     <table className="w-full min-w-[1180px] divide-y divide-blue-100 text-sm">
-                                        <thead className="bg-blue-50 text-left text-slate-700">
+                                        <thead className="sticky top-0 z-10 bg-blue-50 text-left text-slate-700">
                                             <tr>
                                                 <th className="px-4 py-3 font-semibold">Patient</th>
                                                 <th className="px-4 py-3 font-semibold">Contact</th>
@@ -787,6 +796,8 @@ const AdminDashboard = () => {
                         )}
                     </section>
                 )}
+                    </div>
+                </div>
             </div>
 
             {pendingDelete && (
@@ -828,6 +839,13 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
+
+
+
+
+
+
 
 
 
