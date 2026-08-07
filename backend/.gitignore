@@ -38,3 +38,6 @@ dist/
 build/
 *.pid
 *.seed
+
+# Uploaded media (now stored via GridFS in MongoDB)
+uploads/

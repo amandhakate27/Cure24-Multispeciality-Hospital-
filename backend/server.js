@@ -28,22 +28,6 @@ const ADMIN_PASSWORD_HASH = process.env.ADMIN_PASSWORD_HASH;
 const MONGO_URI = process.env.MONGO_URI;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
-const allowedOrigins = (process.env.CORS_ORIGIN || '')
-    .split(',')
-    .map((o) => o.trim().replace(/\/$/, ''))
-    .filter(Boolean);
-
-const DEFAULT_ALLOWED_ORIGINS = [
-    'https://apligrampanchayat.in',
-    'https://www.apligrampanchayat.in',
-    'https://cure24hospital.onrender.com',
-];
-
-const isAllowedOrigin = (origin) =>
-    !origin ||
-    allowedOrigins.includes(origin) ||
-    DEFAULT_ALLOWED_ORIGINS.includes(origin);
-
 const ADMIN_EFFECTIVE_HASH =
     ADMIN_PASSWORD_HASH || (ADMIN_PASSWORD ? bcrypt.hashSync(ADMIN_PASSWORD, 10) : null);
 
@@ -122,13 +106,7 @@ app.use(
 
 app.use(
     cors({
-        origin: (origin, callback) => {
-            if (isAllowedOrigin(origin)) {
-                callback(null, true);
-            } else {
-                callback(new Error('Not allowed by CORS'));
-            }
-        },
+        origin: true,
         credentials: true,
     })
 );
