@@ -6,6 +6,7 @@ import {
     Search,
     Trash2,
     Image,
+    Images,
     Upload,
     ImageOff,
     Video as VideoIcon,
@@ -116,9 +117,9 @@ const SectionTab = ({ active, onClick, label, count, icon: Icon }) => (
     </button>
 );
 
-const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
+const PhotoUpload = ({ onUpload, uploading, progress, nameLabel = "Alt Text", submitLabel = "Add to Slider", dropTitle = "Add Slider Image", sizeHint = "PNG, JPG up to 5MB" }) => {
     const [file, setFile] = useState(null);
-    const [altText, setAltText] = useState("");
+    const [name, setName] = useState("");
     const [preview, setPreview] = useState(null);
     const [dragActive, setDragActive] = useState(false);
 
@@ -154,16 +155,16 @@ const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (file) {
-            onUpload(file, altText);
+            onUpload(file, name);
             setFile(null);
-            setAltText("");
+            setName("");
             setPreview(null);
         }
     };
 
     const handleCancel = () => {
         setFile(null);
-        setAltText("");
+        setName("");
         if (preview) {
             URL.revokeObjectURL(preview);
             setPreview(null);
@@ -210,14 +211,14 @@ const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
                         onChange={handleFileChange}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                         disabled={uploading}
-                        aria-label="Choose slider image"
+                        aria-label={`Choose ${nameLabel.toLowerCase()} image`}
                     />
                     <Upload className="mx-auto h-12 w-12 text-blue-500" />
                     <p className="mt-3 text-sm font-medium text-slate-700">
-                        Add Slider Image
+                        {dropTitle}
                     </p>
                     <p className="mt-1 text-xs text-slate-500">Drag &amp; drop or click to upload</p>
-                    <p className="text-xs text-slate-400">PNG, JPG up to 5MB</p>
+                    <p className="text-xs text-slate-400">{sizeHint}</p>
                 </div>
             ) : (
                 <div className="relative rounded-2xl border border-blue-200 bg-white overflow-hidden">
@@ -226,18 +227,18 @@ const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
                         <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                             <div className="text-center text-white p-4">
                                 <p className="font-medium">Preview</p>
-                                <p className="text-xs opacity-80 mt-1">Alt: {altText || "No alt text"}</p>
+                                <p className="text-xs opacity-80 mt-1">{nameLabel}: {name || `No ${nameLabel.toLowerCase()}`}</p>
                             </div>
                         </div>
                     </div>
                     <div className="p-3 space-y-2 bg-slate-50">
                         <label className="flex flex-col gap-1 text-sm text-slate-700">
-                            <span className="font-semibold text-slate-900">Alt Text</span>
+                            <span className="font-semibold text-slate-900">{nameLabel}</span>
                             <input
                                 type="text"
-                                value={altText}
-                                onChange={(e) => setAltText(e.target.value)}
-                                placeholder="e.g., Hospital entrance view"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                                placeholder={`e.g., ${nameLabel === "Photo Name" ? "Hospital entrance view" : "Hospital entrance view"}`}
                                 className="rounded-xl border border-blue-200 bg-white px-3 py-2 outline-none transition focus:border-blue-500 text-sm"
                                 disabled={uploading}
                             />
@@ -248,7 +249,7 @@ const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
                                 disabled={uploading}
                                 className="flex-1 rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
                             >
-                                Add to Slider
+                                {submitLabel}
                             </button>
                             <button
                                 type="button"
@@ -265,8 +266,8 @@ const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
     );
 };
 
-const HeroSlideCard = ({ slide, onToggleActive, onDelete, isNew }) => {
-    const imageUrl = buildAssetUrl(slide.imageUrl);
+const PhotoCard = ({ photo, onToggleActive, onDelete, isNew, name, statusText, addLabel = "Add to Slider" }) => {
+    const imageUrl = buildAssetUrl(photo.imageUrl);
     const [hasError, setHasError] = useState(false);
 
     return (
@@ -275,7 +276,7 @@ const HeroSlideCard = ({ slide, onToggleActive, onDelete, isNew }) => {
                 {!hasError ? (
                     <img
                         src={imageUrl}
-                        alt={slide.altText}
+                        alt={name}
                         className="w-full h-full object-cover transition duration-300 group-hover:scale-105"
                         loading="lazy"
                         crossOrigin="anonymous"
@@ -292,29 +293,29 @@ const HeroSlideCard = ({ slide, onToggleActive, onDelete, isNew }) => {
                 {/* Status badge */}
                 <div className="absolute top-3 left-3">
                     <span className={`rounded-full px-2.5 py-1 text-xs font-medium shadow-lg ${
-                        slide.isActive 
+                        photo.isActive 
                             ? "bg-emerald-500 text-white" 
                             : "bg-slate-500 text-white"
                     }`}>
-                        {slide.isActive ? "Active" : "Inactive"}
+                        {photo.isActive ? "Active" : "Inactive"}
                     </span>
                 </div>
 
                 {/* Action buttons on hover */}
                 <div className="absolute bottom-3 left-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
                     <button
-                        onClick={() => onToggleActive(slide)}
+                        onClick={() => onToggleActive(photo)}
                         className={`flex-1 rounded-xl px-3 py-2 text-sm font-medium transition shadow-lg ${
-                            slide.isActive
+                            photo.isActive
                                 ? "bg-red-500 text-white hover:bg-red-600"
                                 : "bg-emerald-500 text-white hover:bg-emerald-600"
                         }`}
-                        title={slide.isActive ? "Remove from slider" : "Add to slider"}
+                        title={photo.isActive ? `Remove from ${addLabel.replace("Add to ", "")}` : addLabel}
                     >
-                        {slide.isActive ? "Remove" : "Add to Slider"}
+                        {photo.isActive ? "Remove" : addLabel}
                     </button>
                     <button
-                        onClick={() => onDelete(slide)}
+                        onClick={() => onDelete(photo)}
                         className="rounded-xl bg-red-500 text-white px-3 py-2 text-sm font-medium transition hover:bg-red-600 shadow-lg"
                         title="Delete permanently"
                     >
@@ -323,11 +324,11 @@ const HeroSlideCard = ({ slide, onToggleActive, onDelete, isNew }) => {
                 </div>
             </div>
             <div className="p-3">
-                <p className="text-sm font-medium text-slate-900 truncate" title={slide.altText}>
-                    {slide.altText || "No alt text"}
+                <p className="text-sm font-medium text-slate-900 truncate" title={name}>
+                    {name || "No name"}
                 </p>
                 <p className="text-xs text-slate-500 mt-1">
-                    {isNew ? "New" : "Existing"} • {slide.isActive ? "Visible on homepage" : "Hidden from homepage"}
+                    {isNew ? "New" : "Existing"} • {statusText}
                 </p>
             </div>
         </div>
@@ -536,6 +537,7 @@ const AdminDashboard = () => {
     const [appointments, setAppointments] = useState([]);
     const [feedbackList, setFeedbackList] = useState([]);
     const [heroSlides, setHeroSlides] = useState([]);
+    const [galleryPhotos, setGalleryPhotos] = useState([]);
     const [videos, setVideos] = useState([]);
     const [activeSection, setActiveSection] = useState("appointments");
     const [appointmentFilters, setAppointmentFilters] = useState(emptyAppointmentFilters);
@@ -546,8 +548,10 @@ const AdminDashboard = () => {
     const [pendingDelete, setPendingDelete] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [uploadingVideo, setUploadingVideo] = useState(false);
+    const [uploadingPhoto, setUploadingPhoto] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
     const [videoUploadProgress, setVideoUploadProgress] = useState(0);
+    const [photoUploadProgress, setPhotoUploadProgress] = useState(0);
     const toastTimer = useRef(null);
 
 
@@ -571,7 +575,7 @@ const AdminDashboard = () => {
             setLoadError("");
 
             try {
-                const [appointmentsResult, feedbackResult, heroSlidesResult, videosResult] = await Promise.allSettled([
+                const [appointmentsResult, feedbackResult, heroSlidesResult, videosResult, galleryPhotosResult] = await Promise.allSettled([
                     fetch(buildApiUrl("/api/appointments"), {
                         headers: { Authorization: `Bearer ${token}` },
                         signal: controller.signal,
@@ -588,6 +592,10 @@ const AdminDashboard = () => {
                         headers: { Authorization: `Bearer ${token}` },
                         signal: controller.signal,
                     }),
+                    fetch(buildApiUrl("/api/admin/gallery-photos"), {
+                        headers: { Authorization: `Bearer ${token}` },
+                        signal: controller.signal,
+                    }),
                 ]);
 
                 if (ignore) return;
@@ -596,6 +604,7 @@ const AdminDashboard = () => {
                 let nextAppointments = [];
                 let nextFeedback = [];
                 let nextHeroSlides = [];
+                let nextGalleryPhotos = [];
                 let nextVideos = [];
                 let nextError = "";
 
@@ -649,6 +658,18 @@ const AdminDashboard = () => {
                     }
                 }
 
+                if (galleryPhotosResult.status === "fulfilled") {
+                    const response = galleryPhotosResult.value;
+                    if (response.status === 401) {
+                        unauthorized = true;
+                    } else if (response.ok) {
+                        const data = await response.json();
+                        nextGalleryPhotos = data.photos || [];
+                    }
+                } else if (galleryPhotosResult.reason?.name !== "AbortError") {
+                    nextError = nextError || "Gallery photos could not be loaded.";
+                }
+
                 if (unauthorized) {
                     handleUnauthorized();
                     return;
@@ -657,6 +678,7 @@ const AdminDashboard = () => {
                 setAppointments(nextAppointments);
                 setFeedbackList(nextFeedback);
                 setHeroSlides(nextHeroSlides);
+                setGalleryPhotos(nextGalleryPhotos);
                 setVideos(nextVideos);
                 setLoadError(nextError);
             } catch (error) {
@@ -665,6 +687,7 @@ const AdminDashboard = () => {
                     setAppointments([]);
                     setFeedbackList([]);
                     setHeroSlides([]);
+                    setGalleryPhotos([]);
                     setVideos([]);
                     setLoadError("Dashboard data could not be loaded. Please refresh.");
                 }
@@ -1066,6 +1089,126 @@ const AdminDashboard = () => {
         }
     };
 
+    // Photo gallery management functions
+    const uploadGalleryPhoto = async (file, title) => {
+        const token = localStorage.getItem("adminToken");
+        if (!token) { navigate("/admin"); return; }
+
+        setUploadingPhoto(true);
+        setPhotoUploadProgress(0);
+        try {
+            const compressed = await compressImage(file, { maxWidth: 1600, maxHeight: 1600, quality: 0.82 });
+
+            const formData = new FormData();
+            formData.append("image", compressed);
+            if (title) formData.append("title", title);
+
+            const data = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", buildApiUrl("/api/admin/gallery-photos"));
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        setPhotoUploadProgress(Math.round((e.loaded / e.total) * 100));
+                    }
+                };
+                xhr.onload = () => {
+                    if (xhr.status === 401) { handleUnauthorized(); reject(new Error("Unauthorized")); return; }
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(new Error("Upload failed"));
+                    }
+                };
+                xhr.onerror = () => reject(new Error("Network error"));
+                xhr.send(formData);
+            });
+
+            setGalleryPhotos((prev) => [...prev, data.photo].sort((a, b) => a.order - b.order));
+            setToast({ variant: "success", title: "Photo uploaded", message: "Photo added to gallery successfully." });
+        } catch {
+            setToast({ variant: "error", title: "Upload failed", message: "Could not upload photo. Please try again." });
+        } finally {
+            setUploadingPhoto(false);
+            setPhotoUploadProgress(0);
+        }
+    };
+
+    const toggleGalleryPhotoActive = async (photo) => {
+        const token = localStorage.getItem("adminToken");
+        if (!token) {
+            navigate("/admin");
+            return;
+        }
+
+        try {
+            const response = await fetch(buildApiUrl(`/api/admin/gallery-photos/${photo._id}`), {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ isActive: !photo.isActive }),
+            });
+
+            if (response.status === 401) {
+                handleUnauthorized();
+                return;
+            }
+
+            if (!response.ok) throw new Error("Failed to update photo");
+
+            const data = await response.json();
+            setGalleryPhotos((prev) => prev.map((item) => (item._id === photo._id ? data.photo : item)));
+            setToast({
+                variant: "success",
+                title: data.photo.isActive ? "Photo activated" : "Photo deactivated",
+                message: "Gallery photo updated successfully.",
+            });
+        } catch {
+            setToast({
+                variant: "error",
+                title: "Update failed",
+                message: "Could not update photo status.",
+            });
+        }
+    };
+
+    const deleteGalleryPhoto = async (photo) => {
+        const token = localStorage.getItem("adminToken");
+        if (!token) {
+            navigate("/admin");
+            return;
+        }
+
+        try {
+            const response = await fetch(buildApiUrl(`/api/admin/gallery-photos/${photo._id}`), {
+                method: "DELETE",
+                headers: { Authorization: `Bearer ${token}` },
+            });
+
+            if (response.status === 401) {
+                handleUnauthorized();
+                return;
+            }
+
+            if (!response.ok) throw new Error("Delete failed");
+
+            setGalleryPhotos((prev) => prev.filter((item) => item._id !== photo._id));
+            setToast({
+                variant: "delete",
+                title: "Photo deleted",
+                message: "Gallery photo removed successfully.",
+            });
+        } catch {
+            setToast({
+                variant: "error",
+                title: "Delete failed",
+                message: "Could not delete photo.",
+            });
+        }
+    };
+
     const filteredAppointments = appointments
         .filter((appointment) => {
             const appointmentDate = parseDate(appointment.date);
@@ -1213,6 +1356,13 @@ const AdminDashboard = () => {
                                 icon={Image}
                                 label="Slider Images"
                                 count={heroSlides.length}
+                            />
+                            <SectionTab
+                                active={activeSection === "gallery"}
+                                onClick={() => setActiveSection("gallery")}
+                                icon={Images}
+                                label="Photo Gallery"
+                                count={galleryPhotos.length}
                             />
                             <SectionTab
                                 active={activeSection === "videos"}
@@ -1531,9 +1681,13 @@ const AdminDashboard = () => {
                                 <div className="flex-1 min-h-0 overflow-auto p-4 sm:p-6">
                                     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-full">
                                         {/* Upload Card - always first */}
-                                        <HeroSliderUpload 
+                                        <PhotoUpload 
                                             onUpload={uploadHeroSlide} 
                                             uploading={uploading} 
+                                            progress={uploadProgress}
+                                            nameLabel="Alt Text"
+                                            submitLabel="Add to Slider"
+                                            dropTitle="Add Slider Image"
                                         />
                                         
                                         {/* Existing Slides */}
@@ -1545,12 +1699,72 @@ const AdminDashboard = () => {
                                             </div>
                                         ) : (
                                             heroSlides.map((slide) => (
-                                                <HeroSlideCard
+                                                <PhotoCard
                                                     key={slide._id}
-                                                    slide={slide}
+                                                    photo={slide}
                                                     onToggleActive={toggleHeroSlideActive}
                                                     onDelete={deleteHeroSlide}
                                                     isNew={false}
+                                                    name={slide.altText}
+                                                    statusText={slide.isActive ? "Visible on homepage" : "Hidden from homepage"}
+                                                    addLabel="Add to Slider"
+                                                />
+                                            ))
+                                        )}
+                                    </div>
+                                </div>
+                            </section>
+                        )}
+
+                        {activeSection === "gallery" && (
+                            <section className="flex h-full min-h-0 flex-col rounded-[28px] border border-blue-100 bg-white shadow-[0_24px_60px_-40px_rgba(15,23,42,0.45)]">
+                                <div className="shrink-0 p-4 sm:p-6 border-b border-blue-100">
+                                    <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                                        <div>
+                                            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-600">Photo Gallery</p>
+                                            <h2 className="mt-1 text-2xl font-bold text-slate-900">Gallery Photos</h2>
+                                        </div>
+                                        <div className="flex items-center gap-3 text-sm text-slate-500">
+                                            <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">
+                                                {galleryPhotos.filter(p => p.isActive).length} Visible
+                                            </span>
+                                            <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-600 font-medium">
+                                                {galleryPhotos.length} Total
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex-1 min-h-0 overflow-auto p-4 sm:p-6">
+                                    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 max-w-full">
+                                        {/* Upload Card - always first */}
+                                        <PhotoUpload 
+                                            onUpload={uploadGalleryPhoto} 
+                                            uploading={uploadingPhoto} 
+                                            progress={photoUploadProgress}
+                                            nameLabel="Photo Name"
+                                            submitLabel="Add to Gallery"
+                                            dropTitle="Add Gallery Photo"
+                                        />
+                                        
+                                        {/* Existing Photos */}
+                                        {galleryPhotos.length === 0 ? (
+                                            <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                                                <Images className="h-16 w-16 text-slate-300" />
+                                                <p className="mt-4 text-lg font-medium text-slate-700">No gallery photos yet</p>
+                                                <p className="mt-1 text-sm text-slate-500">Click above to add your first photo</p>
+                                            </div>
+                                        ) : (
+                                            galleryPhotos.map((photo) => (
+                                                <PhotoCard
+                                                    key={photo._id}
+                                                    photo={photo}
+                                                    onToggleActive={toggleGalleryPhotoActive}
+                                                    onDelete={deleteGalleryPhoto}
+                                                    isNew={false}
+                                                    name={photo.title}
+                                                    statusText={photo.isActive ? "Visible in gallery" : "Hidden from gallery"}
+                                                    addLabel="Add to Gallery"
                                                 />
                                             ))
                                         )}

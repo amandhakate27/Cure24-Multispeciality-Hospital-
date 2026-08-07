@@ -182,6 +182,19 @@ const heroSliderSchema = new mongoose.Schema(
 
 const HeroSlider = mongoose.model('HeroSlider', heroSliderSchema);
 
+// Gallery Photo Schema
+const galleryPhotoSchema = new mongoose.Schema(
+    {
+        imageUrl: { type: String, required: true },
+        title: { type: String, default: 'Gallery photo' },
+        isActive: { type: Boolean, default: true },
+        order: { type: Number, default: 0 },
+    },
+    { timestamps: true }
+);
+
+const GalleryPhoto = mongoose.model('GalleryPhoto', galleryPhotoSchema);
+
 // Video Schema
 const videoSchema = new mongoose.Schema(
     {
@@ -204,6 +217,14 @@ const getRequestBaseUrl = (req) => {
 
 const serializeHeroSlide = (slide, req) => {
     const data = typeof slide.toObject === 'function' ? slide.toObject() : { ...slide };
+    if (data.imageUrl && !/^https?:\/\//i.test(data.imageUrl)) {
+        data.imageUrl = `${getRequestBaseUrl(req)}${data.imageUrl}`;
+    }
+    return data;
+};
+
+const serializeGalleryPhoto = (photo, req) => {
+    const data = typeof photo.toObject === 'function' ? photo.toObject() : { ...photo };
     if (data.imageUrl && !/^https?:\/\//i.test(data.imageUrl)) {
         data.imageUrl = `${getRequestBaseUrl(req)}${data.imageUrl}`;
     }
@@ -493,6 +514,118 @@ app.delete('/api/admin/hero-slider/:id', authenticate, async (req, res) => {
     }
 });
 
+// --- GALLERY PHOTOS ENDPOINTS ---
+
+// Get gallery photos (public - for photo gallery page)
+app.get('/api/gallery-photos', async (req, res) => {
+    try {
+        const photos = await GalleryPhoto.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
+        return res.json({ success: true, photos: photos.map((p) => serializeGalleryPhoto(p, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get all gallery photos (admin)
+app.get('/api/admin/gallery-photos', authenticate, async (req, res) => {
+    try {
+        const photos = await GalleryPhoto.find().sort({ order: 1, createdAt: 1 });
+        return res.json({ success: true, photos: photos.map((p) => serializeGalleryPhoto(p, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Upload gallery photo (admin)
+app.post('/api/admin/gallery-photos', authenticate, heroSliderUpload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Image is required' });
+        }
+
+        const { title, isActive, order } = req.body;
+
+        // Compress & resize image with sharp for faster delivery
+        const ext = path.extname(req.file.originalname).toLowerCase();
+        const isWebCompatible = ['.jpg', '.jpeg', '.png', '.webp'].includes(ext);
+        let buffer = req.file.buffer;
+        let finalFilename = `gallery_${Date.now()}${ext || '.png'}`;
+
+        if (isWebCompatible) {
+            finalFilename = finalFilename.replace(/\.[^.]+$/, '.webp');
+            buffer = await sharp(req.file.buffer)
+                .resize({ width: 1600, withoutEnlargement: true })
+                .webp({ quality: 82 })
+                .toBuffer();
+        }
+
+        const uploaded = await gridfs.uploadBuffer(
+            gridfs.GALLERY_BUCKET,
+            buffer,
+            finalFilename,
+            isWebCompatible ? 'image/webp' : req.file.mimetype
+        );
+
+        const maxOrderPhoto = await GalleryPhoto.findOne().sort({ order: -1 });
+        const nextOrder = maxOrderPhoto ? maxOrderPhoto.order + 1 : 0;
+        const activeValue = isActive === undefined ? true : (isActive === 'true' || isActive === true);
+
+        const photo = await GalleryPhoto.create({
+            imageUrl: `/media/gallery/${uploaded._id}`,
+            title: title || 'Gallery photo',
+            isActive: activeValue,
+            order: order !== undefined ? Number(order) : nextOrder,
+        });
+
+        return res.status(201).json({ success: true, photo: serializeGalleryPhoto(photo, req) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Update gallery photo (admin)
+app.patch('/api/admin/gallery-photos/:id', authenticate, async (req, res) => {
+    try {
+        const { title, isActive, order } = req.body;
+        const photo = await GalleryPhoto.findByIdAndUpdate(
+            req.params.id,
+            {
+                ...(title !== undefined && { title }),
+                ...(isActive !== undefined && { isActive: Boolean(isActive) }),
+                ...(order !== undefined && { order: Number(order) }),
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!photo) {
+            return res.status(404).json({ success: false, message: 'Photo not found' });
+        }
+
+        return res.json({ success: true, photo: serializeGalleryPhoto(photo, req) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Delete gallery photo (admin)
+app.delete('/api/admin/gallery-photos/:id', authenticate, async (req, res) => {
+    try {
+        const photo = await GalleryPhoto.findByIdAndDelete(req.params.id);
+        if (!photo) {
+            return res.status(404).json({ success: false, message: 'Photo not found' });
+        }
+
+        const fileId = gridfs.getFileIdFromUrl(photo.imageUrl);
+        if (fileId) {
+            await gridfs.deleteFile(gridfs.GALLERY_BUCKET, fileId);
+        }
+
+        return res.json({ success: true });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // --- VIDEOS ENDPOINTS ---
 
 // Get active videos (public - for website video section)
@@ -660,6 +793,7 @@ app.delete('/api/appointments/:id', authenticate, async (req, res) => {
 // GridFS media streaming (hero images + videos) - Range request aware
 app.get('/media/hero/:id', (req, res) => gridfs.streamFile(req, res, gridfs.HERO_BUCKET, req.params.id));
 app.get('/media/video/:id', (req, res) => gridfs.streamFile(req, res, gridfs.VIDEO_BUCKET, req.params.id));
+app.get('/media/gallery/:id', (req, res) => gridfs.streamFile(req, res, gridfs.GALLERY_BUCKET, req.params.id));
 
 // Serve uploads with explicit CORS, CORP and aggressive cache headers
 app.use('/uploads', (req, res, next) => {

@@ -3,6 +3,7 @@ const { ObjectId } = require('mongodb');
 
 const HERO_BUCKET = 'heroImages';
 const VIDEO_BUCKET = 'videos';
+const GALLERY_BUCKET = 'galleryPhotos';
 
 const getBucket = (name) =>
     new mongoose.mongo.GridFSBucket(mongoose.connection.db, { bucketName: name });
@@ -140,6 +141,7 @@ const streamFile = async (req, res, bucketName, id) => {
 module.exports = {
     HERO_BUCKET,
     VIDEO_BUCKET,
+    GALLERY_BUCKET,
     uploadBuffer,
     getFile,
     deleteFile,

@@ -37,7 +37,7 @@ const popCard = {
     },
 };
 
-const galleryPhotos = [
+const staticGalleryPhotos = [
     { id: "bed-facilities", title: "Comfortable Bed Facilities", image: bedFacilitiesImg },
     { id: "hospital-exterior-view", title: "Hospital Exterior", image: hospitalExteriorViewImg },
     { id: "inpatient-services", title: "Inpatient Care Services", image: inpatientImg },
@@ -62,7 +62,35 @@ const Gallery = () => {
     const [selectedPhotoId, setSelectedPhotoId] = useState(null);
     const [lightboxDirection, setLightboxDirection] = useState(1);
     const [videos, setVideos] = useState(defaultVideoGallery);
+    const [galleryPhotos, setGalleryPhotos] = useState(staticGalleryPhotos);
     const location = useLocation();
+
+    useEffect(() => {
+        let ignore = false;
+        const fetchGalleryPhotos = async () => {
+            try {
+                const res = await fetch(buildApiUrl("/api/gallery-photos"));
+                if (res.ok) {
+                    const data = await res.json();
+                    if (!ignore && data.success && Array.isArray(data.photos) && data.photos.length > 0) {
+                        const dynamicPhotos = data.photos.map((photo) => ({
+                            id: photo._id,
+                            title: photo.title || "Gallery photo",
+                            image: buildAssetUrl(photo.imageUrl),
+                        }));
+                        setGalleryPhotos([...dynamicPhotos, ...staticGalleryPhotos]);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch gallery photos:", err);
+            }
+        };
+
+        fetchGalleryPhotos();
+        return () => {
+            ignore = true;
+        };
+    }, []);
 
     useEffect(() => {
         let ignore = false;
