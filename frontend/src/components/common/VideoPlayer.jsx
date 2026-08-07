@@ -36,7 +36,7 @@ const VideoPlayer = ({ src, className, onError }) => {
                     src={src}
                     controls
                     preload="metadata"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-contain bg-slate-950"
                     onError={onError}
                 />
             ) : null}
