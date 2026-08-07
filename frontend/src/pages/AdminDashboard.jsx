@@ -116,7 +116,7 @@ const SectionTab = ({ active, onClick, label, count, icon: Icon }) => (
     </button>
 );
 
-const HeroSliderUpload = ({ onUpload, uploading }) => {
+const HeroSliderUpload = ({ onUpload, uploading, progress }) => {
     const [file, setFile] = useState(null);
     const [altText, setAltText] = useState("");
     const [preview, setPreview] = useState(null);
@@ -172,7 +172,31 @@ const HeroSliderUpload = ({ onUpload, uploading }) => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-3">
-            {!preview ? (
+            {/* Upload Progress Overlay */}
+            {uploading && (
+                <div className="rounded-2xl border border-blue-200 bg-white p-5 space-y-3">
+                    <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-slate-800">
+                                {progress < 100 ? "Uploading image…" : "Processing…"}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-0.5">
+                                {progress < 100 ? `${progress}% transferred` : "Compressing & saving…"}
+                            </p>
+                        </div>
+                        <span className="text-sm font-bold text-blue-600 tabular-nums">{progress}%</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-blue-100 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${Math.max(progress, 4)}%` }}
+                        />
+                    </div>
+                </div>
+            )}
+
+            {!uploading && (!preview ? (
                 <div
                     className={`relative rounded-2xl border-2 border-dashed p-6 text-center transition min-h-[200px] flex flex-col items-center justify-center ${dragActive ? "border-blue-500 bg-blue-50" : "border-blue-200 hover:border-blue-400 cursor-pointer"}`}
                     onDragEnter={handleDrag}
@@ -192,7 +216,7 @@ const HeroSliderUpload = ({ onUpload, uploading }) => {
                     <p className="mt-3 text-sm font-medium text-slate-700">
                         Add Slider Image
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">Drag & drop or click to upload</p>
+                    <p className="mt-1 text-xs text-slate-500">Drag &amp; drop or click to upload</p>
                     <p className="text-xs text-slate-400">PNG, JPG up to 5MB</p>
                 </div>
             ) : (
@@ -224,7 +248,7 @@ const HeroSliderUpload = ({ onUpload, uploading }) => {
                                 disabled={uploading}
                                 className="flex-1 rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
                             >
-                                {uploading ? "Adding..." : "Add to Slider"}
+                                Add to Slider
                             </button>
                             <button
                                 type="button"
@@ -236,7 +260,7 @@ const HeroSliderUpload = ({ onUpload, uploading }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            ))}
         </form>
     );
 };
@@ -308,9 +332,7 @@ const HeroSlideCard = ({ slide, onToggleActive, onDelete, isNew }) => {
             </div>
         </div>
     );
-};
-
-const VideoUpload = ({ onUpload, uploading }) => {
+};const VideoUpload = ({ onUpload, uploading, progress }) => {
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState("");
     const [preview, setPreview] = useState(null);
@@ -364,9 +386,39 @@ const VideoUpload = ({ onUpload, uploading }) => {
         }
     };
 
+    // Determine file size label
+    const fileSizeMB = file ? (file.size / (1024 * 1024)).toFixed(1) : null;
+
     return (
         <form onSubmit={handleSubmit} className="space-y-3">
-            {!preview ? (
+            {/* Upload Progress Overlay */}
+            {uploading && (
+                <div className="rounded-2xl border border-blue-200 bg-white p-5 space-y-3">
+                    <div className="flex items-center gap-3">
+                        <div className="h-8 w-8 rounded-full border-4 border-blue-200 border-t-blue-600 animate-spin flex-shrink-0" />
+                        <div className="flex-1 min-w-0">
+                            <p className="text-sm font-semibold text-slate-800">
+                                {progress < 100 ? "Uploading video…" : "Saving to server…"}
+                            </p>
+                            <p className="text-xs text-slate-500 mt-0.5">
+                                {progress < 100
+                                    ? `${progress}% transferred${fileSizeMB ? ` of ${fileSizeMB} MB` : ""}`
+                                    : "Almost done…"}
+                            </p>
+                        </div>
+                        <span className="text-sm font-bold text-blue-600 tabular-nums">{progress}%</span>
+                    </div>
+                    <div className="w-full h-2.5 bg-blue-100 rounded-full overflow-hidden">
+                        <div
+                            className="h-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${Math.max(progress, 4)}%` }}
+                        />
+                    </div>
+                    <p className="text-xs text-slate-400 text-center">Please wait, do not close this tab</p>
+                </div>
+            )}
+
+            {!uploading && (!preview ? (
                 <div
                     className={`relative rounded-2xl border-2 border-dashed p-6 text-center transition min-h-[200px] flex flex-col items-center justify-center ${dragActive ? "border-blue-500 bg-blue-50" : "border-blue-200 hover:border-blue-400 cursor-pointer"}`}
                     onDragEnter={handleDrag}
@@ -386,7 +438,7 @@ const VideoUpload = ({ onUpload, uploading }) => {
                     <p className="mt-3 text-sm font-medium text-slate-700">
                         Add Video
                     </p>
-                    <p className="mt-1 text-xs text-slate-500">Drag & drop or click to upload video</p>
+                    <p className="mt-1 text-xs text-slate-500">Drag &amp; drop or click to upload video</p>
                     <p className="text-xs text-slate-400">MP4, WebM up to 100MB</p>
                 </div>
             ) : (
@@ -395,6 +447,9 @@ const VideoUpload = ({ onUpload, uploading }) => {
                         <video src={preview} controls muted className="w-full h-full object-contain" />
                     </div>
                     <div className="p-3 space-y-2 bg-slate-50">
+                        {fileSizeMB && (
+                            <p className="text-xs text-slate-500">File size: <span className="font-medium text-slate-700">{fileSizeMB} MB</span>{parseFloat(fileSizeMB) > 50 ? <span className="ml-1 text-amber-600 font-medium">(Large — upload may take time)</span> : null}</p>
+                        )}
                         <label className="flex flex-col gap-1 text-sm text-slate-700">
                             <span className="font-semibold text-slate-900">Video Title</span>
                             <input
@@ -412,7 +467,7 @@ const VideoUpload = ({ onUpload, uploading }) => {
                                 disabled={uploading}
                                 className="flex-1 rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white transition hover:bg-blue-700 disabled:opacity-50"
                             >
-                                {uploading ? "Uploading Video..." : "Add Video"}
+                                Add Video
                             </button>
                             <button
                                 type="button"
@@ -424,10 +479,11 @@ const VideoUpload = ({ onUpload, uploading }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            ))}
         </form>
     );
 };
+;
 
 const VideoCard = ({ video, onToggleActive, onDelete }) => {
     const videoUrl = buildAssetUrl(video.videoUrl);
@@ -490,7 +546,10 @@ const AdminDashboard = () => {
     const [pendingDelete, setPendingDelete] = useState(null);
     const [uploading, setUploading] = useState(false);
     const [uploadingVideo, setUploadingVideo] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [videoUploadProgress, setVideoUploadProgress] = useState(0);
     const toastTimer = useRef(null);
+
 
     const handleUnauthorized = useCallback(() => {
         localStorage.removeItem("adminToken");
@@ -770,12 +829,10 @@ const AdminDashboard = () => {
 
     const uploadHeroSlide = async (file, altText) => {
         const token = localStorage.getItem("adminToken");
-        if (!token) {
-            navigate("/admin");
-            return;
-        }
+        if (!token) { navigate("/admin"); return; }
 
         setUploading(true);
+        setUploadProgress(0);
         try {
             // Compress image client-side before upload (~70% size reduction)
             const compressed = await compressImage(file, { maxWidth: 1920, maxHeight: 1080, quality: 0.82 });
@@ -784,34 +841,34 @@ const AdminDashboard = () => {
             formData.append("image", compressed);
             if (altText) formData.append("altText", altText);
 
-            const response = await fetch(buildApiUrl("/api/admin/hero-slider"), {
-                method: "POST",
-                headers: { Authorization: `Bearer ${token}` },
-                body: formData,
+            const data = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", buildApiUrl("/api/admin/hero-slider"));
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        setUploadProgress(Math.round((e.loaded / e.total) * 100));
+                    }
+                };
+                xhr.onload = () => {
+                    if (xhr.status === 401) { handleUnauthorized(); reject(new Error("Unauthorized")); return; }
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(new Error("Upload failed"));
+                    }
+                };
+                xhr.onerror = () => reject(new Error("Network error"));
+                xhr.send(formData);
             });
 
-            if (response.status === 401) {
-                handleUnauthorized();
-                return;
-            }
-
-            if (!response.ok) throw new Error("Upload failed");
-
-            const data = await response.json();
             setHeroSlides((prev) => [...prev, data.slide].sort((a, b) => a.order - b.order));
-            setToast({
-                variant: "success",
-                title: "Image uploaded",
-                message: "Slider image added successfully.",
-            });
+            setToast({ variant: "success", title: "Image uploaded", message: "Slider image added successfully." });
         } catch {
-            setToast({
-                variant: "error",
-                title: "Upload failed",
-                message: "Could not upload image. Please try again.",
-            });
+            setToast({ variant: "error", title: "Upload failed", message: "Could not upload image. Please try again." });
         } finally {
             setUploading(false);
+            setUploadProgress(0);
         }
     };
 
@@ -894,45 +951,43 @@ const AdminDashboard = () => {
     // Video management functions
     const uploadVideo = async (file, title) => {
         const token = localStorage.getItem("adminToken");
-        if (!token) {
-            navigate("/admin");
-            return;
-        }
+        if (!token) { navigate("/admin"); return; }
 
         setUploadingVideo(true);
+        setVideoUploadProgress(0);
         try {
             const formData = new FormData();
             formData.append("video", file);
             if (title) formData.append("title", title);
 
-            const response = await fetch(buildApiUrl("/api/admin/videos"), {
-                method: "POST",
-                headers: { Authorization: `Bearer ${token}` },
-                body: formData,
+            const data = await new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("POST", buildApiUrl("/api/admin/videos"));
+                xhr.setRequestHeader("Authorization", `Bearer ${token}`);
+                xhr.upload.onprogress = (e) => {
+                    if (e.lengthComputable) {
+                        setVideoUploadProgress(Math.round((e.loaded / e.total) * 100));
+                    }
+                };
+                xhr.onload = () => {
+                    if (xhr.status === 401) { handleUnauthorized(); reject(new Error("Unauthorized")); return; }
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        resolve(JSON.parse(xhr.responseText));
+                    } else {
+                        reject(new Error("Upload failed"));
+                    }
+                };
+                xhr.onerror = () => reject(new Error("Network error"));
+                xhr.send(formData);
             });
 
-            if (response.status === 401) {
-                handleUnauthorized();
-                return;
-            }
-
-            if (!response.ok) throw new Error("Upload failed");
-
-            const data = await response.json();
             setVideos((prev) => [data.video, ...prev]);
-            setToast({
-                variant: "success",
-                title: "Video uploaded",
-                message: "Video added successfully.",
-            });
+            setToast({ variant: "success", title: "Video uploaded", message: "Video added successfully." });
         } catch {
-            setToast({
-                variant: "error",
-                title: "Upload failed",
-                message: "Could not upload video. Please try again.",
-            });
+            setToast({ variant: "error", title: "Upload failed", message: "Could not upload video. Please try again." });
         } finally {
             setUploadingVideo(false);
+            setVideoUploadProgress(0);
         }
     };
 
