@@ -75,8 +75,8 @@ const CampaignVideos = () => {
                                 key={video._id || video.id}
                                 className="group bg-white rounded-2xl border border-blue-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
                             >
-                                <div className="relative aspect-video bg-slate-950 overflow-hidden">
-                                    <VideoPlayer src={src} />
+                                <div className="relative aspect-video overflow-hidden">
+                                    <VideoPlayer src={src} title={video.title || "Hospital Campaign Video"} />
                                 </div>
                                 <div className="p-4 flex-1 flex flex-col gap-1">
                                     <h3 className="font-semibold text-blue-800 text-sm md:text-base line-clamp-2" title={video.title}>

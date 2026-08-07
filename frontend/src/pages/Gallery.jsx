@@ -233,8 +233,8 @@ const Gallery = () => {
                                     key={video._id || video.id}
                                     className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
                                 >
-                                    <div className="relative aspect-video bg-slate-950">
-                                        <VideoPlayer src={src} />
+                                    <div className="relative aspect-video">
+                                        <VideoPlayer src={src} title={video.title} />
                                     </div>
                                     <div className="flex-1 flex flex-col justify-center p-4">
                                         <p className="text-sm md:text-base font-semibold text-blue-800 text-center">

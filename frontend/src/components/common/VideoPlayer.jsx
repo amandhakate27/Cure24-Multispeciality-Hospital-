@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const VideoPlayer = ({ src, poster, className, onError }) => {
+const VideoPlayer = ({ src, className, onError }) => {
     const containerRef = useRef(null);
     const [shouldLoad, setShouldLoad] = useState(false);
 
@@ -22,7 +22,7 @@ const VideoPlayer = ({ src, poster, className, onError }) => {
                     }
                 });
             },
-            { rootMargin: "200px" }
+            { rootMargin: "300px" }
         );
 
         observer.observe(el);
@@ -30,29 +30,16 @@ const VideoPlayer = ({ src, poster, className, onError }) => {
     }, []);
 
     return (
-        <div ref={containerRef} className={className}>
+        <div ref={containerRef} className={`w-full h-full ${className || ""}`}>
             {shouldLoad ? (
                 <video
                     src={src}
                     controls
                     preload="metadata"
                     className="w-full h-full object-cover"
-                    poster={poster || undefined}
                     onError={onError}
                 />
-            ) : (
-                <div className="w-full h-full bg-slate-900 flex items-center justify-center">
-                    <span className="sr-only">Video</span>
-                    <svg
-                        className="h-10 w-10 text-white/40"
-                        viewBox="0 0 24 24"
-                        fill="currentColor"
-                        aria-hidden="true"
-                    >
-                        <path d="M8 5v14l11-7z" />
-                    </svg>
-                </div>
-            )}
+            ) : null}
         </div>
     );
 };

@@ -9,6 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
 const sharp = require('sharp');
+const gridfs = require('./gridfs');
 require('dotenv').config();
 
 
@@ -239,23 +240,9 @@ const serializeVideo = (video, req) => {
     return data;
 };
 
-// Multer config for hero slider uploads
-const heroSliderStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const dir = path.join(__dirname, 'uploads', 'hero-slider');
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, `hero_${Date.now()}${ext}`);
-    },
-});
-
+// Multer config for hero slider uploads (in-memory, stored via GridFS)
 const heroSliderUpload = multer({
-    storage: heroSliderStorage,
+    storage: multer.memoryStorage(),
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
     fileFilter: (req, file, cb) => {
         if (!file.mimetype.startsWith('image/')) {
@@ -265,23 +252,9 @@ const heroSliderUpload = multer({
     },
 });
 
-// Multer config for video uploads
-const videoStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        const dir = path.join(__dirname, 'uploads', 'videos');
-        if (!fs.existsSync(dir)) {
-            fs.mkdirSync(dir, { recursive: true });
-        }
-        cb(null, dir);
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, `vid_${Date.now()}${ext}`);
-    },
-});
-
+// Multer config for video uploads (in-memory, stored via GridFS)
 const videoUpload = multer({
-    storage: videoStorage,
+    storage: multer.memoryStorage(),
     limits: { fileSize: 100 * 1024 * 1024 }, // 100MB
     fileFilter: (req, file, cb) => {
         if (!file.mimetype.startsWith('video/')) {
@@ -457,27 +430,32 @@ app.post('/api/admin/hero-slider', authenticate, heroSliderUpload.single('image'
         const { altText, isActive, order } = req.body;
 
         // Compress & resize image with sharp for faster delivery
-        const inputPath = req.file.path;
-        const ext = path.extname(req.file.filename).toLowerCase();
+        const ext = path.extname(req.file.originalname).toLowerCase();
         const isWebCompatible = ['.jpg', '.jpeg', '.png', '.webp'].includes(ext);
-        let finalFilename = req.file.filename;
+        let buffer = req.file.buffer;
+        let finalFilename = `hero_${Date.now()}${ext || '.png'}`;
 
         if (isWebCompatible) {
-            finalFilename = req.file.filename.replace(/\.[^.]+$/, '.webp');
-            const outputPath = path.join(path.dirname(inputPath), finalFilename);
-            await sharp(inputPath)
+            finalFilename = finalFilename.replace(/\.[^.]+$/, '.webp');
+            buffer = await sharp(req.file.buffer)
                 .resize({ width: 1920, withoutEnlargement: true })
                 .webp({ quality: 82 })
-                .toFile(outputPath);
-            fs.unlink(inputPath, () => {}); // remove original
+                .toBuffer();
         }
+
+        const uploaded = await gridfs.uploadBuffer(
+            gridfs.HERO_BUCKET,
+            buffer,
+            finalFilename,
+            isWebCompatible ? 'image/webp' : req.file.mimetype
+        );
 
         const maxOrderSlide = await HeroSlider.findOne().sort({ order: -1 });
         const nextOrder = maxOrderSlide ? maxOrderSlide.order + 1 : 0;
         const activeValue = isActive === undefined ? true : (isActive === 'true' || isActive === true);
 
         const slide = await HeroSlider.create({
-            imageUrl: `/uploads/hero-slider/${finalFilename}`,
+            imageUrl: `/media/hero/${uploaded._id}`,
             altText: altText || 'Hero slider image',
             isActive: activeValue,
             order: order !== undefined ? Number(order) : nextOrder,
@@ -485,9 +463,6 @@ app.post('/api/admin/hero-slider', authenticate, heroSliderUpload.single('image'
 
         return res.status(201).json({ success: true, slide: serializeHeroSlide(slide, req) });
     } catch (error) {
-        if (req.file) {
-            fs.unlink(req.file.path, () => {});
-        }
         return res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -524,9 +499,14 @@ app.delete('/api/admin/hero-slider/:id', authenticate, async (req, res) => {
             return res.status(404).json({ success: false, message: 'Slide not found' });
         }
 
-        const filePath = path.join(__dirname, slide.imageUrl);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+        const fileId = gridfs.getFileIdFromUrl(slide.imageUrl);
+        if (fileId) {
+            await gridfs.deleteFile(gridfs.HERO_BUCKET, fileId);
+        }
+
+        const legacyPath = path.join(__dirname, slide.imageUrl);
+        if (fs.existsSync(legacyPath)) {
+            fs.unlinkSync(legacyPath);
         }
 
         return res.json({ success: true });
@@ -569,8 +549,16 @@ app.post('/api/admin/videos', authenticate, videoUpload.single('video'), async (
         const nextOrder = maxOrderVideo ? maxOrderVideo.order + 1 : 0;
         const activeValue = useInVideosSection === undefined ? true : (useInVideosSection === 'true' || useInVideosSection === true);
 
+        const filename = `vid_${Date.now()}${path.extname(req.file.originalname) || '.mp4'}`;
+        const uploaded = await gridfs.uploadBuffer(
+            gridfs.VIDEO_BUCKET,
+            req.file.buffer,
+            filename,
+            req.file.mimetype || 'video/mp4'
+        );
+
         const video = await Video.create({
-            videoUrl: `/uploads/videos/${req.file.filename}`,
+            videoUrl: `/media/video/${uploaded._id}`,
             title: title || 'Hospital Video',
             description: description || '',
             useInVideosSection: activeValue,
@@ -579,9 +567,6 @@ app.post('/api/admin/videos', authenticate, videoUpload.single('video'), async (
 
         return res.status(201).json({ success: true, video: serializeVideo(video, req) });
     } catch (error) {
-        if (req.file) {
-            fs.unlink(req.file.path, () => {});
-        }
         return res.status(500).json({ success: false, error: error.message });
     }
 });
@@ -618,9 +603,14 @@ app.delete('/api/admin/videos/:id', authenticate, async (req, res) => {
             return res.status(404).json({ success: false, message: 'Video not found' });
         }
 
-        const filePath = path.join(__dirname, video.videoUrl);
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
+        const fileId = gridfs.getFileIdFromUrl(video.videoUrl);
+        if (fileId) {
+            await gridfs.deleteFile(gridfs.VIDEO_BUCKET, fileId);
+        }
+
+        const legacyPath = path.join(__dirname, video.videoUrl);
+        if (fs.existsSync(legacyPath)) {
+            fs.unlinkSync(legacyPath);
         }
 
         return res.json({ success: true });
@@ -688,6 +678,10 @@ app.delete('/api/appointments/:id', authenticate, async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 });
+
+// GridFS media streaming (hero images + videos) - Range request aware
+app.get('/media/hero/:id', (req, res) => gridfs.streamFile(req, res, gridfs.HERO_BUCKET, req.params.id));
+app.get('/media/video/:id', (req, res) => gridfs.streamFile(req, res, gridfs.VIDEO_BUCKET, req.params.id));
 
 // Serve uploads with explicit CORS, CORP and aggressive cache headers
 app.use('/uploads', (req, res, next) => {
