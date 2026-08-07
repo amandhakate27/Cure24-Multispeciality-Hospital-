@@ -133,7 +133,7 @@ const Appointment = () => {
 
 
                 <div className="mt-6 bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">Book an Appointment</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Schedule your consultation with our expert doctors. Fill out the form below
@@ -144,7 +144,7 @@ const Appointment = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-5xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <motion.div
                         className="bg-white border border-blue-100 rounded-2xl shadow-lg shadow-blue-100/50 p-6 md:p-10"
                         variants={formVariants}
@@ -294,7 +294,7 @@ const Appointment = () => {
             </section>
 
             <section className="pb-16">
-                <div className="max-w-5xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
                         <div className="flex flex-col items-center">
                             <div className="w-12 h-12 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">

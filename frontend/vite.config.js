@@ -5,6 +5,12 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
+  server: {
+    proxy: {
+      '/api': 'http://localhost:5000',
+      '/uploads': 'http://localhost:5000',
+    },
+  },
   build: {
     minify: 'terser',
     terserOptions: {
@@ -29,3 +35,4 @@ export default defineConfig({
     include: ['react', 'react-dom', 'react-router-dom'],
   },
 })
+

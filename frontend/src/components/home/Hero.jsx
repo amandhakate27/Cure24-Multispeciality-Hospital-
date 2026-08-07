@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Phone } from "lucide-react";
-import heroImage from "../../assets/images/heroImage1.jpg";
-import BlobBackground from "./BlobBackground";
+import HeroSlider from "./HeroSlider";
 
 const stats = [
     { value: 24, suffix: "/7", label: "Emergency Care" },
@@ -35,17 +34,21 @@ const Hero = () => {
     }, []);
 
     return (
-        <section className="relative overflow-hidden bg-[linear-gradient(135deg,#f7fbff_0%,#eef4ff_48%,#f8fbff_100%)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_18%,rgba(4,26,169,0.10),transparent_28%),radial-gradient(circle_at_72%_24%,rgba(4,26,169,0.08),transparent_22%)]" />
+        <section className="relative overflow-hidden bg-slate-950 min-h-screen lg:h-screen flex flex-col justify-center">
+            {/* Background slider with admin uploaded images */}
+            <HeroSlider variant="background" />
 
-            <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col px-5 pb-0 pt-20 sm:px-7 sm:pt-24 md:pt-20 lg:px-10 xl:px-12">
-                <div className="grid flex-1 items-center gap-3 lg:grid-cols-[55%_45%] lg:gap-8 xl:gap-12">
+            {/* Subtle & Light Overlay so background image is bright, clear & vibrant */}
+            <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.50)_45%,rgba(255,255,255,0.12)_100%)]" />
+
+            <div className="relative z-20 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-5 pb-8 pt-20 sm:px-7 sm:pt-24 md:pt-20 lg:px-10 xl:px-14">
+                <div className="grid flex-1 items-center gap-3 lg:grid-cols-[62%_38%] xl:grid-cols-[65%_35%] 2xl:grid-cols-[68%_32%] lg:gap-8 xl:gap-12">
                     <div className="flex flex-col justify-center self-stretch pt-0">
                         <div className="mx-auto w-full max-w-[700px] md:max-w-[760px] lg:max-w-full lg:mx-0">
-                            <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[3.6rem] text-center lg:text-[4.4rem] lg:text-left">
+                            <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[3.6rem] text-center lg:text-[4.8rem] xl:text-[5.5rem] 2xl:text-[6.5rem] lg:text-left drop-shadow-sm">
                                 Care That Never Sleeps
                             </h1>
-                            <p className="mt-5 max-w-full text-[15px] leading-7 text-slate-600 sm:text-base md:text-[16px] text-center lg:text-left mx-auto lg:mx-0">
+                            <p className="mt-5 max-w-full text-[15px] font-medium leading-7 text-slate-700 sm:text-base md:text-[16px] xl:text-[18px] 2xl:text-[20px] xl:leading-8 2xl:leading-9 text-center lg:text-left mx-auto lg:mx-0">
                                 Experience world-class healthcare with 24/7 emergency services, advanced medical
                                 technology, and compassionate care in Nagpur.
                             </p>
@@ -71,31 +74,20 @@ const Hero = () => {
                                 </a>
                             </div>
 
-                            <div className="mt-8 grid max-w-[600px] md:max-w-[720px] grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:mt-9 mx-auto lg:mx-0 pb-6 lg:pb-0">
+                            <div className="mt-8 grid max-w-[600px] md:max-w-[720px] xl:max-w-none grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:mt-9 mx-auto lg:mx-0 pb-4 lg:pb-0">
                                 {stats.map((item, index) => (
                                     <div key={item.label} className="text-center lg:text-left">
-                                        <p className="text-[1.9rem] font-bold tracking-[-0.05em] text-[#0a2fc6] sm:text-[2.2rem]">
+                                        <p className="text-[1.9rem] font-bold tracking-[-0.05em] text-[#0a2fc6] sm:text-[2.2rem] xl:text-[2.8rem] 2xl:text-[3.2rem]">
                                             {counts[index]}{item.suffix}
                                         </p>
-                                        <p className="mt-1 text-[12px] font-medium text-[#4361b6] sm:text-[14px]">{item.label}</p>
+                                        <p className="mt-1 text-[12px] font-semibold text-[#3051b4] sm:text-[14px] xl:text-[16px] 2xl:text-[18px]">{item.label}</p>
                                     </div>
                                 ))}
                             </div>
                         </div>
                     </div>
 
-                    <div className="relative flex w-full items-center justify-center self-center overflow-visible min-h-[360px] sm:min-h-[420px] md:min-h-[480px] lg:self-stretch lg:items-end lg:justify-end lg:min-h-0 lg:pt-0 pb-0 md:pb-0 lg:pb-0">
-                        <BlobBackground />
-                        <img
-                            src={heroImage}
-                            alt="Cure24 Hospital care team"
-                            className="relative z-10 w-auto max-w-full object-contain object-bottom h-[360px] sm:h-[420px] md:h-[480px] lg:-ml-2 lg:h-full lg:max-h-[680px] xl:-ml-6"
-                            decoding="async"
-                            fetchPriority="high"
-                        />
-
-
-                    </div>
+                    <div className="hidden lg:block" aria-hidden="true" />
                 </div>
             </div>
         </section>

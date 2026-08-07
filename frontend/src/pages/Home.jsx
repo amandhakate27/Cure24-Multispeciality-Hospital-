@@ -8,6 +8,7 @@ const ServicesPreview = lazy(() => import('../components/home/ServicesPreview'))
 const KeyServices = lazy(() => import('../components/home/KeyServices'));
 const Testimonials = lazy(() => import('../components/home/Testimonials'));
 const CallToAction = lazy(() => import('../components/home/CallToAction'));
+const CampaignVideos = lazy(() => import('../components/home/CampaignVideos'));
 
 const SectionFallback = ({ height = 'min-h-[220px]' }) => (
     <div className={`${height} bg-transparent`} />
@@ -29,6 +30,9 @@ const Home = () => {
             </Suspense>
             <Suspense fallback={<SectionFallback height="min-h-[260px]" />}>
                 <CallToAction />
+            </Suspense>
+            <Suspense fallback={<SectionFallback height="min-h-[380px]" />}>
+                <CampaignVideos />
             </Suspense>
             <Suspense fallback={null}>
                 <Testimonials />

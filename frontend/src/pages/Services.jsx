@@ -195,7 +195,7 @@ const Services = () => {
 
             <section className="pt-16 md:pt-20">
                 <div className="mt-6 bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">Our Medical Services</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Comprehensive healthcare services with advanced medical technology and
@@ -206,7 +206,7 @@ const Services = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <motion.div
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
                         variants={gridVariants}
@@ -241,7 +241,7 @@ const Services = () => {
             </section>
 
             <section className="pb-16">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800 text-center">
                         Why Our Services Stand Out
                     </h3>

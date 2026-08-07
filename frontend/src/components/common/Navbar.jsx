@@ -81,7 +81,7 @@ const Navbar = () => {
     return (
         <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/80 backdrop-blur-md shadow-sm shadow-blue-100/60" : "bg-transparent"}`}>
             <div>
-                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 sm:h-20 lg:px-8 xl:px-10">
+                <div className="mx-auto flex h-16 max-w-[1600px] items-center justify-between px-6 sm:h-20 lg:px-10 xl:px-14">
                     <Link to="/" className="inline-flex items-center h-full cursor-pointer">
                         <img
                             src={hospitalLogo}

@@ -152,7 +152,7 @@ const Testimonials = () => {
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.2 }}
             >
-                <div className="mx-auto max-w-3xl px-4 text-center sm:px-6 lg:px-10">
+                <div className="mx-auto max-w-[1600px] px-4 text-center sm:px-6 lg:px-10 xl:px-14">
                     <p className="text-sm font-semibold uppercase tracking-[0.32em] text-blue-100/90">Patient Stories</p>
                     <h2 className="mt-3 text-3xl font-bold text-white md:text-4xl">
                         Words of care from our patients

@@ -1,9 +1,11 @@
-import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import { buildApiUrl, buildAssetUrl } from "../utils/api";
+import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
 import bedFacilitiesImg from "../assets/images/Bed Facilities.jpeg";
 import hospitalExteriorViewImg from "../assets/images/hospital exterior view.jpeg";
 import inpatientImg from "../assets/images/inpatient services.png";
@@ -48,18 +50,61 @@ const galleryPhotos = [
     { id: "women-doctor-service", title: "Personalized Doctor Consultation", image: womenDoctorServiceImg },
 ];
 
-const videoGallery = [
-    { id: "vid-1", title: "Advanced Healthcare Facilities", url: panelOfDoctorsVideo },
-    { id: "vid-2", title: "Patient Care Journey", url: panelOfDoctorsVideo },
-    { id: "vid-3", title: "Our Expert Panel of Doctors", url: panelOfDoctorsVideo },
-    { id: "vid-4", title: "Emergency & Critical Care", url: panelOfDoctorsVideo },
-    { id: "vid-5", title: "Diagnostic & Lab Infrastructure", url: panelOfDoctorsVideo },
-    { id: "vid-6", title: "Community Health Programs", url: panelOfDoctorsVideo },
+const defaultVideoGallery = [
+    { _id: "vid-1", title: "Advanced Healthcare Facilities", videoUrl: panelOfDoctorsVideo },
+    { _id: "vid-2", title: "Patient Care Journey", videoUrl: panelOfDoctorsVideo },
+    { _id: "vid-3", title: "Our Expert Panel of Doctors", videoUrl: panelOfDoctorsVideo },
+    { _id: "vid-4", title: "Emergency & Critical Care", videoUrl: panelOfDoctorsVideo },
 ];
 
 const Gallery = () => {
     const [selectedPhotoId, setSelectedPhotoId] = useState(null);
     const [lightboxDirection, setLightboxDirection] = useState(1);
+    const [videos, setVideos] = useState(defaultVideoGallery);
+    const location = useLocation();
+
+    useEffect(() => {
+        let ignore = false;
+        const fetchVideos = async () => {
+            try {
+                const res = await fetch(buildApiUrl("/api/videos"));
+                if (res.ok) {
+                    const data = await res.json();
+                    if (!ignore && data.success && Array.isArray(data.videos) && data.videos.length > 0) {
+                        setVideos(data.videos);
+                    }
+                }
+            } catch (err) {
+                console.error("Failed to fetch gallery videos:", err);
+            }
+        };
+
+        fetchVideos();
+        return () => {
+            ignore = true;
+        };
+    }, [location.pathname, location.hash]);
+
+    useEffect(() => {
+        const isVideosHash = location.hash === "#videos" || window.location.hash === "#videos";
+        if (isVideosHash) {
+            const scrollToVideos = () => {
+                const el = document.getElementById("videos");
+                if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                }
+            };
+            scrollToVideos();
+            const timer1 = setTimeout(scrollToVideos, 100);
+            const timer2 = setTimeout(scrollToVideos, 450);
+            return () => {
+                clearTimeout(timer1);
+                clearTimeout(timer2);
+            };
+        } else {
+            window.scrollTo(0, 0);
+        }
+    }, [location.pathname, location.hash]);
 
     const selectedPhotoIndex = useMemo(
         () => galleryPhotos.findIndex((photo) => photo.id === selectedPhotoId),
@@ -109,7 +154,7 @@ const Gallery = () => {
 
             <section className="pt-16 md:pt-20">
                 <div className="mt-6 bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">Photo Gallery</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Explore our facility and healthcare infrastructure
@@ -119,7 +164,7 @@ const Gallery = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <motion.div
                         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
                         variants={cardsContainer}
@@ -161,9 +206,9 @@ const Gallery = () => {
             </section>
 
             {/* Video Gallery Section */}
-            <section className="pt-8">
+            <section id="videos" className="pt-8 scroll-mt-20">
                 <div className="bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">Video Gallery</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Watch our hospital facilities and patient care in action
@@ -173,39 +218,41 @@ const Gallery = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10">
-                    <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-                        variants={cardsContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                    >
-                        {videoGallery.map((video) => (
-                            <motion.div
-                                key={video.id}
-                                variants={popCard}
-                                whileHover={{ y: -8, scale: 1.02 }}
-                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                                className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden flex flex-col"
-                            >
-                                <div className="relative aspect-video bg-blue-50">
-                                    <video
-                                        src={video.url}
-                                        controls
-                                        preload="metadata"
-                                        muted
-                                        className="w-full h-full object-cover"
-                                    ></video>
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {videos.map((video) => {
+                            const src = video.videoUrl
+                                ? (/^https?:\/\//i.test(video.videoUrl) || video.videoUrl.startsWith('blob:')
+                                    ? video.videoUrl
+                                    : buildAssetUrl(video.videoUrl))
+                                : panelOfDoctorsVideo;
+
+                            return (
+                                <div
+                                    key={video._id || video.id}
+                                    className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
+                                >
+                                    <div className="relative aspect-video bg-slate-950">
+                                        <video
+                                            src={src}
+                                            controls
+                                            muted
+                                            preload="metadata"
+                                            className="w-full h-full object-cover"
+                                        ></video>
+                                    </div>
+                                    <div className="flex-1 flex flex-col justify-center p-4">
+                                        <p className="text-sm md:text-base font-semibold text-blue-800 text-center">
+                                            {video.title}
+                                        </p>
+                                        {video.description && (
+                                            <p className="text-xs text-slate-500 mt-1 text-center line-clamp-2">{video.description}</p>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="flex-1 flex items-center justify-center p-4">
-                                    <p className="text-sm md:text-base font-semibold text-blue-800 text-center">
-                                        {video.title}
-                                    </p>
-                                </div>
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                            );
+                        })}
+                    </div>
                 </div>
             </section>
 
@@ -310,8 +357,3 @@ const Gallery = () => {
 };
 
 export default Gallery;
-
-
-
-
-

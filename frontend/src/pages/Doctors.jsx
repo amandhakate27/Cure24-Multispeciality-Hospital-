@@ -151,7 +151,7 @@ const DoctorCard = ({ doctor, detailsLabel = "Qualifications" }) => {
 
 const DoctorsSection = ({ title, doctors, detailsLabel }) => (
     <section className="py-12">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+        <div className="mx-auto max-w-[1600px] px-6 lg:px-10 xl:px-14">
             <div className="mx-auto max-w-3xl text-center">
                 <h3 className="text-2xl font-bold text-blue-800 md:text-3xl">{title}</h3>
             </div>
@@ -177,7 +177,7 @@ const Doctors = () => {
 
             <section className="pt-16 md:pt-20">
                 <div className="mt-0 bg-blue-800 text-white">
-                    <div className="mx-auto max-w-7xl px-6 py-8 text-center lg:px-10">
+                    <div className="mx-auto max-w-[1600px] px-6 py-8 text-center lg:px-10 xl:px-14">
                         <h2 className="text-2xl font-semibold md:text-3xl">Our Expert Doctors</h2>
                         <p className="mx-auto mt-2 max-w-3xl text-sm text-blue-100 md:text-base">
                             Meet our team of highly qualified and experienced medical professionals dedicated

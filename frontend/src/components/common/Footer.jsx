@@ -4,7 +4,7 @@ import { Clock, Mail, MapPin, Phone, Facebook, Instagram } from "lucide-react";
 const Footer = () => {
     return (
         <footer className="border-t border-white/10 bg-[linear-gradient(180deg,#0620AF_0%,#04156F_100%)] text-white">
-            <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
+            <div className="mx-auto max-w-[1600px] px-6 py-16 lg:px-10 xl:px-14">
                 <div className="grid gap-8 lg:grid-cols-[1.1fr_0.8fr_0.8fr_1fr]">
                     <div className="rounded-[26px] border border-white/10 bg-white/6 p-6 text-center shadow-lg shadow-blue-950/20 lg:text-left">
                         <Link to="/" className="text-2xl font-bold text-white">

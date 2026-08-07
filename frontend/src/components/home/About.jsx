@@ -29,7 +29,7 @@ const cardVariants = {
 const About = () => {
     return (
         <section className="bg-white pt-12 pb-16 md:pt-16 md:pb-20">
-            <div className="max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                 <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-center">
 
                     {/* LEFT - CONTENT */}

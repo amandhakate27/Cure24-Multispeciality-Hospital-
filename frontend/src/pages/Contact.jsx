@@ -105,7 +105,7 @@ const Contact = () => {
 
             <section className="pt-16 md:pt-20">
                 <div className="mt-0 bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">Contact Us</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Get in touch with us for any queries, feedback, or emergency assistance.
@@ -116,7 +116,7 @@ const Contact = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr] gap-8 items-stretch">
                         <motion.div
                             className="bg-white/90 border border-blue-100 rounded-2xl shadow-md shadow-blue-200/40 p-6 md:p-8 h-full transition-all duration-300 hover:shadow-2xl hover:shadow-blue-300/50 hover:bg-white"
@@ -284,7 +284,7 @@ const Contact = () => {
             </section>
 
             <section className="pb-12">
-                <div className="max-w-5xl mx-auto px-6 lg:px-10">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <h3 className="text-2xl font-bold text-blue-800 text-center">
                         Find Us on Map
                     </h3>
@@ -313,7 +313,7 @@ const Contact = () => {
             </section>
 
             <section className="pb-16">
-                <div className="max-w-5xl mx-auto px-6 lg:px-10 text-center">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 text-center">
                     <h3 className="text-2xl font-bold text-blue-800">Medical Emergency?</h3>
                     <p className="text-blue-700 mt-2 text-sm md:text-base">
                         Call our emergency hotline immediately for urgent medical assistance

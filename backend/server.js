@@ -73,20 +73,41 @@ if (NODE_ENV === 'production' && WEAK_SECRETS.includes(JWT_SECRET)) {
     process.exit(1);
 }
 
-
 // Security Middleware
-
-
 app.disable('x-powered-by');
 app.set('trust proxy', 1);
 app.use(
     helmet({
+        crossOriginResourcePolicy: { policy: "cross-origin" },
         contentSecurityPolicy: {
             useDefaults: true,
             directives: {
                 "connect-src": [
                     "'self'",
+                    "http://localhost:5000",
+                    "http://localhost:5173",
                     "https://apligrampanchayat.in",
+                    "https://www.apligrampanchayat.in",
+                    "https://cure24hospital.onrender.com"
+                ],
+                "img-src": [
+                    "'self'",
+                    "data:",
+                    "blob:",
+                    "http://localhost:5000",
+                    "http://localhost:5173",
+                    "https://apligrampanchayat.in",
+                    "https://www.apligrampanchayat.in",
+                    "https://cure24hospital.onrender.com"
+                ],
+                "media-src": [
+                    "'self'",
+                    "data:",
+                    "blob:",
+                    "http://localhost:5000",
+                    "http://localhost:5173",
+                    "https://apligrampanchayat.in",
+                    "https://www.apligrampanchayat.in",
                     "https://cure24hospital.onrender.com"
                 ],
                 "frame-src": ["'self'", "https://www.google.com"],
@@ -120,8 +141,6 @@ const apiLimiter = rateLimit({
 app.use('/api', apiLimiter);
 
 // Database
-
-
 const connectToDatabase = async () => {
     if (!MONGO_URI) {
         console.error('Missing MONGO_URI');
@@ -137,10 +156,7 @@ const connectToDatabase = async () => {
     }
 };
 
-
 // Schema
-
-
 const appointmentSchema = new mongoose.Schema(
     {
         name: { type: String, required: true },
@@ -172,10 +188,108 @@ const feedbackSchema = new mongoose.Schema(
 
 const Feedback = mongoose.model('Feedback', feedbackSchema);
 
+// Hero Slider Schema
+const heroSliderSchema = new mongoose.Schema(
+    {
+        imageUrl: { type: String, required: true },
+        altText: { type: String, default: 'Hero slider image' },
+        isActive: { type: Boolean, default: true },
+        order: { type: Number, default: 0 },
+    },
+    { timestamps: true }
+);
+
+const HeroSlider = mongoose.model('HeroSlider', heroSliderSchema);
+
+// Video Schema
+const videoSchema = new mongoose.Schema(
+    {
+        videoUrl: { type: String, required: true },
+        title: { type: String, default: 'Hospital Video' },
+        description: { type: String, default: '' },
+        useInVideosSection: { type: Boolean, default: true },
+        order: { type: Number, default: 0 },
+    },
+    { timestamps: true }
+);
+
+const Video = mongoose.model('Video', videoSchema);
+
+const getRequestBaseUrl = (req) => {
+    const configuredBase = process.env.PUBLIC_API_URL || process.env.API_PUBLIC_URL;
+    if (configuredBase) return configuredBase.replace(/\/$/, '');
+    return `${req.protocol}://${req.get('host')}`;
+};
+
+const serializeHeroSlide = (slide, req) => {
+    const data = typeof slide.toObject === 'function' ? slide.toObject() : { ...slide };
+    if (data.imageUrl && !/^https?:\/\//i.test(data.imageUrl)) {
+        data.imageUrl = `${getRequestBaseUrl(req)}${data.imageUrl}`;
+    }
+    return data;
+};
+
+const serializeVideo = (video, req) => {
+    const data = typeof video.toObject === 'function' ? video.toObject() : { ...video };
+    if (data.videoUrl && !/^https?:\/\//i.test(data.videoUrl)) {
+        data.videoUrl = `${getRequestBaseUrl(req)}${data.videoUrl}`;
+    }
+    return data;
+};
+
+// Multer config for hero slider uploads
+const heroSliderStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = path.join(__dirname, 'uploads', 'hero-slider');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        cb(null, `hero_${Date.now()}${ext}`);
+    },
+});
+
+const heroSliderUpload = multer({
+    storage: heroSliderStorage,
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+    fileFilter: (req, file, cb) => {
+        if (!file.mimetype.startsWith('image/')) {
+            return cb(new Error('Only image files are allowed'));
+        }
+        cb(null, true);
+    },
+});
+
+// Multer config for video uploads
+const videoStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        const dir = path.join(__dirname, 'uploads', 'videos');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        cb(null, `vid_${Date.now()}${ext}`);
+    },
+});
+
+const videoUpload = multer({
+    storage: videoStorage,
+    limits: { fileSize: 100 * 1024 * 1024 }, // 100MB
+    fileFilter: (req, file, cb) => {
+        if (!file.mimetype.startsWith('video/')) {
+            return cb(new Error('Only video files are allowed'));
+        }
+        cb(null, true);
+    },
+});
 
 // Helpers
-
-
 const authenticate = (req, res, next) => {
     const authHeader = req.headers.authorization || '';
     const token = authHeader.startsWith('Bearer ')
@@ -195,10 +309,7 @@ const authenticate = (req, res, next) => {
     }
 };
 
-
 // API Routes
-
-
 app.get("/api/health", (req, res) => {
     res.json({ success: true, status: "ok" });
 });
@@ -256,7 +367,6 @@ app.post('/api/appointments', async (req, res) => {
     }
 });
 
-
 // Create feedback (public)
 app.post('/api/feedback', async (req, res) => {
     try {
@@ -292,7 +402,6 @@ app.get('/api/appointments', authenticate, async (req, res) => {
     }
 });
 
-
 // Get feedback (admin)
 app.get('/api/feedback', authenticate, async (req, res) => {
     try {
@@ -311,6 +420,192 @@ app.get('/api/testimonials', async (req, res) => {
             .select('name message createdAt');
 
         return res.json({ success: true, testimonials });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get hero slider images (public - for frontend)
+app.get('/api/hero-slider', async (req, res) => {
+    try {
+        const slides = await HeroSlider.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
+        return res.json({ success: true, slides: slides.map((slide) => serializeHeroSlide(slide, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get all hero slider images (admin)
+app.get('/api/admin/hero-slider', authenticate, async (req, res) => {
+    try {
+        const slides = await HeroSlider.find().sort({ order: 1, createdAt: 1 });
+        return res.json({ success: true, slides: slides.map((slide) => serializeHeroSlide(slide, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Upload hero slider image (admin)
+app.post('/api/admin/hero-slider', authenticate, heroSliderUpload.single('image'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Image is required' });
+        }
+
+        const { altText, isActive, order } = req.body;
+
+        const maxOrderSlide = await HeroSlider.findOne().sort({ order: -1 });
+        const nextOrder = maxOrderSlide ? maxOrderSlide.order + 1 : 0;
+        const activeValue = isActive === undefined ? true : (isActive === 'true' || isActive === true);
+
+        const slide = await HeroSlider.create({
+            imageUrl: `/uploads/hero-slider/${req.file.filename}`,
+            altText: altText || 'Hero slider image',
+            isActive: activeValue,
+            order: order !== undefined ? Number(order) : nextOrder,
+        });
+
+        return res.status(201).json({ success: true, slide: serializeHeroSlide(slide, req) });
+    } catch (error) {
+        if (req.file) {
+            fs.unlink(req.file.path, () => {});
+        }
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Update hero slider image (admin)
+app.patch('/api/admin/hero-slider/:id', authenticate, async (req, res) => {
+    try {
+        const { altText, isActive, order } = req.body;
+        const slide = await HeroSlider.findByIdAndUpdate(
+            req.params.id,
+            {
+                ...(altText !== undefined && { altText }),
+                ...(isActive !== undefined && { isActive: Boolean(isActive) }),
+                ...(order !== undefined && { order: Number(order) }),
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!slide) {
+            return res.status(404).json({ success: false, message: 'Slide not found' });
+        }
+
+        return res.json({ success: true, slide: serializeHeroSlide(slide, req) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Delete hero slider image (admin)
+app.delete('/api/admin/hero-slider/:id', authenticate, async (req, res) => {
+    try {
+        const slide = await HeroSlider.findByIdAndDelete(req.params.id);
+        if (!slide) {
+            return res.status(404).json({ success: false, message: 'Slide not found' });
+        }
+
+        const filePath = path.join(__dirname, slide.imageUrl);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        return res.json({ success: true });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// --- VIDEOS ENDPOINTS ---
+
+// Get active videos (public - for website video section)
+app.get('/api/videos', async (req, res) => {
+    try {
+        const videos = await Video.find({ useInVideosSection: true }).sort({ order: 1, createdAt: -1 });
+        return res.json({ success: true, videos: videos.map((v) => serializeVideo(v, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get all videos (admin)
+app.get('/api/admin/videos', authenticate, async (req, res) => {
+    try {
+        const videos = await Video.find().sort({ order: 1, createdAt: -1 });
+        return res.json({ success: true, videos: videos.map((v) => serializeVideo(v, req)) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Upload video (admin)
+app.post('/api/admin/videos', authenticate, videoUpload.single('video'), async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: 'Video file is required' });
+        }
+
+        const { title, description, useInVideosSection } = req.body;
+        const maxOrderVideo = await Video.findOne().sort({ order: -1 });
+        const nextOrder = maxOrderVideo ? maxOrderVideo.order + 1 : 0;
+        const activeValue = useInVideosSection === undefined ? true : (useInVideosSection === 'true' || useInVideosSection === true);
+
+        const video = await Video.create({
+            videoUrl: `/uploads/videos/${req.file.filename}`,
+            title: title || 'Hospital Video',
+            description: description || '',
+            useInVideosSection: activeValue,
+            order: nextOrder,
+        });
+
+        return res.status(201).json({ success: true, video: serializeVideo(video, req) });
+    } catch (error) {
+        if (req.file) {
+            fs.unlink(req.file.path, () => {});
+        }
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Update video (admin)
+app.patch('/api/admin/videos/:id', authenticate, async (req, res) => {
+    try {
+        const { title, description, useInVideosSection } = req.body;
+        const video = await Video.findByIdAndUpdate(
+            req.params.id,
+            {
+                ...(title !== undefined && { title }),
+                ...(description !== undefined && { description }),
+                ...(useInVideosSection !== undefined && { useInVideosSection: Boolean(useInVideosSection) }),
+            },
+            { new: true, runValidators: true }
+        );
+
+        if (!video) {
+            return res.status(404).json({ success: false, message: 'Video not found' });
+        }
+
+        return res.json({ success: true, video: serializeVideo(video, req) });
+    } catch (error) {
+        return res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Delete video (admin)
+app.delete('/api/admin/videos/:id', authenticate, async (req, res) => {
+    try {
+        const video = await Video.findByIdAndDelete(req.params.id);
+        if (!video) {
+            return res.status(404).json({ success: false, message: 'Video not found' });
+        }
+
+        const filePath = path.join(__dirname, video.videoUrl);
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+        }
+
+        return res.json({ success: true });
     } catch (error) {
         return res.status(500).json({ success: false, error: error.message });
     }
@@ -376,6 +671,13 @@ app.delete('/api/appointments/:id', authenticate, async (req, res) => {
     }
 });
 
+// Serve uploads with explicit CORS and CORP headers
+app.use('/uploads', (req, res, next) => {
+    res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+}, express.static(path.join(__dirname, 'uploads')));
+
 // Serve frontend
 app.use(express.static(path.join(__dirname, '../frontend/dist')));
 
@@ -389,8 +691,3 @@ connectToDatabase().then(() => {
         console.log(`Server running on port ${PORT}`);
     });
 });
-
-
-
-
-

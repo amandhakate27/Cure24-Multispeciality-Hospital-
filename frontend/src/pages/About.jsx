@@ -29,7 +29,7 @@ const About = () => {
 
             <section className="pt-16 md:pt-20">
                 <div className="mt-6 bg-blue-800 text-white">
-                    <div className="max-w-7xl mx-auto px-6 lg:px-10 py-8 text-center">
+                    <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
                         <h2 className="text-2xl md:text-3xl font-semibold">About Us</h2>
                         <p className="text-blue-100 mt-2 text-sm md:text-base">
                             Cure24 Clinic is a trusted neighbourhood healthcare centre in Nagpur,
@@ -41,7 +41,7 @@ const About = () => {
             </section>
 
             <section className="py-12">
-                <div className="max-w-7xl mx-auto px-8 lg:px-12">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
                         <div className="text-center">
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
@@ -78,7 +78,7 @@ const About = () => {
             </section>
 
             <section className="pb-16">
-                <div className="max-w-7xl mx-auto px-6 lg:px-10 text-center">
+                <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 text-center">
                     <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                         Our Mission & Vision
                     </h3>

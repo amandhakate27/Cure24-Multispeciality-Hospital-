@@ -51,7 +51,7 @@ const ServicesPreview = () => {
         <section className="relative overflow-hidden py-16 md:py-20">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
-            <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
+            <div className="relative max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                 <div className="text-center max-w-3xl mx-auto">
                     <h2 className="text-3xl md:text-4xl font-bold text-blue-800">
                         Why Choose Cure24?

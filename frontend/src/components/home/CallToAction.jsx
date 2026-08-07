@@ -14,7 +14,7 @@ const CallToAction = () => {
     return (
         <section className="bg-white py-16 md:py-20">
             <motion.div
-                className="max-w-5xl mx-auto px-6 lg:px-10 text-center"
+                className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 text-center"
                 variants={sectionVariants}
                 initial="hidden"
                 whileInView="visible"
