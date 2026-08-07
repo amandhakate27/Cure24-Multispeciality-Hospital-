@@ -1798,6 +1798,7 @@ const AdminDashboard = () => {
                                         <VideoUpload 
                                             onUpload={uploadVideo} 
                                             uploading={uploadingVideo} 
+                                            progress={videoUploadProgress}
                                         />
                                         
                                         {/* Existing Videos */}
