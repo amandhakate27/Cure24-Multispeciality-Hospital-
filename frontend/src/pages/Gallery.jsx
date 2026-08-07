@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import VideoPlayer from "../components/common/VideoPlayer";
 import { buildApiUrl, buildAssetUrl } from "../utils/api";
 import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
 import bedFacilitiesImg from "../assets/images/Bed Facilities.jpeg";
@@ -233,13 +234,7 @@ const Gallery = () => {
                                     className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
                                 >
                                     <div className="relative aspect-video bg-slate-950">
-                                        <video
-                                            src={src}
-                                            controls
-                                            muted
-                                            preload="metadata"
-                                            className="w-full h-full object-cover"
-                                        ></video>
+                                        <VideoPlayer src={src} />
                                     </div>
                                     <div className="flex-1 flex flex-col justify-center p-4">
                                         <p className="text-sm md:text-base font-semibold text-blue-800 text-center">

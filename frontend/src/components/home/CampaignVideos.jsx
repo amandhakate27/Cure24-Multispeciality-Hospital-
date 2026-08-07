@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
+import VideoPlayer from "../common/VideoPlayer";
 import { buildApiUrl, buildAssetUrl } from "../../utils/api";
 import panelOfDoctorsVideo from "../../assets/videos/panel of doctors.mp4";
 
@@ -75,13 +76,7 @@ const CampaignVideos = () => {
                                 className="group bg-white rounded-2xl border border-blue-100 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
                             >
                                 <div className="relative aspect-video bg-slate-950 overflow-hidden">
-                                    <video
-                                        src={src}
-                                        controls
-                                        muted
-                                        preload="metadata"
-                                        className="w-full h-full object-cover"
-                                    />
+                                    <VideoPlayer src={src} />
                                 </div>
                                 <div className="p-4 flex-1 flex flex-col gap-1">
                                     <h3 className="font-semibold text-blue-800 text-sm md:text-base line-clamp-2" title={video.title}>
