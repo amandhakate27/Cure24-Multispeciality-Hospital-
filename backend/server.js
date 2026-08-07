@@ -8,7 +8,9 @@ const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 const multer = require('multer');
+const sharp = require('sharp');
 require('dotenv').config();
+
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -454,12 +456,28 @@ app.post('/api/admin/hero-slider', authenticate, heroSliderUpload.single('image'
 
         const { altText, isActive, order } = req.body;
 
+        // Compress & resize image with sharp for faster delivery
+        const inputPath = req.file.path;
+        const ext = path.extname(req.file.filename).toLowerCase();
+        const isWebCompatible = ['.jpg', '.jpeg', '.png', '.webp'].includes(ext);
+        let finalFilename = req.file.filename;
+
+        if (isWebCompatible) {
+            finalFilename = req.file.filename.replace(/\.[^.]+$/, '.webp');
+            const outputPath = path.join(path.dirname(inputPath), finalFilename);
+            await sharp(inputPath)
+                .resize({ width: 1920, withoutEnlargement: true })
+                .webp({ quality: 82 })
+                .toFile(outputPath);
+            fs.unlink(inputPath, () => {}); // remove original
+        }
+
         const maxOrderSlide = await HeroSlider.findOne().sort({ order: -1 });
         const nextOrder = maxOrderSlide ? maxOrderSlide.order + 1 : 0;
         const activeValue = isActive === undefined ? true : (isActive === 'true' || isActive === true);
 
         const slide = await HeroSlider.create({
-            imageUrl: `/uploads/hero-slider/${req.file.filename}`,
+            imageUrl: `/uploads/hero-slider/${finalFilename}`,
             altText: altText || 'Hero slider image',
             isActive: activeValue,
             order: order !== undefined ? Number(order) : nextOrder,
@@ -671,12 +689,22 @@ app.delete('/api/appointments/:id', authenticate, async (req, res) => {
     }
 });
 
-// Serve uploads with explicit CORS and CORP headers
+// Serve uploads with explicit CORS, CORP and aggressive cache headers
 app.use('/uploads', (req, res, next) => {
     res.setHeader('Cross-Origin-Resource-Policy', 'cross-origin');
     res.setHeader('Access-Control-Allow-Origin', '*');
+    // Cache images for 30 days, videos for 7 days in browser
+    const isVideo = /\.(mp4|webm|mov|avi|mkv)$/i.test(req.path);
+    res.setHeader(
+        'Cache-Control',
+        isVideo ? 'public, max-age=604800' : 'public, max-age=2592000, immutable'
+    );
     next();
-}, express.static(path.join(__dirname, 'uploads')));
+}, express.static(path.join(__dirname, 'uploads'), {
+    etag: true,
+    lastModified: true,
+}));
+
 
 // Serve frontend
 app.use(express.static(path.join(__dirname, '../frontend/dist')));

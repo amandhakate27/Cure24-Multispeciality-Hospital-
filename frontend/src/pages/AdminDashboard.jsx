@@ -13,6 +13,8 @@ import {
 import hospitalLogo from "../assets/images/reallogo1.png";
 import Toast from "../components/common/Toast";
 import { buildApiUrl, buildAssetUrl } from "../utils/api";
+import { compressImage } from "../utils/imageCompressor";
+
 
 const statusOptions = ["pending", "confirmed", "completed", "cancelled"];
 
@@ -775,8 +777,11 @@ const AdminDashboard = () => {
 
         setUploading(true);
         try {
+            // Compress image client-side before upload (~70% size reduction)
+            const compressed = await compressImage(file, { maxWidth: 1920, maxHeight: 1080, quality: 0.82 });
+
             const formData = new FormData();
-            formData.append("image", file);
+            formData.append("image", compressed);
             if (altText) formData.append("altText", altText);
 
             const response = await fetch(buildApiUrl("/api/admin/hero-slider"), {
@@ -809,6 +814,7 @@ const AdminDashboard = () => {
             setUploading(false);
         }
     };
+
 
     const toggleHeroSlideActive = async (slide) => {
         const token = localStorage.getItem("adminToken");
