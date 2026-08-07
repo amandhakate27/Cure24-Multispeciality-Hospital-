@@ -55,7 +55,6 @@ The server will run on `http://localhost:5000`
 - Dotenv
 
 ## Notes
-
 - Currently uses in-memory storage
 - For production, integrate with a database (MongoDB, PostgreSQL, etc.)
 - Implement JWT authentication for secure admin access
