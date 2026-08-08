@@ -557,13 +557,13 @@ const AdminDashboard = () => {
 
     const handleUnauthorized = useCallback(() => {
         localStorage.removeItem("adminToken");
-        navigate("/admin");
+        navigate("/admin", { replace: true });
     }, [navigate]);
 
     useEffect(() => {
         const token = localStorage.getItem("adminToken");
         if (!token) {
-            navigate("/admin");
+            navigate("/admin", { replace: true });
             return undefined;
         }
 
@@ -1307,23 +1307,27 @@ const AdminDashboard = () => {
                     {/* Mobile header: logo + logout in a row, title below */}
                     <div className="px-4 py-3 sm:px-5 sm:py-4">
                         <div className="flex items-center justify-between gap-3">
-                            <div className="rounded-xl bg-white/95 px-3 py-1.5 shadow-lg shadow-blue-950/10 shrink-0">
-                                <img src={hospitalLogo} alt="Cure24 Hospital" className="h-8 sm:h-10 w-auto" loading="eager" />
+                            <div className="flex-1 flex justify-start">
+                                <div className="rounded-xl bg-white/95 px-3 py-1.5 shadow-lg shadow-blue-950/10 shrink-0">
+                                    <img src={hospitalLogo} alt="Cure24 Hospital" className="h-8 sm:h-10 w-auto" loading="eager" />
+                                </div>
                             </div>
-                            <div className="flex-1 text-center">
+                            <div className="shrink-0 text-center">
                                 <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold text-white leading-tight">Admin Dashboard</h1>
+                                <p className="mt-1 text-xs text-blue-100/80 hidden sm:block">Manage appointments, patient feedback, slider images &amp; hospital videos.</p>
                             </div>
-                            <button
-                                onClick={() => {
-                                    localStorage.removeItem("adminToken");
-                                    navigate("/admin");
-                                }}
-                                className="shrink-0 rounded-xl border border-red-400/30 bg-red-600 px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold text-white transition hover:bg-red-700"
-                            >
-                                Logout
-                            </button>
+                            <div className="flex-1 flex justify-end">
+                                <button
+                                    onClick={() => {
+                                        localStorage.removeItem("adminToken");
+                                        navigate("/admin", { replace: true });
+                                    }}
+                                    className="shrink-0 rounded-xl border border-red-400/30 bg-red-600 px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-semibold text-white transition hover:bg-red-700"
+                                >
+                                    Logout
+                                </button>
+                            </div>
                         </div>
-                        <p className="mt-1.5 text-center text-xs text-blue-100/80 hidden sm:block">Manage appointments, patient feedback, slider images &amp; hospital videos.</p>
                     </div>
                 </section>
                 {loadError && (

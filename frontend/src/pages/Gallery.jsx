@@ -1,55 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Images } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
 import VideoPlayer from "../components/common/VideoPlayer";
 import { buildApiUrl, buildAssetUrl } from "../utils/api";
 import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
-import bedFacilitiesImg from "../assets/images/Bed Facilities.jpeg";
-import hospitalExteriorViewImg from "../assets/images/hospital exterior view.jpeg";
-import inpatientImg from "../assets/images/inpatient services.png";
-import medicalNurseImg from "../assets/images/medical-nurse.jpg";
-import preventiveHealthCheckupsImg from "../assets/images/preventive health checkups.png";
-import roomFacilitiesImg from "../assets/images/Room facilities.jpeg";
-import stretcherBedImg from "../assets/images/Stretcher Bed.jpeg";
-import receptionViewImg from "../assets/images/slideimage5.jpeg";
-import fullHospitalViewImg from "../assets/images/slideimage6.jpeg";
-import slideimage7Img from "../assets/images/slideimage7.png";
-import womenDoctorServiceImg from "../assets/images/women-doctor-service.png";
-
-const cardsContainer = {
-    hidden: {},
-    visible: {
-        transition: { staggerChildren: 0.12 },
-    },
-};
-
-const popCard = {
-    hidden: { opacity: 0, scale: 0.9, y: 24, rotateX: -6 },
-    visible: {
-        opacity: 1,
-        scale: 1,
-        y: 0,
-        rotateX: 0,
-        transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
-    },
-};
-
-const staticGalleryPhotos = [
-    { id: "bed-facilities", title: "Comfortable Bed Facilities", image: bedFacilitiesImg },
-    { id: "hospital-exterior-view", title: "Hospital Exterior", image: hospitalExteriorViewImg },
-    { id: "inpatient-services", title: "Inpatient Care Services", image: inpatientImg },
-    { id: "medical-nurse", title: "Skilled Doctors Care Team", image: medicalNurseImg },
-    { id: "preventive-health-checkups", title: "Preventive Health Checkup", image: preventiveHealthCheckupsImg },
-    { id: "room-facilities", title: "Patient Room Facilities", image: roomFacilitiesImg },
-    { id: "stretcher-bed", title: "Emergency Stretcher Support", image: stretcherBedImg },
-    { id: "reception-view", title: "Reception and Front Desk", image: receptionViewImg },
-    { id: "full-hospital-view", title: "Full View of Hospital", image: fullHospitalViewImg },
-    { id: "hospital-care-view", title: "Hospital Care View", image: slideimage7Img },
-    { id: "women-doctor-service", title: "Personalized Doctor Consultation", image: womenDoctorServiceImg },
-];
 
 const defaultVideoGallery = [
     { _id: "vid-1", title: "Advanced Healthcare Facilities", videoUrl: panelOfDoctorsVideo },
@@ -62,7 +19,7 @@ const Gallery = () => {
     const [selectedPhotoId, setSelectedPhotoId] = useState(null);
     const [lightboxDirection, setLightboxDirection] = useState(1);
     const [videos, setVideos] = useState(defaultVideoGallery);
-    const [galleryPhotos, setGalleryPhotos] = useState(staticGalleryPhotos);
+    const [galleryPhotos, setGalleryPhotos] = useState([]);
     const location = useLocation();
 
     useEffect(() => {
@@ -78,7 +35,7 @@ const Gallery = () => {
                             title: photo.title || "Gallery photo",
                             image: buildAssetUrl(photo.imageUrl),
                         }));
-                        setGalleryPhotos([...dynamicPhotos, ...staticGalleryPhotos]);
+                        setGalleryPhotos(dynamicPhotos);
                     }
                 }
             } catch (err) {
@@ -194,43 +151,40 @@ const Gallery = () => {
 
             <section className="py-12">
                 <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
-                    <motion.div
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
-                        variants={cardsContainer}
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true, amount: 0.2 }}
-                    >
-                        {galleryPhotos.map((photo) => (
-                            <motion.button
-                                key={photo.title}
-                                type="button"
-                                variants={popCard}
-                                whileHover={{ y: -8, scale: 1.02 }}
-                                transition={{ type: "spring", stiffness: 240, damping: 18 }}
-                                onClick={() => handleOpenPhoto(photo.id)}
-                                className="text-left bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden group"
-                            >
-                                <div className="relative h-48 bg-blue-50">
-                                    <img
-                                        src={photo.image}
-                                        alt={photo.title}
-                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        loading="lazy"
-                                        decoding="async"
-                                    />
-                                    <div className="absolute inset-0 bg-linear-to-t from-black/55 via-black/15 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                                        <div className="px-4 pb-3 text-white text-xs font-medium tracking-wide">
-                                            Click to view
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {galleryPhotos.length === 0 ? (
+                            <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-slate-500">
+                                <Images className="h-14 w-14 text-slate-300" />
+                                <p className="mt-4 text-lg font-medium text-slate-600">No gallery photos yet</p>
+                                <p className="mt-1 text-sm text-slate-400">Photos added from the admin dashboard will appear here.</p>
+                            </div>
+                        ) : (
+                            galleryPhotos.map((photo) => (
+                                <button
+                                    key={photo.id}
+                                    type="button"
+                                    onClick={() => handleOpenPhoto(photo.id)}
+                                    className="group text-left bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden cursor-pointer"
+                                >
+                                    <div className="relative h-48 bg-blue-50 overflow-hidden">
+                                        <img
+                                            src={photo.image}
+                                            alt={photo.title}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                            <div className="px-4 pb-3 text-white text-xs font-medium tracking-wide">
+                                                Click to view
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <p className="px-4 py-3 text-sm md:text-base font-semibold text-blue-800 text-center">
-                                    {photo.title}
-                                </p>
-                            </motion.button>
-                        ))}
-                    </motion.div>
+                                    <p className="px-4 py-3 text-sm md:text-base font-semibold text-blue-800 text-center">
+                                        {photo.title}
+                                    </p>
+                                </button>
+                            ))
+                        )}
+                    </div>
                 </div>
             </section>
 
@@ -261,7 +215,7 @@ const Gallery = () => {
                                     key={video._id || video.id}
                                     className="bg-white/95 border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden flex flex-col hover:-translate-y-1"
                                 >
-                                    <div className="relative aspect-video">
+                                    <div className="relative aspect-video overflow-hidden">
                                         <VideoPlayer src={src} title={video.title} />
                                     </div>
                                     <div className="flex-1 flex flex-col justify-center p-4">

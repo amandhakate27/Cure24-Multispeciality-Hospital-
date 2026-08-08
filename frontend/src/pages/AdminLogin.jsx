@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Lock, LogIn, User } from "lucide-react";
 import { buildApiUrl } from "../utils/api";
@@ -10,6 +10,12 @@ const AdminLogin = () => {
     const [error, setError] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (localStorage.getItem("adminToken")) {
+            navigate("/admin/dashboard", { replace: true });
+        }
+    }, [navigate]);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -47,7 +53,7 @@ const AdminLogin = () => {
             }
 
             localStorage.setItem("adminToken", data.token);
-            navigate("/admin/dashboard");
+            navigate("/admin/dashboard", { replace: true });
         } catch (err) {
             const fallback =
                 err?.message === "Failed to fetch"
