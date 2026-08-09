@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import LoadingLink from "../common/LoadingLink";
 import { buildApiUrl, buildAssetUrl } from "../../utils/api";
-import seniorWomanImg from "../../assets/images/senior-woman.jpg";
 
 const HomeGallery = () => {
     const [images, setImages] = useState([]);
@@ -42,9 +42,7 @@ const HomeGallery = () => {
         };
     }, []);
 
-    const slides = images.length > 0
-        ? images
-        : [{ id: "fallback", title: "Cure 24 Hospital", url: seniorWomanImg }];
+    const slides = images;
 
     useEffect(() => {
         if (slides.length < 2 || lightboxIndex !== null) return undefined;
@@ -120,10 +118,21 @@ const HomeGallery = () => {
         openLightbox(current);
     };
 
-    const currentSlide = slides[current % slides.length];
+    const currentSlide = slides.length > 0 ? slides[current % slides.length] : null;
 
     return (
         <>
+            {images.length === 0 ? (
+                <div className="flex h-64 sm:h-80 lg:h-[540px] w-full items-center justify-center rounded-3xl border-2 border-dashed border-blue-200 bg-blue-50/60 text-center">
+                    <div className="px-6">
+                        <Images className="mx-auto h-10 w-10 text-blue-300" aria-hidden="true" />
+                        <p className="mt-3 text-sm font-medium text-blue-600">Gallery photos will appear here</p>
+                        <p className="mt-1 text-xs text-blue-400">
+                            Photos marked "Send to Home" in the admin dashboard will show up in this rotating gallery.
+                        </p>
+                    </div>
+                </div>
+            ) : (
             <div
                 className="group relative w-full h-64 sm:h-80 lg:h-[540px] overflow-hidden rounded-3xl shadow-xl select-none cursor-pointer"
                 onPointerDown={onPointerDown}
@@ -198,19 +207,21 @@ const HomeGallery = () => {
                     </>
                 )}
             </div>
+            )}
 
             {/* Lightbox */}
+            {createPortal(
             <AnimatePresence>
                 {lightboxIndex !== null && (
                     <motion.div
-                        className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
+                        className="fixed inset-0 z-[80] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={closeLightbox}
                     >
                         <motion.div
-                            className="relative w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl"
+                            className="w-full max-w-4xl bg-white rounded-2xl overflow-hidden shadow-2xl"
                             initial={{ scale: 0.92, y: 14, opacity: 0 }}
                             animate={{ scale: 1, y: 0, opacity: 1 }}
                             exit={{ scale: 0.94, y: 10, opacity: 0 }}
@@ -219,7 +230,7 @@ const HomeGallery = () => {
                             onMouseEnter={() => setLightboxPaused(true)}
                             onMouseLeave={() => setLightboxPaused(false)}
                         >
-                            <div className="flex items-center justify-between px-4 py-3 border-b border-blue-100 bg-white">
+                            <div className="flex items-center justify-between px-4 py-3 border-b border-blue-100">
                                 <div className="flex items-center gap-3 min-w-0">
                                     <h4 className="text-base md:text-lg font-semibold text-blue-800 truncate">
                                         {slides[lightboxIndex % slides.length].title}
@@ -305,6 +316,7 @@ const HomeGallery = () => {
                     </motion.div>
                 )}
             </AnimatePresence>
+            , document.body)}
         </>
     );
 };
