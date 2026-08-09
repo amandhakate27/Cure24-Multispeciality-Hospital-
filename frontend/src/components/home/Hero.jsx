@@ -45,7 +45,7 @@ const Hero = () => {
                 <div className="grid flex-1 items-center gap-3 lg:grid-cols-[62%_38%] xl:grid-cols-[65%_35%] 2xl:grid-cols-[68%_32%] lg:gap-8 xl:gap-12">
                     <div className="flex flex-col justify-center self-stretch pt-0">
                         <div className="mx-auto w-full max-w-[700px] md:max-w-[760px] lg:max-w-full lg:mx-0">
-                            <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[3.6rem] text-center lg:text-[4.8rem] xl:text-[5.5rem] 2xl:text-[6.5rem] lg:text-left drop-shadow-sm">
+                            <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[3.6rem] text-center lg:text-[5.3rem] xl:text-[6rem] 2xl:text-[6.8rem] lg:text-left drop-shadow-sm">
                                 Care That Never Sleeps
                             </h1>
                             <p className="mt-5 max-w-full text-[15px] font-medium leading-7 text-slate-700 sm:text-base md:text-[16px] xl:text-[18px] 2xl:text-[20px] xl:leading-8 2xl:leading-9 text-center lg:text-left mx-auto lg:mx-0">

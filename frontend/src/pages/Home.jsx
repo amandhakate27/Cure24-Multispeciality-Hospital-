@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import Hero from '../components/home/Hero';
 import Navbar from '../components/common/Navbar';
 import Footer from '../components/common/Footer';
+import Reveal from '../components/common/Reveal';
 
 const About = lazy(() => import('../components/home/About'));
 const ServicesPreview = lazy(() => import('../components/home/ServicesPreview'));
@@ -20,22 +21,22 @@ const Home = () => {
             <Navbar />
             <Hero />
             <Suspense fallback={<SectionFallback height="min-h-[520px]" />}>
-                <About />
+                <Reveal><About /></Reveal>
             </Suspense>
             <Suspense fallback={<SectionFallback height="min-h-[420px]" />}>
-                <ServicesPreview />
+                <Reveal><ServicesPreview /></Reveal>
             </Suspense>
             <Suspense fallback={<SectionFallback height="min-h-[420px]" />}>
-                <KeyServices />
+                <Reveal><KeyServices /></Reveal>
             </Suspense>
             <Suspense fallback={<SectionFallback height="min-h-[260px]" />}>
-                <CallToAction />
+                <Reveal><CallToAction /></Reveal>
             </Suspense>
             <Suspense fallback={<SectionFallback height="min-h-[380px]" />}>
-                <CampaignVideos />
+                <Reveal><CampaignVideos /></Reveal>
             </Suspense>
             <Suspense fallback={null}>
-                <Testimonials />
+                <Reveal><Testimonials /></Reveal>
             </Suspense>
             <Footer />
         </div>

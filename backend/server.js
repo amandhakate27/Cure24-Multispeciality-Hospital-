@@ -188,6 +188,7 @@ const galleryPhotoSchema = new mongoose.Schema(
         imageUrl: { type: String, required: true },
         title: { type: String, default: 'Gallery photo' },
         isActive: { type: Boolean, default: true },
+        showOnHome: { type: Boolean, default: false },
         order: { type: Number, default: 0 },
     },
     { timestamps: true }
@@ -516,10 +517,11 @@ app.delete('/api/admin/hero-slider/:id', authenticate, async (req, res) => {
 
 // --- GALLERY PHOTOS ENDPOINTS ---
 
-// Get gallery photos (public - for photo gallery page)
+// Get gallery photos (public - for photo gallery page and home gallery)
 app.get('/api/gallery-photos', async (req, res) => {
     try {
-        const photos = await GalleryPhoto.find({ isActive: true }).sort({ order: 1, createdAt: 1 });
+        const filter = req.query.home === 'true' ? { isActive: true, showOnHome: true } : { isActive: true };
+        const photos = await GalleryPhoto.find(filter).sort({ order: 1, createdAt: 1 });
         return res.json({ success: true, photos: photos.map((p) => serializeGalleryPhoto(p, req)) });
     } catch (error) {
         return res.status(500).json({ success: false, error: error.message });
@@ -586,13 +588,14 @@ app.post('/api/admin/gallery-photos', authenticate, heroSliderUpload.single('ima
 // Update gallery photo (admin)
 app.patch('/api/admin/gallery-photos/:id', authenticate, async (req, res) => {
     try {
-        const { title, isActive, order } = req.body;
+        const { title, isActive, order, showOnHome } = req.body;
         const photo = await GalleryPhoto.findByIdAndUpdate(
             req.params.id,
             {
                 ...(title !== undefined && { title }),
                 ...(isActive !== undefined && { isActive: Boolean(isActive) }),
                 ...(order !== undefined && { order: Number(order) }),
+                ...(showOnHome !== undefined && { showOnHome: Boolean(showOnHome) }),
             },
             { new: true, runValidators: true }
         );

@@ -266,9 +266,13 @@ const PhotoUpload = ({ onUpload, uploading, progress, nameLabel = "Alt Text", su
     );
 };
 
-const PhotoCard = ({ photo, onToggleActive, onDelete, isNew, name, statusText, addLabel = "Add to Slider" }) => {
+const PhotoCard = ({ photo, onToggleActive, onDelete, name, addLabel = "Add to Slider", onToggleHome }) => {
     const imageUrl = buildAssetUrl(photo.imageUrl);
     const [hasError, setHasError] = useState(false);
+
+    const activeLabel = addLabel.startsWith("Send to ")
+        ? `Remove from ${addLabel.replace(/^Send to /, "")}`
+        : "Remove";
 
     return (
         <div className="group relative rounded-2xl border border-blue-100 bg-white overflow-hidden shadow-sm transition hover:shadow-lg">
@@ -301,19 +305,17 @@ const PhotoCard = ({ photo, onToggleActive, onDelete, isNew, name, statusText, a
                     </span>
                 </div>
 
-                {/* Action buttons on hover */}
-                <div className="absolute bottom-3 left-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
-                    <button
-                        onClick={() => onToggleActive(photo)}
-                        className={`flex-1 rounded-xl px-3 py-2 text-sm font-medium transition shadow-lg ${
-                            photo.isActive
-                                ? "bg-red-500 text-white hover:bg-red-600"
-                                : "bg-emerald-500 text-white hover:bg-emerald-600"
-                        }`}
-                        title={photo.isActive ? `Remove from ${addLabel.replace("Add to ", "")}` : addLabel}
-                    >
-                        {photo.isActive ? "Remove" : addLabel}
-                    </button>
+                {/* Home badge */}
+                {photo.showOnHome && (
+                    <div className="absolute top-3 right-3">
+                        <span className="rounded-full bg-indigo-500 text-white px-2.5 py-1 text-xs font-medium shadow-lg">
+                            On Home
+                        </span>
+                    </div>
+                )}
+
+                {/* Delete button on hover */}
+                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300 translate-y-2 group-hover:translate-y-0">
                     <button
                         onClick={() => onDelete(photo)}
                         className="rounded-xl bg-red-500 text-white px-3 py-2 text-sm font-medium transition hover:bg-red-600 shadow-lg"
@@ -324,11 +326,41 @@ const PhotoCard = ({ photo, onToggleActive, onDelete, isNew, name, statusText, a
                 </div>
             </div>
             <div className="p-3">
+                {onToggleHome ? (
+                    <div className="grid grid-cols-2 gap-2 mb-2">
+                        <button
+                            onClick={() => onToggleActive(photo)}
+                            className={`rounded-xl px-2 py-2 text-xs font-semibold text-white transition ${
+                                photo.isActive ? "bg-slate-500 hover:bg-slate-600" : "bg-blue-600 hover:bg-blue-700"
+                            }`}
+                            title={photo.isActive ? "Hide this photo from the public gallery page" : "Show this photo on the public gallery page"}
+                        >
+                            {photo.isActive ? "Remove from Gallery" : "Send to Gallery"}
+                        </button>
+                        <button
+                            onClick={() => onToggleHome(photo)}
+                            className={`rounded-xl px-2 py-2 text-xs font-semibold text-white transition ${
+                                photo.showOnHome ? "bg-slate-500 hover:bg-slate-600" : "bg-indigo-600 hover:bg-indigo-700"
+                            }`}
+                            title={photo.showOnHome ? "Remove this photo from the home page gallery" : "Show this photo in the rotating gallery on the home page"}
+                        >
+                            {photo.showOnHome ? "Remove from Home" : "Send to Home"}
+                        </button>
+                    </div>
+                ) : (
+                    <button
+                        onClick={() => onToggleActive(photo)}
+                        className={`mb-2 w-full rounded-xl px-3 py-2 text-sm font-medium transition ${
+                            photo.isActive
+                                ? "bg-red-500 text-white hover:bg-red-600"
+                                : "bg-emerald-500 text-white hover:bg-emerald-600"
+                        }`}
+                    >
+                        {photo.isActive ? activeLabel : addLabel}
+                    </button>
+                )}
                 <p className="text-sm font-medium text-slate-900 truncate" title={name}>
                     {name || "No name"}
-                </p>
-                <p className="text-xs text-slate-500 mt-1">
-                    {isNew ? "New" : "Existing"} • {statusText}
                 </p>
             </div>
         </div>
@@ -1174,6 +1206,48 @@ const AdminDashboard = () => {
         }
     };
 
+    const setGalleryPhotoOnHome = async (photo, showOnHome) => {
+        const token = localStorage.getItem("adminToken");
+        if (!token) {
+            navigate("/admin");
+            return;
+        }
+
+        try {
+            const response = await fetch(buildApiUrl(`/api/admin/gallery-photos/${photo._id}`), {
+                method: "PATCH",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ showOnHome }),
+            });
+
+            if (response.status === 401) {
+                handleUnauthorized();
+                return;
+            }
+
+            if (!response.ok) throw new Error("Failed to update photo");
+
+            const data = await response.json();
+            setGalleryPhotos((prev) => prev.map((item) => (item._id === photo._id ? data.photo : item)));
+            setToast({
+                variant: "success",
+                title: showOnHome ? "Sent to gallery" : "Removed from gallery",
+                message: showOnHome
+                    ? "Photo will now appear in the home page gallery."
+                    : "Photo removed from the home page gallery.",
+            });
+        } catch {
+            setToast({
+                variant: "error",
+                title: "Update failed",
+                message: "Could not update photo.",
+            });
+        }
+    };
+
     const deleteGalleryPhoto = async (photo) => {
         const token = localStorage.getItem("adminToken");
         if (!token) {
@@ -1708,9 +1782,7 @@ const AdminDashboard = () => {
                                                     photo={slide}
                                                     onToggleActive={toggleHeroSlideActive}
                                                     onDelete={deleteHeroSlide}
-                                                    isNew={false}
                                                     name={slide.altText}
-                                                    statusText={slide.isActive ? "Visible on homepage" : "Hidden from homepage"}
                                                     addLabel="Add to Slider"
                                                 />
                                             ))
@@ -1765,10 +1837,9 @@ const AdminDashboard = () => {
                                                     photo={photo}
                                                     onToggleActive={toggleGalleryPhotoActive}
                                                     onDelete={deleteGalleryPhoto}
-                                                    isNew={false}
+                                                    onToggleHome={(p) => setGalleryPhotoOnHome(p, !p.showOnHome)}
                                                     name={photo.title}
-                                                    statusText={photo.isActive ? "Visible in gallery" : "Hidden from gallery"}
-                                                    addLabel="Add to Gallery"
+                                                    addLabel="Send to Gallery"
                                                 />
                                             ))
                                         )}

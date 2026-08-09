@@ -1,9 +1,10 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Images } from "lucide-react";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import Reveal from "../components/common/Reveal";
 import VideoPlayer from "../components/common/VideoPlayer";
 import { buildApiUrl, buildAssetUrl } from "../utils/api";
 import panelOfDoctorsVideo from "../assets/videos/panel of doctors.mp4";
@@ -18,8 +19,10 @@ const defaultVideoGallery = [
 const Gallery = () => {
     const [selectedPhotoId, setSelectedPhotoId] = useState(null);
     const [lightboxDirection, setLightboxDirection] = useState(1);
+    const [lightboxPaused, setLightboxPaused] = useState(false);
     const [videos, setVideos] = useState(defaultVideoGallery);
     const [galleryPhotos, setGalleryPhotos] = useState([]);
+    const selectedThumbRef = useRef(null);
     const location = useLocation();
 
     useEffect(() => {
@@ -134,6 +137,16 @@ const Gallery = () => {
         };
     }, [selectedPhoto, handleClosePhoto, handlePrevPhoto, handleNextPhoto]);
 
+    useEffect(() => {
+        if (!selectedPhoto || galleryPhotos.length < 2 || lightboxPaused) return undefined;
+        const timer = setInterval(handleNextPhoto, 3000);
+        return () => clearInterval(timer);
+    }, [selectedPhoto, galleryPhotos.length, lightboxPaused, handleNextPhoto]);
+
+    useEffect(() => {
+        selectedThumbRef.current?.scrollIntoView({ inline: "center", block: "nearest", behavior: "smooth" });
+    }, [selectedPhotoId]);
+
     return (
         <div className="min-h-screen bg-[#F5F9FF]">
             <Navbar />
@@ -141,17 +154,20 @@ const Gallery = () => {
             <section className="pt-16 md:pt-20">
                 <div className="mt-6 bg-blue-800 text-white">
                     <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
-                        <h2 className="text-2xl md:text-3xl font-semibold">Photo Gallery</h2>
-                        <p className="text-blue-100 mt-2 text-sm md:text-base">
-                            Explore our facility and healthcare infrastructure
-                        </p>
+                        <Reveal>
+                            <h2 className="text-2xl md:text-3xl font-semibold">Photo Gallery</h2>
+                            <p className="text-blue-100 mt-2 text-sm md:text-base">
+                                Explore our facility and healthcare infrastructure
+                            </p>
+                        </Reveal>
                     </div>
                 </div>
             </section>
 
             <section className="py-12">
                 <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                    <Reveal>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {galleryPhotos.length === 0 ? (
                             <div className="col-span-full flex flex-col items-center justify-center py-16 text-center text-slate-500">
                                 <Images className="h-14 w-14 text-slate-300" />
@@ -184,7 +200,8 @@ const Gallery = () => {
                                 </button>
                             ))
                         )}
-                    </div>
+                        </div>
+                    </Reveal>
                 </div>
             </section>
 
@@ -192,16 +209,19 @@ const Gallery = () => {
             <section id="videos" className="pt-8 scroll-mt-20">
                 <div className="bg-blue-800 text-white">
                     <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
-                        <h2 className="text-2xl md:text-3xl font-semibold">Video Gallery</h2>
-                        <p className="text-blue-100 mt-2 text-sm md:text-base">
-                            Watch our hospital facilities and patient care in action
-                        </p>
+                        <Reveal>
+                            <h2 className="text-2xl md:text-3xl font-semibold">Video Gallery</h2>
+                            <p className="text-blue-100 mt-2 text-sm md:text-base">
+                                Watch our hospital facilities and patient care in action
+                            </p>
+                        </Reveal>
                     </div>
                 </div>
             </section>
 
             <section className="py-12">
                 <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
+                    <Reveal>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                         {videos.map((video) => {
                             const src = video.videoUrl
@@ -230,6 +250,7 @@ const Gallery = () => {
                             );
                         })}
                     </div>
+                    </Reveal>
                 </div>
             </section>
 
@@ -249,11 +270,18 @@ const Gallery = () => {
                             exit={{ scale: 0.94, y: 10, opacity: 0 }}
                             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                             onClick={(event) => event.stopPropagation()}
+                            onMouseEnter={() => setLightboxPaused(true)}
+                            onMouseLeave={() => setLightboxPaused(false)}
                         >
                             <div className="flex items-center justify-between px-4 py-3 border-b border-blue-100">
-                                <h4 className="text-base md:text-lg font-semibold text-blue-800">
-                                    {selectedPhoto.title}
-                                </h4>
+                                <div className="flex items-center gap-3 min-w-0">
+                                    <h4 className="text-base md:text-lg font-semibold text-blue-800 truncate">
+                                        {selectedPhoto.title}
+                                    </h4>
+                                    <span className="shrink-0 rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-700">
+                                        {selectedPhotoIndex + 1} / {galleryPhotos.length}
+                                    </span>
+                                </div>
                                 <button
                                     type="button"
                                     onClick={handleClosePhoto}
@@ -294,8 +322,12 @@ const Gallery = () => {
                                 </button>
                             </div>
                             <div className="px-4 py-3 border-t border-blue-100 bg-white">
+                                <div className="flex items-center justify-between mb-2">
+                                    <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">All Photos</p>
+                                    <p className="text-xs text-slate-400">{lightboxPaused ? "Paused" : "Auto-playing"}</p>
+                                </div>
                                 <div className="flex gap-2 overflow-x-auto pb-1">
-                                    {galleryPhotos.map((photo) => {
+                                    {galleryPhotos.map((photo, index) => {
                                         const isSelected = photo.id === selectedPhoto.id;
                                         return (
                                             <button
@@ -304,14 +336,12 @@ const Gallery = () => {
                                                 onClick={() =>
                                                     handleOpenPhoto(
                                                         photo.id,
-                                                        selectedPhotoIndex >= 0 &&
-                                                            galleryPhotos.findIndex((item) => item.id === photo.id) < selectedPhotoIndex
-                                                            ? -1
-                                                            : 1
+                                                        index < selectedPhotoIndex ? -1 : 1
                                                     )
                                                 }
                                                 className={`relative h-14 w-20 rounded-md overflow-hidden border shrink-0 ${isSelected ? "border-blue-700 ring-1 ring-blue-700" : "border-blue-200"
                                                     }`}
+                                                ref={isSelected ? selectedThumbRef : undefined}
                                             >
                                                 <img
                                                     src={photo.image}

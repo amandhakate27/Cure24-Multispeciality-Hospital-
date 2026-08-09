@@ -48,7 +48,7 @@ const features = [
 
 const ServicesPreview = () => {
     return (
-        <section className="relative overflow-hidden py-16 md:py-20">
+        <section className="relative overflow-hidden pt-10 md:pt-14 pb-16 md:pb-20">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
             <div className="relative max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">

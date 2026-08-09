@@ -2,6 +2,7 @@ import { Eye, Heart, Target } from "lucide-react";
 import { motion } from "framer-motion";
 import Footer from "../components/common/Footer";
 import Navbar from "../components/common/Navbar";
+import Reveal from "../components/common/Reveal";
 import hospitalLogo from "../assets/images/reallogo1.png";
 
 const cardsContainer = {
@@ -30,12 +31,14 @@ const About = () => {
             <section className="pt-16 md:pt-20">
                 <div className="mt-6 bg-blue-800 text-white">
                     <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 py-8 text-center">
-                        <h2 className="text-2xl md:text-3xl font-semibold">About Us</h2>
-                        <p className="text-blue-100 mt-2 text-sm md:text-base">
-                            Cure24 Clinic is a trusted neighbourhood healthcare centre in Nagpur,
-                            offering compassionate medical care, expert consultations, and
-                            patient-focused treatment for everyday health needs.
-                        </p>
+                        <Reveal>
+                            <h2 className="text-2xl md:text-3xl font-semibold">About Us</h2>
+                            <p className="text-blue-100 mt-2 text-sm md:text-base">
+                                Cure24 Clinic is a trusted neighbourhood healthcare centre in Nagpur,
+                                offering compassionate medical care, expert consultations, and
+                                patient-focused treatment for everyday health needs.
+                            </p>
+                        </Reveal>
                     </div>
                 </div>
             </section>
@@ -43,7 +46,7 @@ const About = () => {
             <section className="py-12">
                 <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
                     <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 items-start">
-                        <div className="text-center">
+                        <Reveal className="text-center">
                             <h3 className="text-2xl md:text-3xl font-bold text-blue-800">
                                 Cure 24 Clinic Hospital, Nagpur
                             </h3>
@@ -63,8 +66,8 @@ const About = () => {
                                 improving health outcomes through professional excellence and compassionate
                                 care.
                             </p>
-                        </div>
-                        <div className="flex justify-center lg:justify-end">
+                        </Reveal>
+                        <Reveal className="flex justify-center lg:justify-end" delay={120}>
                             <div className="bg-white border border-blue-100 rounded-2xl shadow-sm w-64 h-64 sm:w-72 sm:h-72 flex items-center justify-center p-4 sm:p-6">
                                 <img
                                     src={hospitalLogo}
@@ -72,7 +75,7 @@ const About = () => {
                                     className="w-full h-full max-w-[220px] sm:max-w-[260px] md:max-w-[280px] object-contain"
                                 />
                             </div>
-                        </div>
+                        </Reveal>
                     </div>
                 </div>
             </section>
