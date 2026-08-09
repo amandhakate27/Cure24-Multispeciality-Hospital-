@@ -43,7 +43,7 @@ const services = [
 
 const KeyServices = () => {
     return (
-        <section className="relative overflow-hidden py-16 md:py-20">
+        <section className="relative overflow-hidden py-12 md:py-14 lg:py-14">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
             <div className="relative max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
@@ -56,7 +56,7 @@ const KeyServices = () => {
                     </p>
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:mt-8">
                     {services.map((service) => (
                         <div
                             key={service.title}

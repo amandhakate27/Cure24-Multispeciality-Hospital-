@@ -323,12 +323,10 @@ const HomeGallery = () => {
 
 const About = () => {
     return (
-        <section className="bg-white pt-12 pb-16 md:pt-16 md:pb-20">
+        <section className="bg-white py-12 md:py-14 lg:py-14">
             <div className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
-                <h2 className="text-center text-3xl md:text-4xl font-bold text-blue-800 leading-tight">
-                    Leading Healthcare Provider in
-                    <br />
-                    Nagpur
+                <h2 className="text-center text-3xl md:text-4xl font-bold text-blue-800 leading-tight lg:whitespace-nowrap">
+                    Leading Healthcare Provider in Nagpur
                 </h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 items-start mt-8 lg:mt-12">
@@ -350,6 +348,10 @@ const About = () => {
 
                         <p className="text-blue-700 mt-4 [text-align:justify]">
                             From routine checkups to complex surgeries, emergency care to preventive health programs , we offer comprehensive medical service under one roof, backed by the latest diagnostic and treatment technologies.
+                        </p>
+
+                        <p className="text-blue-700 mt-4 [text-align:justify]">
+                            Our hospital is recognized across Nagpur for its unwavering commitment to patient safety and quality outcomes. Every department is equipped with advanced medical technology, and our diagnostic and surgical facilities meet rigorous quality standards, ensuring patients receive world-class treatment close to home.
                         </p>
 
                         <LoadingLink

@@ -47,7 +47,7 @@ const CampaignVideos = () => {
     const displayVideos = videos.slice(0, 4);
 
     return (
-        <section className="bg-white py-16 md:py-20 border-t border-blue-100">
+        <section className="bg-white py-12 md:py-14 lg:py-14 border-t border-blue-100">
             <motion.div
                 className="max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14 text-center"
                 variants={sectionVariants}

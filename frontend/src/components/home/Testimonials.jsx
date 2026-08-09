@@ -130,7 +130,7 @@ const Testimonials = () => {
     }
 
     return (
-        <section className="relative overflow-hidden py-16 md:py-20">
+        <section className="relative overflow-hidden py-12 md:py-14 lg:py-14">
             <style>{`
                 @keyframes testimonial-marquee-left {
                     from { transform: translate3d(0, 0, 0); }

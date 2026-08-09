@@ -48,7 +48,7 @@ const features = [
 
 const ServicesPreview = () => {
     return (
-        <section className="relative overflow-hidden pt-10 md:pt-14 pb-16 md:pb-20">
+        <section className="relative overflow-hidden py-12 md:py-14 lg:py-14">
             <div className="absolute inset-0 bg-[linear-gradient(180deg,#ffffff_0%,#edf4ff_100%)]" />
 
             <div className="relative max-w-[1600px] mx-auto px-6 lg:px-10 xl:px-14">
@@ -61,7 +61,7 @@ const ServicesPreview = () => {
                     </p>
                 </div>
 
-                <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:mt-8">
                     {features.map((item) => (
                         <div
                             key={item.title}

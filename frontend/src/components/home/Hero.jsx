@@ -41,22 +41,22 @@ const Hero = () => {
             {/* Subtle & Light Overlay so background image is bright, clear & vibrant */}
             <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(255,255,255,0.82)_0%,rgba(255,255,255,0.50)_45%,rgba(255,255,255,0.12)_100%)]" />
 
-            <div className="relative z-20 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-5 pb-8 pt-20 sm:px-7 sm:pt-24 md:pt-20 lg:px-10 xl:px-14">
-                <div className="grid flex-1 items-center gap-3 lg:grid-cols-[62%_38%] xl:grid-cols-[65%_35%] 2xl:grid-cols-[68%_32%] lg:gap-8 xl:gap-12">
+            <div className="relative z-20 mx-auto flex h-full max-w-[1600px] flex-col justify-center px-5 pb-8 pt-20 sm:px-7 sm:pt-24 md:px-10 md:pt-24 md:pb-12 lg:px-0 xl:px-0 2xl:px-6">
+                <div className="grid flex-1 items-center gap-3 lg:grid-cols-[58%_42%] xl:grid-cols-[62%_38%] 2xl:grid-cols-[64%_36%] lg:gap-35 xl:gap-70">
                     <div className="flex flex-col justify-center self-stretch pt-0">
-                        <div className="mx-auto w-full max-w-[700px] md:max-w-[760px] lg:max-w-full lg:mx-0">
-                            <h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[3.6rem] text-center lg:text-[5.3rem] xl:text-[6rem] 2xl:text-[6.8rem] lg:text-left drop-shadow-sm">
+                        <div className="mx-auto w-full max-w-[700px] md:max-w-[820px] lg:max-w-full lg:mx-0">
+<h1 className="text-4xl font-black leading-[1.05] tracking-[-0.06em] text-[#0a2fc6] sm:text-5xl md:text-[4.4rem] md:leading-[1.02] text-center lg:text-[5.3rem] xl:text-[6rem] 2xl:text-[6.8rem] lg:text-left drop-shadow-sm">
                                 Care That Never Sleeps
                             </h1>
-                            <p className="mt-5 max-w-full text-[15px] font-medium leading-7 text-slate-700 sm:text-base md:text-[16px] xl:text-[18px] 2xl:text-[20px] xl:leading-8 2xl:leading-9 text-center lg:text-left mx-auto lg:mx-0">
+                            <p className="mt-5 max-w-full text-[15px] font-medium leading-7 text-slate-700 sm:text-base md:text-[18px] md:leading-8 md:max-w-[600px] xl:text-[18px] 2xl:text-[20px] xl:leading-8 2xl:leading-9 text-center lg:text-left mx-auto lg:mx-0">
                                 Experience world-class healthcare with 24/7 emergency services, advanced medical
                                 technology, and compassionate care in Nagpur.
                             </p>
 
-                            <div className="mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                            <div className="mt-7 flex flex-wrap items-center justify-center lg:justify-start gap-3 md:gap-4">
                                 <a
                                     href="tel:+919654317717"
-                                    className="inline-flex min-w-[170px] items-center justify-center gap-3 rounded-xl bg-[#0a2fc6] px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_18px_40px_rgba(10,47,198,0.22)] transition hover:bg-[#041aa9]"
+                                    className="inline-flex min-w-[170px] items-center justify-center gap-3 rounded-xl bg-[#0a2fc6] px-6 py-3.5 text-[15px] font-semibold text-white shadow-[0_18px_40px_rgba(10,47,198,0.22)] transition hover:bg-[#041aa9] md:text-[16px]"
                                 >
                                     <Phone className="h-5 w-5" />
                                     Book Now
@@ -74,7 +74,7 @@ const Hero = () => {
                                 </a>
                             </div>
 
-                            <div className="mt-8 grid max-w-[600px] md:max-w-[720px] xl:max-w-none grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:mt-9 mx-auto lg:mx-0 pb-4 lg:pb-0">
+                            <div className="mt-8 grid max-w-[600px] md:max-w-[760px] md:gap-x-8 md:gap-y-8 xl:max-w-none grid-cols-2 gap-x-4 gap-y-6 md:grid-cols-4 lg:mt-9 mx-auto lg:mx-0 pb-4 lg:pb-0">
                                 {stats.map((item, index) => (
                                     <div key={item.label} className="text-center lg:text-left">
                                         <p className="text-[1.9rem] font-bold tracking-[-0.05em] text-[#0a2fc6] sm:text-[2.2rem] xl:text-[2.8rem] 2xl:text-[3.2rem]">
