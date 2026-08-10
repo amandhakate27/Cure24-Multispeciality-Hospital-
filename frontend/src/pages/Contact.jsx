@@ -60,8 +60,8 @@ const Contact = () => {
     const textareaClasses =
         "w-full rounded-xl border border-blue-200/80 bg-white px-4 py-3 pl-11 text-sm text-blue-900 placeholder:text-gray-400 outline-none shadow-sm transition-all duration-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100 focus:shadow-md resize-none";
 
-    const mapEmbedUrl =
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.120000862208!2d79.13550111005296!3d21.147622180450426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c76b577c7ddb%3A0xd2bd1c7d5e55aaf5!2sAuro%20Critical%20Care%20Hospital%20%7C%20Orthopedic%20Hospital%20in%20Nagpur%20%7C%20Kne%20Replacement%20Hospital%20in%20Nagpur%20%7C%20Join%20Replacement%20Surgeon%20in%20Nagpur%20%7C!5e0!3m2!1sen!2sin!4v1771320732076!5m2!1sen!2sin";
+    const mapEmbedUrl = "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d930.2815451200885!2d79.1373971!3d21.1473762!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd4c79867f62325%3A0xb297e6aa7c7d3e76!2sCure24%20Multispeciality%20Hospital!5e0!3m2!1sen!2sin!4v1786346543176!5m2!1sen!2sin";
+    const mapDirectionsUrl = "https://maps.app.goo.gl/3jj4X2erzK9eYqh59";
 
 
     const handleSubmit = async (event) => {
@@ -299,7 +299,7 @@ const Contact = () => {
                     >
                         <div className="w-full h-80 md:h-105">
                             <iframe
-                                title="Auro Critical Care Hospital Location"
+                                title="Cure24 Multispeciality Hospital Location"
                                 src={mapEmbedUrl}
                                 className="w-full h-full border-0"
                                 loading="lazy"
@@ -307,6 +307,17 @@ const Contact = () => {
                                 referrerPolicy="strict-origin-when-cross-origin"
                             />
 
+                        </div>
+                        <div className="flex justify-center mt-6 mb-2 pb-1">
+                            <a
+                                href={mapDirectionsUrl}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="inline-flex items-center justify-center gap-2 bg-blue-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-800 transition-all duration-200 hover:scale-[1.03] active:scale-95"
+                            >
+                                <MapPin className="w-4 h-4" aria-hidden="true" />
+                                Get Directions
+                            </a>
                         </div>
                     </motion.div>
                 </div>
